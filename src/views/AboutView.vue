@@ -1,7 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <DraggableComponent></DraggableComponent>
+    <div >
+      <DraggableComponent></DraggableComponent>
+    </div>
   </div>
 </template>
 
