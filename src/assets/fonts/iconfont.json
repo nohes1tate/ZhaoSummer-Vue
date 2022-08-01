@@ -1,0 +1,16 @@
+{
+  "id": "3560580",
+  "name": "测试",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "30747882",
+      "name": "云物流",
+      "font_class": "ambitus02",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

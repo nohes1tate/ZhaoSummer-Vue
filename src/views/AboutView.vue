@@ -1,14 +1,15 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <tip-tap></tip-tap>
+    <div >
+      <DraggableComponent></DraggableComponent>
+    </div>
   </div>
 </template>
 
 <script>
-import TipTap from "@/components/TipTap";
+import DraggableComponent from "@/components/InlineAxure/DraggableComponent";
 export default {
-  components: {TipTap},
+  components: {DraggableComponent},
   data (){
     return {
       value: ''
