@@ -35,7 +35,7 @@
           <el-input placeholder="邮箱" v-model="registerForm.email"></el-input>
         </el-form-item>
         <el-form-item prop="realName">
-          <el-input placeholder="真实姓名" v-model="registerForm.email"></el-input>
+          <el-input placeholder="真实姓名" v-model="registerForm.realName"></el-input>
         </el-form-item>
       </el-form>
       <el-button style="width: 220px" type="primary" @click="register">注册</el-button>
@@ -50,6 +50,64 @@
 export default {
   name: "loginView",
   data() {
+    let checkUsername = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('用户名不能为空'));
+      } else {
+        var reg=/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+        if (!reg.test(value)) {
+        callback(new Error('用户名由中英文、数字或下划线组成'))
+      } else {
+        callback();
+      }
+      }
+    };
+    let checkEmail = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('邮箱不能为空'));
+      } else {
+        var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (!reg.test(value)) {
+          callback(new Error('请输入有效的邮箱'));
+        } else {
+          callback();
+        }
+      }
+    };
+    let validatePass = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入密码'));
+      } else {
+        var reg_pwd=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/;
+        if (!reg_pwd.test(value)) {
+          callback(new Error('密码至少同时包含字母和数字，且长度为8-18'));
+        } else {
+          if (this.registerForm.confirmPassword !== '') {
+            this.$refs.registerForm.validateField('password');
+          }
+          callback();
+        }
+      }
+    };
+    let validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.registerForm.password) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
+    var checkRealName = (rule, value, callback) => {
+      const reg=/^[\u4e00-\u9fa5a-zA-Z]+$/;
+      if (!value) {
+        return callback(new Error('真实姓名不能为空'));
+      } else if (!reg.test(value)) {
+        callback(new Error('真实姓名由中英文组成'))
+      } else {
+        callback();
+      }
+    };
     return {
       registerDialogVisible: false,
       loginDialogVisible: true,
@@ -64,6 +122,23 @@ export default {
         email: "",
         realName: "",
       },
+      registerRules: {
+        username: [
+          { validator: checkUsername, trigger: 'blur'}
+        ],
+        email: [
+          { validator: checkEmail, trigger: 'blur'}
+        ],
+        password: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        confirmPassword: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+        realName: [
+          { validator: checkRealName, trigger: 'blur'}
+        ],
+      }
     }
   },
   methods: {
