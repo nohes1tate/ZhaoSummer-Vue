@@ -52,22 +52,35 @@
     </el-menu>
   </div>
   <div class="right-side-box">
+    <div class="top-line">
+      <div class="top-left-box">
+        <page-tabs :keep-alive-component-instance="keepAliveComponentInstance" />
+        <div ref="keepAliveContainer">
+          <keep-alive>
+            <router-view :key="$route.fullPath" />
+          </keep-alive>
+        </div>
+      </div>
+      <div class="top-right-box">
+
+      </div>
+    </div>
     <div class="create-box">
-      <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false">
+      <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="go('/project/testPage')">
         <div class="top-card">
           <i class="el-icon-edit"></i>
         </div>
         <div class="bottom-card"><div class="text-line">新建页面</div></div>
       </div>
       <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
-      <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false">
+      <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="go('/project/testUML')">
         <div class="top-card">
           <i class="el-icon-set-up"></i>
         </div>
         <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
       </div>
       <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-      <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false">
+      <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
         <div class="top-card">
           <i class="el-icon-document-add"></i>
         </div>
@@ -80,14 +93,36 @@
 </template>
 
 <script>
+import PageTabs from "@/components/projectpage/PageTabs";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "project",
+  components: {
+    PageTabs
+  },
+  mounted() {
+    if (this.$refs.keepAliveContainer) {
+      this.keepAliveComponentInstance = this.$refs.keepAliveContainer.childNodes[0].__vue__;
+    }
+  },
   data() {
     return {
+      keepAliveComponentInstance: null,
       showTip1: false,
       showTip2: false,
       showTip3: false,
+    }
+  },
+  methods: {
+    go(path) {
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+  },
+  created() {
+    if (this.$vnode) {
+      this.$vnode.parent.componentInstance.cache = {}
     }
   }
 }
@@ -146,9 +181,18 @@ export default {
 }
 .right-side-box{
   //border:solid 5px blueviolet;
-  height: 720px;
+  height: 100%;
   width: 100%;
   text-align: center;
+}
+.top-line{
+  position: relative;
+  //border:solid 5px blue;
+  width: 100%;
+  height: 5%;
+  display: flex;
+  //top: 10px;
+  margin-bottom: 5px;
 }
 .create-box{
   //border: solid 3px rosybrown;
@@ -176,7 +220,7 @@ export default {
 .top-card{
   width: 100%;
   height: 300px;
-  //border: solid 1px lightpink;
+//border: solid 1px lightpink;
   background-color: #f4f0e1;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -184,13 +228,13 @@ export default {
 .bottom-card{
   width: 100%;
   height: 60px;
-  //border: solid 1px lightpink;
+//border: solid 1px lightpink;
   background-color: #f1ecda;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 .text-line{
-  //border: solid 2px lightpink;
+//border: solid 2px lightpink;
   margin-top: 20px;
   color: grey;
 }
@@ -209,10 +253,10 @@ export default {
   justify-content: center;
   font-size: 15px;
   background-color: #f4f0e1;
-  //border: solid 2px lightpink;
+//border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
-  top:95px;
+  top:130px;
   left: 500px;
   box-shadow: 0px 5px 15px 2px grey;
 }
@@ -243,7 +287,7 @@ export default {
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
-  top:95px;
+  top:130px;
   left: 830px;
   box-shadow: 0px 5px 15px 2px grey;
 }
@@ -270,7 +314,7 @@ export default {
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
-  top:95px;
+  top:130px;
   left: 1150px;
   box-shadow: 0px 5px 15px 2px grey;
 }
