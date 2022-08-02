@@ -174,7 +174,7 @@ export default {
           );
           this.$router.push({
             path: '/preview',
-            query: {id: 'xxx', r: '1'}
+            query: {id: '114', r: '1'}
           });
           break;
 
