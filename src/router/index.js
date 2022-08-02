@@ -19,6 +19,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/login',
+    name: 'login',
+    component:()=>import('../views/login/LoginView')
+  },
+  {
     path: '/project',
     name: 'project',
     component: () => import(/* webpackChunkName: "about" */ '../views/project/Project'),
