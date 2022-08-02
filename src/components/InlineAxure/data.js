@@ -12,6 +12,7 @@ export const defalutMenus = {
         {},
         { name: '保存', keyboard: 'Ctrl+S', action: 'save' },
         { name: '下载JSON文件', action: 'downloadJson' },
+        { name: '导出HTML文件', action: 'downloadHtml'},
         {},
         { name: '下载为PNG', action: 'downloadPng' },
         { name: '下载为SVG', action: 'downloadSvg' }
@@ -57,7 +58,7 @@ export const defalutUserMenus = [
 
 export const defalutMaterials = [
   {
-    name: '企业图形库',
+    name: '基础图形库',
     expand: true,
     show: true,
     list: []
