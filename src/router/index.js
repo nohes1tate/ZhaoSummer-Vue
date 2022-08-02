@@ -14,6 +14,11 @@ const routes = [
     component: () => import('../views/AboutView')
   },
   {
+    path: '/documentEdit/:documentID',
+    name: 'documentEdit',
+    component: () => import('../views/documentEdit/DocumentView')
+  },
+  {
     path: '/preview',
     name: 'preview',
     component: () => import('../views/design/PreviewView')

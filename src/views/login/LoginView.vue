@@ -7,7 +7,7 @@
       <span>高效的软工团队协作与管理平台</span>
     </div>
     <div class="login-container" v-if="loginDialogVisible">
-      <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" style="margin-left: -100px">
+      <el-form :model="loginForm" ref="loginForm" :rules="{}" label-width="100px" style="margin-left: -100px">
         <el-form-item prop="username">
           <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
         </el-form-item>
@@ -150,6 +150,9 @@ export default {
       this.loginDialogVisible = true;
       this.registerDialogVisible = false;
     },
+    register() {
+      console.log('register!')
+    }
   },
 }
 </script>
