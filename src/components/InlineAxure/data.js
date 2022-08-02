@@ -1,29 +1,25 @@
 export const defalutMenus = {
-  // back: {
-  //   icon: 't-icon t-angle-left'
-  // },
+   back: {
+     icon: 't-icon t-angle-left'
+   },
   // login: true,
   left: [
     {
-      name: '文件(自定义菜单1)',
+      name: '文件',
+      icon: 't-icon t-folder',
       children: [
-        { name: '新建文件', keyboard: 'Ctrl+N', action: 'loadNew' },
-        { name: '打开文件', keyboard: 'Ctrl+O', action: 'open' },
         { name: '导入文件', keyboard: 'Ctrl+I', action: 'load' },
         {},
         { name: '保存', keyboard: 'Ctrl+S', action: 'save' },
-        { name: '另存为', keyboard: 'Ctrl+Shift+I', action: 'saveAs' },
         { name: '下载JSON文件', action: 'downloadJson' },
-        { name: '下载zip打包文件', action: 'downloadZip' },
-        {},
-        { name: '导出为HTML', action: 'downloadHtml' },
         {},
         { name: '下载为PNG', action: 'downloadPng' },
         { name: '下载为SVG', action: 'downloadSvg' }
       ]
     },
     {
-      name: '编辑(自定义菜单2)',
+      name: '编辑',
+      icon: 't-icon t-edit',
       children: [
         { name: '撤销', keyboard: 'Ctrl+Z', action: 'undo' },
         { name: '恢复  ', keyboard: 'Ctrl+Shift+Z', action: 'redo' },
@@ -34,8 +30,14 @@ export const defalutMenus = {
       ]
     },
     {
-      name: '我的菜单3',
-      router: '/page'
+      name: '保存',
+      icon: 't-icon t-save',
+      action: 'save'
+    },
+    {
+      name: '撤销',
+      icon: 't-icon t-reply',
+      action: 'undo'
     }
   ]
   // middle: []
@@ -1097,12 +1099,30 @@ export const defalutMaterials = [
         }
       }
     ]
+  },
+  {
+    iconUrl: '//at.alicdn.com/t/c/font_3562998_u3eld7cz7g.css',
+    expand: true,
+    show: true,
+    list: [],
+  },
+  {
+    iconUrl: '//at.alicdn.com/t/c/font_3562987_7wtvdvxywl7.css',
+    expand: true,
+    show: true,
+    list: []
+  },
+  {
+    iconUrl: '//at.alicdn.com/t/c/font_3560668_y2e6askrww.css',
+    expand: true,
+    show: true,
+    list: []
   }
 ];
 
 export const images = [
   {
     image:
-      'https://iconfont.alicdn.com/t/d2ffc78f-ce7a-4b02-94c9-7a2224bf8485.png'
+      ''
   }
 ];

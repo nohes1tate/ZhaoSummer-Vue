@@ -15,9 +15,9 @@
 <script>
 import Vue from 'vue';
 // 导入topology-vue组件
-import topology from 'topology-vue';
+import topology from '@/assets/topology-vue';
 // 需要导入topology-vue.css
-import 'topology-vue/topology-vue.css';
+import '@/assets/topology-vue/topology-vue.css';
 
 Vue.use(topology);
 import {
@@ -35,12 +35,12 @@ export default {
       content: '',
       topologyConfigs: {
         license: {
-          key: '企业版授权码',
-          value: '国产原创开源发展做出我们的贡献'
+          key: 'le5le',
+          value: 'le5le'
         },
         logo: {
-          img: 'http://topology.le5le.com/assets/img/favicon.ico',
-          url: 'http://topology.le5le.com',
+          img: 'https://thumbnail8.baidupcs.com/thumbnail/8922933bamce4e3de85bf3c20436af34?fid=2595694748-250528-496437148589000&time=1659430800&rt=yt&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-xJ7vd2%2BCIl0lkkH0XSS1%2Bsewt7k%3D&expires=24h&chkv=0&chkbd=0&chkpc=&dp-logid=2891203934&dp-callid=0&size=c1536_u864&quality=90&vuk=-&ft=video&autopolicy=1',
+          url: 'http://www.baidu.com',
           target: '_blank'
         },
         menus: defalutMenus,
@@ -142,10 +142,13 @@ export default {
           // 导航菜单configs.menus里面定义的action
           // 比如这里表示打开文件
           break;
+        case 'Share':
+          console.log('share')
+              break;
         case 'save':
           // 导航菜单configs.menus里面定义的action
           console.log(window.topology.data)
-          window.topology.open(this.content)
+          // window.topology.open(this.content)
           // 比如这里表示保存文件
           break;
         case 'saveAs' :
