@@ -18,11 +18,41 @@
           <el-menu-item-group>
             <el-menu-item index="1">小学期</el-menu-item>
             <el-menu-item index="2">示例团队</el-menu-item>
-            <el-menu-item index="3"><i class="el-icon-plus"></i>新建团队</el-menu-item>
+            <el-menu-item index="3"
+                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </div>
+
+    <el-dialog
+        title="新建团队"
+        :visible.sync="newTeamDialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <el-form :model="teamForm" :rules="teamRules" ref="teamForm" label-width="100px">
+        <el-form-item label="团队名称" prop="teamName">
+          <el-input
+              maxlength="10"
+              show-word-limit
+              :rows="1"
+              v-model="teamForm.teamName"></el-input>
+        </el-form-item>
+        <el-form-item label="团队简介" prop="teamIntro">
+          <el-input
+              type="textarea"
+              maxlength="100"
+              show-word-limit
+              :rows="4"
+              v-model="teamForm.teamIntro"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="newTeamDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="newTeamDialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
+
     <div class="content-home">
       <div style="text-align: left; margin-top: 50px; margin-bottom: 20px;">
         <span style="font-size: 30px;">团队名称</span>
@@ -35,8 +65,38 @@
         </el-menu>
       </div>
       <div class="button">
-        <el-button type="primary" v-if="activeIndex==='1'">+ 新建项目</el-button>
-        <el-button type="primary" v-if="activeIndex==='2'">+ 邀请成员</el-button>
+        <el-button type="primary" v-if="activeIndex==='1'"
+                   @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目</el-button>
+
+        <el-dialog
+            title="新建项目"
+            :visible.sync="newProjectDialogVisible"
+            width="30%"
+            :before-close="handleClose">
+          <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
+            <el-form-item label="项目名称" prop="projectName">
+              <el-input
+                  maxlength="10"
+                  show-word-limit
+                  :rows="1"
+                  v-model="projectForm.projectName"></el-input>
+            </el-form-item>
+            <el-form-item label="项目简介" prop="projectIntro">
+              <el-input
+                  type="textarea"
+                  maxlength="100"
+                  show-word-limit
+                  :rows="4"
+                  v-model="projectForm.projectIntro"></el-input>
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+    <el-button @click="newProjectDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="newProjectDialogVisible = false">确 定</el-button>
+  </span>
+        </el-dialog>
+
+        <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
       </div>
       <div class="content-project" v-if="activeIndex==='1'">
         <projectCover projectName='项目1'></projectCover>
@@ -72,11 +132,11 @@
               label="操作"
               width="100">
             <el-popover
-                placement="bottom"
-                width="100"
+                placement="right"
+                width="190"
                 trigger="hover">
-              <ul>移出团队</ul>
-              <ul>设为管理员</ul>
+              <el-button size="small" plain>设为管理员</el-button>
+              <el-button size="small" type="danger" plain>移出团队</el-button>
               <i class="el-icon-more" slot="reference"></i>
             </el-popover>
           </el-table-column>
@@ -95,6 +155,32 @@ export default {
       return {
         activeIndex: '1',
         Index: '1',
+        newProjectDialogVisible: false,
+        projectForm: {
+          projectName: '',
+          projectIntro: '',
+        },
+        projectRules: {
+          projectName: [
+            {required: true, message: '请输入项目名称', trigger: 'blur'}
+          ],
+          projectIntro: [
+            {required: true, message: '请输入项目简介', trigger: 'blur'}
+          ]
+        },
+        newTeamDialogVisible: false,
+        teamForm: {
+          teamName: '',
+          teamIntro: '',
+        },
+        teamRules: {
+          teamName: [
+            {required: true, message: '请输入团队名称', trigger: 'blur'}
+          ],
+          teamIntro: [
+            {required: true, message: '请输入团队简介', trigger: 'blur'}
+          ]
+        },
        tableData: [{
          member: '番茄炒西红柿666',
          name: '陈百铭',

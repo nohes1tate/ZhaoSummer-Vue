@@ -5,14 +5,45 @@
     </div>
     <div style="float: right; margin-top: 16px">
       <el-popover
-          placement="bottom"
-          width="100"
+          placement="right"
+          width="170"
           trigger="hover">
-        <ul>重命名</ul>
-        <ul>删除项目</ul>
+        <el-button size="small" plain @click="newProjectNameDialogVisible = true">修改名称</el-button>
+        <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">删除项目</el-button>
         <i class="el-icon-more" slot="reference"></i>
       </el-popover>
     </div>
+
+    <el-dialog
+        title="修改项目名称"
+        :visible.sync="newProjectNameDialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <el-form :model="newProjectNameForm" :rules="newProjectNameRules" ref="newProjectNameForm" label-width="100px">
+        <el-form-item label="项目名称" prop="newProjectName">
+          <el-input
+              maxlength="10"
+              show-word-limit
+              :rows="1"
+              v-model="newProjectNameForm.newProjectName"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="newProjectNameDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="newProjectNameDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+        title="删除项目"
+        :visible.sync="deleteProjectDialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <span>确认删除项目xxx?</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="deleteProjectDialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -21,6 +52,16 @@ export default {
   name: "projectCover",
   data(){
     return{
+      newProjectNameDialogVisible: false,
+      newProjectNameForm: {
+        newProjectName: '',
+      },
+      newProjectNameRules: {
+        newProjectName: [
+          {required: true, message: '请输入项目名称', trigger: 'blur'}
+        ],
+      },
+      deleteProjectDialogVisible: false,
     }
   },
   props:{
