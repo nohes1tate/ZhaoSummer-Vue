@@ -289,7 +289,7 @@ export default {
       &:first-child {
         border-left: 1px solid $c-tab-border-color;
         border-top-left-radius: 2px;
-        margin-left: 10px;
+        //margin-left: 10px;
       }
       &:last-child {
         border-top-right-radius: 2px;

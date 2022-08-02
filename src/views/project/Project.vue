@@ -120,6 +120,11 @@ export default {
       }
     },
   },
+  created() {
+    if (this.$vnode) {
+      this.$vnode.parent.componentInstance.cache = {}
+    }
+  }
 }
 </script>
 
