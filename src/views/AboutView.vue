@@ -1,15 +1,13 @@
 <template>
-  <div class="about">
-    <div >
-      <DraggableComponent></DraggableComponent>
-    </div>
+  <div style="width: auto">
+      <design-tool></design-tool>
   </div>
 </template>
 
 <script>
-import DraggableComponent from "@/components/InlineAxure/DraggableComponent";
+import designTool from "@/components/InlineAxure/DesignTool";
 export default {
-  components: {DraggableComponent},
+  components: {designTool},
   data (){
     return {
       value: ''
