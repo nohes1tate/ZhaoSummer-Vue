@@ -76,6 +76,7 @@ export default {
     };
     let validatePass = (rule, value, callback) => {
       if (!value) {
+        console.log('密码不能为空');
         callback(new Error('请输入密码'));
       } else {
         var reg_pwd=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/;
@@ -114,6 +115,14 @@ export default {
       loginForm: {
         username: "",
         password: "",
+      },
+      loginRules: {
+        username: [
+          {required: true, message: '请输入用户名', trigger: 'blur'}
+        ],
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
+        ]
       },
       registerForm: {
         username: "",
