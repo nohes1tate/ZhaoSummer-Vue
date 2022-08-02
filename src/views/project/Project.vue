@@ -53,24 +53,27 @@
   </div>
   <div class="right-side-box">
     <div class="create-box">
-      <div class="box-card" @mouseenter="showTip = true" @mouseleave="showTip = false">
+      <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false">
         <div class="top-card">
           <i class="el-icon-edit"></i>
         </div>
         <div class="bottom-card"><div class="text-line">新建页面</div></div>
       </div>
-      <div class="box-card" @mouseenter="showTip = true" @mouseleave="showTip = false">
+      <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
+      <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false">
         <div class="top-card">
           <i class="el-icon-set-up"></i>
         </div>
         <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
       </div>
-      <div class="box-card" @mouseenter="showTip = true" @mouseleave="showTip = false">
+      <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
+      <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false">
         <div class="top-card">
           <i class="el-icon-document-add"></i>
         </div>
         <div class="bottom-card"><div class="text-line">新建文档</div></div>
       </div>
+      <div v-show="showTip3" class="tip3"><div class="tip-line">为项目新建文档</div></div>
     </div>
   </div>
 </div>
@@ -82,7 +85,9 @@ export default {
   name: "project",
   data() {
     return {
-      showTip: false
+      showTip1: false,
+      showTip2: false,
+      showTip3: false,
     }
   }
 }
@@ -94,14 +99,16 @@ export default {
   height: 100%;
   background-color: #faf4e8;
   display: flex;
+  position: absolute;
 }
 .left-side-box{
   position: relative;
   width: 300px;
-  height: 720px;
+  height: 100%;
   //border: solid 5px lightcoral;
   background-color: #f3f0e1;
   text-align: left;
+  border-right: solid 1px lightgrey;
 }
 .title-line{
   //border: solid 1px lightskyblue;
@@ -161,6 +168,7 @@ export default {
   flex-direction: column;
   border-radius: 10px;
   cursor: pointer;
+  z-index: 1;
 }
 .box-card:hover{
   border: solid 2px deepskyblue;
@@ -193,5 +201,89 @@ export default {
   font-size: 150px;
   color: deepskyblue;
 }
-
+.tip1{
+  position: fixed;
+  width: 200px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background-color: #f4f0e1;
+  //border: solid 2px lightpink;
+  border-radius: 5px;
+  z-index: 2;
+  top:95px;
+  left: 500px;
+  box-shadow: 0px 5px 15px 2px grey;
+}
+.tip1::before,.tip1::after{
+  content: '';
+  display: block;
+  border-width: 6px;
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  height: 5px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 16px solid #f4f0e1;
+}
+.tip-line{
+  color: grey;
+  margin-top: 15px;
+}
+.tip2{
+  position: fixed;
+  width: 200px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background-color: #f4f0e1;
+//border: solid 2px lightpink;
+  border-radius: 5px;
+  z-index: 2;
+  top:95px;
+  left: 830px;
+  box-shadow: 0px 5px 15px 2px grey;
+}
+.tip2::before,.tip2::after{
+  content: '';
+  display: block;
+  border-width: 6px;
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  height: 5px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 16px solid #f4f0e1;
+}
+.tip3{
+  position: fixed;
+  width: 200px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background-color: #f4f0e1;
+//border: solid 2px lightpink;
+  border-radius: 5px;
+  z-index: 2;
+  top:95px;
+  left: 1150px;
+  box-shadow: 0px 5px 15px 2px grey;
+}
+.tip3::before,.tip3::after{
+  content: '';
+  display: block;
+  border-width: 6px;
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  height: 5px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 16px solid #f4f0e1;
+}
 </style>

@@ -64,6 +64,7 @@
           :key="item.customId"
           :ref="item.customId"
           :custom-id="item.customId"
+          :active-id="activedId"
           :h="item.fontsSize | filterFonstSizeToHeight(item)"
           :w="item.width"
           :x="item.x"
@@ -79,6 +80,8 @@
           @dragstop="onDragstop"
           @activated="onActivated"
           @resizing="onResizing"
+          @deactivated="onDeactived"
+          :active="item.customId === activedId"
           :lock-aspect-ratio="item.type === 'icon'"
       >
         <div class="lq-draggable-icon" v-if="item.type === 'icon'">
@@ -96,6 +99,7 @@
       </vue-draggable-resizable>
     </div>
     <div class="set-wrap">
+      <div v-if="activedId">
       <div class="control-set-item">
         <p class="title">文本设置</p>
         <el-input
@@ -124,6 +128,7 @@
           </el-option>
         </el-select>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -137,7 +142,7 @@ export default {
   components: {VueDraggableResizable},
   data() {
     return {
-      activedId: '', // 编辑实例的id
+      activedId: 0, // 编辑实例的id
       activedType: '', // 编辑实例的类型
       commonClassName: 'target', // 确保点击其它非控件元素时，已激活的控件不失去焦点,作为单选高亮判定标准
       activedClass: 'lq-active-class',
@@ -279,7 +284,6 @@ export default {
     // 点击控件
     onActivated(customId) {
       // 点击 赋值
-      this.activedId && this.setVal(this.textVal);
       this.activedId = customId;
       let editIndex = this.getEditIndex();
       this.activedType = this.controlsArr[editIndex].type;
@@ -310,6 +314,9 @@ export default {
           break
         }
       }
+    },
+    onDeactived(){
+      this.activedId=0
     },
     // 文本编辑完成
     textChange(val) {
@@ -400,6 +407,7 @@ export default {
       };
       this.controlsArr.push(controlObjMap[type]);
       this.setControlActive(controlObjMap[type].customId);
+      this.activedId=controlObjMap[type].customId
     },
     // 手动设置刚才添加的控件为选中状态
     setControlActive(customId) {
@@ -491,6 +499,7 @@ export default {
   .lq-draggable-icon {
     border: dashed 0px #000;
   }
+
 
   .lq-draggable-seal {
     .seal-inner {

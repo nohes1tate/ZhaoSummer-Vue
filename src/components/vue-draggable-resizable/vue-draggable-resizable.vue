@@ -90,6 +90,10 @@ export default {
       type: [String, Number],
       default: ''
     },
+    activeId: {
+      type: [String, Number],
+      default: ''
+    },
     classNameDragging: {
       type: String,
       default: 'dragging'
@@ -277,7 +281,6 @@ export default {
     this.resetBoundsAndMouseState();
   },
   mounted: function() {
-    console.log(this.className)
     if (!this.enableNativeDrag) {
       this.$el.ondragstart = () => false;
     }
@@ -485,23 +488,19 @@ export default {
       };
     },
     deselect(e) {
-      const target = e.target || e.srcElement;
-      const regex = new RegExp(this.className + '-([trmbl]{2})', '');
-      console.log('deSelect!' + target.className + ' is ' + this.enabled + ' condition:' +
-          !this.$el.contains(target) ,
-          !regex.test(target.className) ,
-          this.commonClassName ,
-              target.className.includes(this.commonClassName)
-      )
-      // console.log(target);
+      const target = e.target
+       //console.log(target.className);
       // console.log(target.className.includes('vdr'));
+      //console.log('customId:',this.customId)
+     // console.log('activateId',this.activeId)
       {
-        if (this.enabled && !this.preventDeactivation) {
+        if (this.enabled && ((target.className === 'drag-wrap')||(!this.preventDeactivation && this.customId!=this.activeId))) {
           // console.log(target);
           this.enabled = false;
-          console.log('false!')
 
-          this.$emit('deactivated', this.commonClassName);
+          console.log('false')
+
+          this.$emit('deactivated', this.customId);
           this.$emit('update:active', false);
         }
 
