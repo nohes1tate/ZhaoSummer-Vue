@@ -1,18 +1,32 @@
 <template>
   <div class="home">
     <div class="nav-left">
-      <el-menu :default-active="Index" class="el-menu-vertical-demo" @select="handleSelect">
-        <el-submenu>
-          <template slot="title">我的团队</template>
-          <el-menu-item index="1">小学期</el-menu-item>
-          <el-menu-item index="2">示例团队</el-menu-item>
-          <el-menu-item index="3">+ 新建团队</el-menu-item>
+      <div style="height: 60px; font-size: 40px; margin-top: 20px">墨书</div>
+      <el-menu
+          class="select-box"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="#f3f0e1"
+          text-color="#000"
+          active-text-color="#6667ab"
+          :default-active="Index">
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-user"></i>
+            <span>我的团队</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="1">小学期</el-menu-item>
+            <el-menu-item index="2">示例团队</el-menu-item>
+            <el-menu-item index="3"><i class="el-icon-plus"></i>新建团队</el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </div>
     <div class="content-home">
-      <div style="font-size: 20px; text-align: left">
-        团队名称
+      <div style="text-align: left; margin-top: 50px; margin-bottom: 20px;">
+        <span style="font-size: 30px;">团队名称</span>
+        <span class="member-tag">普通成员</span>
       </div>
       <div class="nav-team">
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
@@ -63,7 +77,7 @@
                 trigger="hover">
               <ul>移出团队</ul>
               <ul>设为管理员</ul>
-              <el-button slot="reference">…</el-button>
+              <i class="el-icon-more" slot="reference"></i>
             </el-popover>
           </el-table-column>
         </el-table>
@@ -112,15 +126,18 @@ export default {
 
 <style>
 .home {
+  position: absolute;
   display: flex;
   flex-direction: row;
   height: 100%;
 }
 .nav-left {
-  width: 200px;
+  position: relative;
+  width: 300px;
   height: 100%;
-  color: grey;
+  background-color: #f3f0e1;
   border-right: 1px solid #e8e8e8;
+  margin-right: 20px;
 }
 .content-home {
   display: flex;
@@ -129,11 +146,21 @@ export default {
 }
 .button {
   text-align: left;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-left: 10px;
 }
 .content-project {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.member-tag {
+  font-size: 15px;
+  background-color: #c0f0db;
+  color: #2ca37f;
+  padding: 2px 5px;
+  border-radius: 5px;
+  margin-left: 15px;
 }
 </style>

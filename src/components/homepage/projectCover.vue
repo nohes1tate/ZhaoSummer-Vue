@@ -1,7 +1,17 @@
 <template>
   <div id="project-cover">
-    <div style="margin-left: 10px;text-align: center">
+    <div style="margin-left: 10px; margin-top: 15px; width: 450px">
       {{projectName}}
+    </div>
+    <div style="float: right; margin-top: 16px">
+      <el-popover
+          placement="bottom"
+          width="100"
+          trigger="hover">
+        <ul>重命名</ul>
+        <ul>删除项目</ul>
+        <i class="el-icon-more" slot="reference"></i>
+      </el-popover>
     </div>
   </div>
 </template>
