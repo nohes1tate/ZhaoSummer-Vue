@@ -20,8 +20,10 @@
     "qs": "^6.11.0",
     "sass": "^1.54.0",
     "sass-loader": "^13.0.2",
+    "topology-vue": "^0.5.38",
     "vue": "^2.6.14",
     "vue-draggable-resizable": "^2.3.0",
+    "vue-loader-v15": "^0.0.1-security",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
