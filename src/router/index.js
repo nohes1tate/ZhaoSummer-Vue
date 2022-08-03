@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/home/HomeView.vue'
+import TestDocument from "@/components/projectpage/TestDocument";
+import TestPage from "@/components/projectpage/TestPage";
 import TestUML from "@/components/projectpage/TestUML";
-import AboutView from "@/views/AboutView";
-import CreateBox from "@/components/projectpage/CreateBox";
-import DocumentView from "@/views/documentEdit/DocumentView";
-import ProjectView from "@/components/projectpage/ProjectView";
 
 Vue.use(VueRouter)
 
@@ -26,7 +24,7 @@ const routes = [
     component: () => import('../views/design/PreviewView')
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: HomeView
   },
@@ -46,15 +44,14 @@ const routes = [
         path: "blank",
       },
       {path:"",
-        component: CreateBox,
         meta:{
-          title:"新建"
+          title:"首页"
         }},
       {
-        path: "documentEdit",
-        component: DocumentView,
+        path: "testDocument",
+        component: TestDocument,
         meta: {
-          title: "文档", //页面标题
+          title: "文档页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
@@ -62,25 +59,18 @@ const routes = [
         path: "testUML",
         component: TestUML,
         meta: {
-          title: "UML图", //页面标题
+          title: "UML图页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
       {
         path: "testPage",
-        component: AboutView,
+        component: TestPage,
         meta: {
-          title: "页面设计", //页面标题
+          title: "页面设计页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
-      {
-        path:'overview',
-        component: ProjectView,
-        meta: {
-          title: "项目概览",
-        }
-      }
     ]
   },
 ]
