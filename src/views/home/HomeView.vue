@@ -204,14 +204,20 @@
               fixed="right"
               label="操作"
               width="100">
-            <el-popover
-                placement="right"
-                width="220"
-                trigger="hover">
-              <el-button size="small" plain>设为管理员</el-button>
-              <el-button size="small" type="danger" plain>移出团队</el-button>
-              <i class="el-icon-more" slot="reference"></i>
-            </el-popover>
+            <template slot-scope="scope">
+              <el-popover
+                  placement="right"
+                  width="220"
+                  trigger="hover">
+                <el-button size="small" :disabled="scope.row.isManager || (!curIsManager)" plain>设为管理员</el-button>
+                <el-button size="small" v-if="scope.row.userID === curUserID"
+                           :disabled="!(curIsCreator || (curIsManager && !scope.row.isManager))" type="danger" plain>
+                  移出团队
+                </el-button>
+                <el-button v-else size="small" type="danger" plain>退出团队</el-button>
+                <i class="el-icon-more" slot="reference"></i>
+              </el-popover>
+            </template>
           </el-table-column>
         </el-table>
       </div>
