@@ -1,5 +1,5 @@
 <template>
-  <div style="border: solid 2px black;width: 40%;border-radius: 8px">
+  <div style="border: solid 2px black;width: 80vh;border-radius: 8px">
     <div class="editor">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         <div class="menubar">
@@ -128,10 +128,9 @@
           >
             redo
           </button>
-          <hr style="height: 4px;color: black;background: black"/>
         </div>
       </editor-menu-bar>
-
+      <hr style="height: 4px;color: black;background: black;width: 20vh%;margin-left: 0;margin-right: 0"/>
       <editor-content class="editor__content" :editor="editor"/>
     </div>
   </div>
