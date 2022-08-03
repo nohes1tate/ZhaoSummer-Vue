@@ -106,7 +106,7 @@ export default {
           switch (res.data.error) {
             case 0:
               this.$message({
-                message: '团队创建成功',
+                message: '项目信息收集成功!',
                 type: 'success'
               });
               break;
