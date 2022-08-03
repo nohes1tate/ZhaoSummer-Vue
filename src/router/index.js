@@ -5,6 +5,7 @@ import TestUML from "@/components/projectpage/TestUML";
 import AboutView from "@/views/AboutView";
 import CreateBox from "@/components/projectpage/CreateBox";
 import DocumentView from "@/views/documentEdit/DocumentView";
+import ProjectView from "@/components/projectpage/ProjectView";
 
 Vue.use(VueRouter)
 
@@ -53,7 +54,7 @@ const routes = [
         path: "documentEdit",
         component: DocumentView,
         meta: {
-          title: "文档页", //页面标题
+          title: "文档", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
@@ -61,7 +62,7 @@ const routes = [
         path: "testUML",
         component: TestUML,
         meta: {
-          title: "UML图页", //页面标题
+          title: "UML图", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
@@ -69,10 +70,17 @@ const routes = [
         path: "testPage",
         component: AboutView,
         meta: {
-          title: "页面设计页", //页面标题
+          title: "页面设计", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
+      {
+        path:'overview',
+        component: ProjectView,
+        meta: {
+          title: "项目概览",
+        }
+      }
     ]
   },
 ]
