@@ -7,7 +7,7 @@
       <span>高效的软工团队协作与管理平台</span>
     </div>
     <div class="login-container" v-if="loginDialogVisible">
-      <el-form :model="loginForm" ref="loginForm" :rules="{}" label-width="100px" style="margin-left: -100px">
+      <el-form :model="loginForm" ref="loginForm" :rules="loginRules" label-width="100px" style="margin-left: -100px">
         <el-form-item prop="username">
           <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
         </el-form-item>
@@ -160,7 +160,46 @@ export default {
       this.registerDialogVisible = false;
     },
     register() {
-      console.log('register!')
+      const formData = new FormData();
+      formData.append("username", this.registerForm.username);
+      formData.append("password1", this.registerForm.password);
+      formData.append("password2", this.registerForm.confirmPassword);
+      formData.append("email", this.registerForm.email);
+      formData.append("realName", this.registerForm.realName);
+      this.$axios({
+        method: 'post',
+        url: 'api/Login/register/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '注册成功',
+                  type: 'success'
+                });
+                this.toRegister();
+                break;
+              case 4001:
+                this.$message.warning('用户名已存在！');
+                break;
+              case 4002:
+                this.$message.warning('邮箱已注册！');
+                break;
+              case 4003:
+                this.$message.warning('密码不符合规范！');
+                break;
+              case 4004:
+                this.$message.warning('两次密码不一致！');
+                break;
+              case 4005:
+                this.$message.warning('验证邮箱发送失败！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     }
   },
 }
