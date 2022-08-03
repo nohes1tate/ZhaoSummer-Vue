@@ -127,7 +127,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度应该在3~5个字符之间', trigger: 'blur' },
+          { min: 3, max: 20, message: '长度应该在3~20个字符之间', trigger: 'blur' },
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
@@ -171,18 +171,51 @@ export default {
       this.flag = !this.flag
     },
     login()  {
-      this.loginForm.validate((valid) => {
+      let data = new FormData
+      data.append('username',this.loginForm.username)
+      data.append('password',this.loginForm.password)
+      this.$refs.loginFormRef.validate((valid) => {
         if (valid) {
-          console.log('login!')
+          this.$axios({
+            method: 'post',
+            data: data,
+            url: 'Login/login/'
+          })
+              .then( res => {
+                if(res.data.error === 0){
+                  this.$message.success(res.data.msg)
+                  localStorage.setItem('authorization',res.data.authorization)
+                  localStorage.setItem('username',res.data.username)}
+                else {
+                  this.$message.error(res.data.msg)}
+              })
         } else {
           return
         }
       })
     },
     register() {
-      this.registerForm.validate((valid) => {
+      let data = new FormData
+      data.append('username',this.registerForm.username)
+      data.append('password1',this.registerForm.password)
+      data.append('password2',this.registerForm.confirmPassword)
+      data.append('email',this.registerForm.email)
+      data.append('realName',this.registerForm.email)
+      this.$refs.registerFormRef.validate((valid) => {
         if (valid) {
-          console.log('register!')
+          this.$axios({
+            method: 'post',
+            data: data,
+            url: 'Login/register/'
+          })
+              .then( res => {
+                console.log(res)
+                if(res.data.error === 0)
+                this.$message.success(res.data.msg)
+                else {
+                  this.$message.error(res.data.msg)
+                }
+              })
         } else {
           return
         }
