@@ -1,5 +1,5 @@
 <template>
-  <div class="design-tool">
+  <div class="design-tool" style="background: white">
     <!-- 使用topology组件 -->
     <topology
         :configs="topologyConfigs"
@@ -68,7 +68,7 @@ export default {
         }
       },
       user: {
-        username: 'le5le'
+        username: ''
       },
       materials: {
         system: defalutMaterials,
@@ -88,7 +88,9 @@ export default {
   created: function () {
   },
   mounted() {
+    console.log('tool created!')
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
+    this.user.username=localStorage.getItem('username')
     if (window.registerTools) {
       window.registerTools();
       if (window.topologyTools) {

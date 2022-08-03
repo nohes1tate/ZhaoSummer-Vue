@@ -53,16 +53,29 @@
   </span>
     </el-dialog>
 
+    <el-dialog
+        title="提示"
+        :visible.sync="personalInfoDialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="personalInfoDialogVisible= false">取 消</el-button>
+    <el-button type="primary" @click="personalInfoDialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
+
     <div class="content-home">
       <div class="top-bar">
         <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
           <el-popover
             placement="bottom"
             trigger="hover">
-          <el-button size="small" plain @click="newProjectNameDialogVisible = true">个人信息</el-button>
+          <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
           <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
         </el-popover>
+
           {{curUsername}} {{curUserEmail}}
         </div>
         <el-divider style="margin: 0"></el-divider>
@@ -167,6 +180,7 @@ export default {
   components: {ProjectCover},
   data() {
       return {
+        personalInfoDialogVisible:false,
         showInfoDialog: false,
         activeIndex: '1',
         groupIndex: '1',
@@ -248,6 +262,11 @@ export default {
         console.log('open')
       },
       handleClose() {
+        this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
         console.log('close')
       },
       createProject() {

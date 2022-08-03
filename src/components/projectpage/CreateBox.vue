@@ -39,6 +39,9 @@ export default {
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
     },
   },
 }

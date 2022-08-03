@@ -5,17 +5,17 @@
 
 
 
-  &__content {
+  ::v-deep &__content {
 
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
 
-    * {
+    ::v-deep * {
       caret-color: currentColor;
     }
 
-    pre {
+    ::v-deep pre {
       padding: 0.7rem 1rem;
       border-radius: 5px;
       background: $color-black;
@@ -23,12 +23,12 @@
       font-size: 0.8rem;
       overflow-x: auto;
 
-      code {
+      ::v-deep code {
         display: block;
       }
     }
 
-    p code {
+    ::v-deep p code {
       display: inline-block;
       padding: 0 0.4rem;
       border-radius: 5px;
@@ -38,62 +38,62 @@
       color: rgba($color-black, 0.8);
     }
 
-    ul,
-    ol {
+    ::v-deep ul,
+    ::v-deep ol {
       padding-left: 1rem;
     }
 
-    li > p,
-    li > ol,
-    li > ul {
+    ::v-deep li > p,
+    ::v-deep li > ol,
+    ::v-deep li > ul {
       margin: 0;
     }
 
-    a {
+    ::v-deep a {
       color: inherit;
     }
 
-    blockquote {
+    ::v-deep blockquote {
       border-left: 3px solid rgba($color-black, 0.1);
       color: rgba($color-black, 0.8);
       padding-left: 0.8rem;
       font-style: italic;
 
-      p {
+      ::v-deep p {
         margin: 0;
       }
     }
 
-    img {
+    ::v-deep img {
       max-width: 100%;
       border-radius: 3px;
     }
 
-    table {
+    ::v-deep table {
       border-collapse: collapse;
       table-layout: fixed;
       width: 100%;
       margin: 0;
       overflow: hidden;
 
-      td, th {
+      ::v-deep td, th {
         min-width: 1em;
         border: 2px solid $color-grey;
         padding: 3px 5px;
         vertical-align: top;
         box-sizing: border-box;
         position: relative;
-        > * {
+        ::v-deep > * {
           margin-bottom: 0;
         }
       }
 
-      th {
+      ::v-deep th {
         font-weight: bold;
         text-align: left;
       }
 
-      .selectedCell:after {
+      ::v-deep .selectedCell:after {
         z-index: 2;
         position: absolute;
         content: "";
@@ -102,7 +102,7 @@
         pointer-events: none;
       }
 
-      .column-resize-handle {
+      ::v-deep .column-resize-handle {
         position: absolute;
         right: -2px; top: 0; bottom: 0;
         width: 4px;
@@ -112,12 +112,12 @@
       }
     }
 
-    .tableWrapper {
+    ::v-deep .tableWrapper {
       margin: 1em 0;
       overflow-x: auto;
     }
 
-    .resize-cursor {
+    ::v-deep .resize-cursor {
       cursor: ew-resize;
       cursor: col-resize;
     }
