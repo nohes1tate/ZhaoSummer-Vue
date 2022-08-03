@@ -200,7 +200,43 @@ export default {
           .catch(err => {
             console.log(err);
           })
-    }
+    },
+    login() {
+      this.$axios({
+        method: 'post',
+        url: 'api/Login/login/',
+        data: {
+          username: this.loginForm.username,
+          password: this.loginForm.password,
+        }
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '登录成功',
+                  type: 'success'
+                });
+                this.toLogin();
+                break;
+              case 4004:
+                this.$message.warning('用户未验证邮箱！');
+                break;
+              case 4002:
+                this.$message.warning('用户名不存在！');
+                break;
+              case 4003:
+                this.$message.warning('密码错误！');
+                break;
+              case 3001:
+                this.$message.warning('表单验证失败！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
   },
 }
 </script>
