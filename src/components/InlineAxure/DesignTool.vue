@@ -1,5 +1,5 @@
 <template>
-  <div className="design-tool">
+  <div class="design-tool">
     <!-- 使用topology组件 -->
     <topology
         :configs="topologyConfigs"
@@ -144,7 +144,7 @@ export default {
           break;
         case 'Share':
           console.log('share')
-          break;
+              break;
         case 'save':
           // 导航菜单configs.menus里面定义的action
           console.log(window.topology.data)

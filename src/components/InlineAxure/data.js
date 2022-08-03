@@ -1,7 +1,7 @@
 export const defalutMenus = {
-  back: {
-    icon: 't-icon t-angle-left'
-  },
+   back: {
+     icon: 't-icon t-angle-left'
+   },
   // login: true,
   left: [
     {
@@ -1124,6 +1124,6 @@ export const defalutMaterials = [
 export const images = [
   {
     image:
-        ''
+      ''
   }
 ];
