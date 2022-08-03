@@ -88,6 +88,7 @@ export default {
   created: function () {
   },
   mounted() {
+    console.log('tool created!')
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     this.user.username=localStorage.getItem('username')
     if (window.registerTools) {

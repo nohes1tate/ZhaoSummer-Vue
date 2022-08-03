@@ -3,18 +3,18 @@
   margin-bottom: 1rem;
   transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
 
-  &.is-hidden {
+  ::v-deep  &.is-hidden {
     visibility: hidden;
     opacity: 0;
   }
 
-  &.is-focused {
+  ::v-deep &.is-focused {
     visibility: visible;
     opacity: 1;
     transition: visibility 0.2s, opacity 0.2s;
   }
 
-  &__button {
+  ::v-deep &__button {
     font-weight: bold;
     display: inline-flex;
     background: transparent;
@@ -25,16 +25,16 @@
     border-radius: 3px;
     cursor: pointer;
 
-    &:hover {
+    ::v-deep &:hover {
       background-color: rgba($color-black, 0.05);
     }
 
-    &.is-active {
+    ::v-deep &.is-active {
       background-color: rgba($color-black, 0.1);
     }
   }
 
-  span#{&}__button {
+  ::v-deep span#{&}__button {
     font-size: 13.3333px;
   }
 }
