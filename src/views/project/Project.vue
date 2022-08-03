@@ -70,9 +70,9 @@ export default {
     PageTabs
   },
   mounted() {
-    // if (this.$refs.keepAliveContainer) {
-    //   this.keepAliveComponentInstance = this.$refs.keepAliveContainer.childNodes[0].__vue__;
-    // }
+    if (this.$refs.keepAliveContainer) {
+      this.keepAliveComponentInstance = this.$refs.keepAliveContainer.childNodes[0].__vue__;
+    }
   },
   data() {
     return {
