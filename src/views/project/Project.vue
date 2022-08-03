@@ -1,7 +1,7 @@
 <template>
 <div class="project">
   <div class="left-side-box">
-    <div class="title-line">
+    <div class="title-line" @click="go('/home')">
       <span>小学期项目</span>
     </div>
     <el-menu
