@@ -26,7 +26,7 @@
           <el-menu-item index="2-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3" @click="go('/project/testUML')">
+      <el-menu-item index="3" @click="toDrawio()">
         <i class="el-icon-s-marketing"></i>
         <span slot="title">UML图</span>
       </el-menu-item>
@@ -87,6 +87,9 @@ export default {
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
+    },
+    toDrawio() {
+      window.open('https://app.diagrams.net/')
     },
     handleClose() {
       console.log('close')
