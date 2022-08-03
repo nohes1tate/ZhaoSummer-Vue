@@ -109,12 +109,19 @@
         <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
           <el-popover
             placement="bottom"
-            trigger="hover">
-          <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
-          <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
+            trigger="hover"
+            v-show="is_login">
+          <el-button size="small" plain @click="personalInfoDialogVisible = true" >个人信息</el-button>
+          <el-button size="small" type="danger" plain @click="logout" >退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
         </el-popover>
-
+          <el-popover
+              placement="bottom"
+              trigger="hover"
+              v-show="!is_login">
+            <el-button type="primary" plain @click="login" v-show="!is_login" width="150px">去 登 录</el-button>
+            <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
+          </el-popover>
           {{curUsername}} {{curUserEmail}}
         </div>
         <el-divider style="margin: 0"></el-divider>
@@ -219,6 +226,7 @@ export default {
   components: {ProjectCover},
   data() {
       return {
+        is_login:false,
         input1:'',
         input2:'',
         personalInfoDialogVisible:false,
@@ -269,13 +277,12 @@ export default {
       this.curUsername = localStorage.getItem('username');
       this.curUserID = localStorage.getItem('userID');
       this.getGroup();
+      if(this.curUserID!==null)
+        this.is_login=true
     },
     methods: {
     handleSelect(param){
       console.log(param)
-    },
-    logout() {
-      console.log('logout')
     },
       showProject() {
         this.activeIndex = '1';
@@ -439,6 +446,25 @@ export default {
         //const formData = new FormData();
 
       },
+      logout() {
+        //console.log(this.curUserID)
+        this.deleteProjectDialogVisible = true;
+        if(this.is_login)
+        {
+          localStorage.removeItem('userID');
+          localStorage.removeItem('username');
+          localStorage.removeItem('authorization');
+          this.curUsername='';
+          this.curUserID=0;
+          this.is_login=false;
+          location.reload()
+        }
+        else
+          this.$message.error("您还未登录")
+      },
+      login(){
+        this.$router.push('/login');
+      }
     }
 }
 </script>
