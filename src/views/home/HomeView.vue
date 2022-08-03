@@ -164,6 +164,7 @@ export default {
   components: {ProjectCover},
   data() {
       return {
+        showInfoDialog: false,
         activeIndex: '1',
         Index: '1',
         curUsername: '',
@@ -227,12 +228,24 @@ export default {
       this.curUserID = localStorage.getItem('userID');
       this.getGroup();
     },
-  methods: {
+    methods: {
+    handleSelect(param){
+      console.log(param)
+    },
+    logout() {
+      console.log('logout')
+    },
       showProject() {
         this.activeIndex = '1';
       },
       showTeam() {
         this.activeIndex = '2';
+      },
+      handleOpen() {
+        console.log('open')
+      },
+      handleClose() {
+        console.log('close')
       },
       createProject() {
         const formData = new FormData();

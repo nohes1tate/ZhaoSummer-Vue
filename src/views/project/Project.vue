@@ -86,6 +86,12 @@ export default {
         this.$router.push(path);
       }
     },
+    handleClose() {
+      console.log('close')
+    },
+    handleOpen() {
+      console.log('open')
+    }
   },
   created() {
     if (this.$vnode) {
@@ -98,7 +104,7 @@ export default {
 <style scoped>
 .project{
   width: 100%;
-  height: 100%;
+  height: 105vh;
   background-color: #faf4e8;
   display: flex;
   position: absolute;
@@ -106,7 +112,7 @@ export default {
 .left-side-box{
   position: relative;
   width: 35vh;
-  height: 100%;
+  height: 105vh;
   //border: solid 5px lightcoral;
   background-color: #f3f0e1;
   text-align: left;
@@ -148,7 +154,7 @@ export default {
 }
 .right-side-box{
   //border:solid 5px blueviolet;
-  height: 100%;
+  height: 105vh;
   width: 100%;
   text-align: center;
 }

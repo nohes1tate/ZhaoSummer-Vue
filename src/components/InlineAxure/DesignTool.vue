@@ -185,8 +185,9 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .design-tool {
   height: 100vh;
+  width: 170vh;
 }
 </style>

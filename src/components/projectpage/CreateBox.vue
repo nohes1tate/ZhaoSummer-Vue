@@ -14,7 +14,7 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/documentEdit')">
+    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
       <div class="top-card">
         <i class="el-icon-document-add"></i>
       </div>
@@ -97,7 +97,7 @@ export default {
   color: deepskyblue;
 }
 .tip1{
-  position: fixed;
+  position: absolute;
   width: 200px;
   height: 50px;
   align-items: center;
@@ -108,7 +108,7 @@ export default {
   border-radius: 5px;
   z-index: 2;
   top:16vh;
-  left: 65vh;
+  left: 30vh;
   box-shadow: 0px 5px 15px 2px grey;
 }
 .tip1::before,.tip1::after{
@@ -128,7 +128,7 @@ export default {
   margin-top: 15px;
 }
 .tip2{
-  position: fixed;
+  position: absolute;
   width: 200px;
   height: 50px;
   align-items: center;
@@ -139,7 +139,7 @@ export default {
   border-radius: 5px;
   z-index: 2;
   top:16vh;
-  left: 110vh;
+  left: 75vh;
   box-shadow: 0px 5px 15px 2px grey;
 }
 .tip2::before,.tip2::after{
@@ -155,7 +155,7 @@ export default {
   border-top: 16px solid #f4f0e1;
 }
 .tip3{
-  position: fixed;
+  position: absolute;
   width: 200px;
   height: 50px;
   align-items: center;
@@ -166,7 +166,7 @@ export default {
   border-radius: 5px;
   z-index: 2;
   top:16vh;
-  left: 155vh;
+  left: 121vh;
   box-shadow: 0px 5px 15px 2px grey;
 }
 .tip3::before,.tip3::after{
