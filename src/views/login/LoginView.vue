@@ -185,7 +185,9 @@ export default {
                 if(res.data.error === 0){
                   this.$message.success(res.data.msg)
                   localStorage.setItem('authorization',res.data.authorization)
-                  localStorage.setItem('username',res.data.username)}
+                  localStorage.setItem('username',res.data.username)
+                  localStorage.setItem('userID',res.data.userID)
+                  }
                 else {
                   this.$message.error(res.data.msg)}
               })

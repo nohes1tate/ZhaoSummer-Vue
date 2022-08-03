@@ -231,38 +231,31 @@ export default {
       createProject() {
         const formData = new FormData();
         formData.append("projectName", this.projectForm.projectName);
-        formData.append("password1", this.registerForm.password);
-        formData.append("password2", this.registerForm.confirmPassword);
-        formData.append("email", this.registerForm.email);
-        formData.append("realName", this.registerForm.realName);
+        formData.append("projectTeamID", this.curGroupID);
+        formData.append("projectIntro", this.projectForm.projectIntro);
+        formData.append("projectCreatorID", localStorage.getItem('userID'));
         this.$axios({
           method: 'post',
-          url: 'api/Login/register/',
+          url: 'api/ProjectManager/projectCreate/',
           data: formData,
         })
             .then(res => {
               switch (res.data.error) {
                 case 0:
                   this.$message({
-                    message: '注册成功',
+                    message: '项目创建成功',
                     type: 'success'
                   });
                   this.toRegister();
                   break;
                 case 4001:
-                  this.$message.warning('用户名已存在！');
+                  this.$message.warning('用户不存在！');
                   break;
                 case 4002:
-                  this.$message.warning('邮箱已注册！');
+                  this.$message.warning('团队不存在！');
                   break;
                 case 4003:
-                  this.$message.warning('密码不符合规范！');
-                  break;
-                case 4004:
-                  this.$message.warning('两次密码不一致！');
-                  break;
-                case 4005:
-                  this.$message.warning('验证邮箱发送失败！');
+                  this.$message.warning('非团队成员无权限操作！');
                   break;
               }
             })
@@ -271,6 +264,7 @@ export default {
             })
             .finally(() => {
               this.newProjectDialogVisible = false;
+              location.reload();
             });
       },
     }
