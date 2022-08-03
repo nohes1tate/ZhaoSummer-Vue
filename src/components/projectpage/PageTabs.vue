@@ -96,15 +96,15 @@ export default {
   methods: {
     //打开页面
     openPage(route) {
-      if (route.name == this.blankRouteName) {
+      if (route.name === this.blankRouteName) {
         return;
       }
       let isExist = this.openedPageRouters.some(
-          (item) => item.fullPath == route.fullPath
+          (item) => item.fullPath === route.fullPath
       );
       if (!isExist) {
         let openedPageRoute = this.openedPageRouters.find(
-            (item) => item.path == route.path
+            (item) => item.path === route.path
         );
         //判断页面是否支持不同参数多开页面功能，如果不支持且已存在path值一样的页面路由，那就替换它
         if (!route.meta.canMultipleOpen && openedPageRoute != null) {
@@ -132,7 +132,7 @@ export default {
       if (route.fullPath === this.$route.fullPath) {
         //删除页面后，跳转到上一页面
         this.$router.replace(
-            this.openedPageRouters[index == 0 ? 0 : index - 1]
+            this.openedPageRouters[index === 0 ? 0 : index - 1]
         );
       }
     },
@@ -166,7 +166,7 @@ export default {
           i--;
         }
       }
-      if (this.contextMenuTargetPageRoute.fullPath != this.$route.fullPath) {
+      if (this.contextMenuTargetPageRoute.fullPath !== this.$route.fullPath) {
         this.$router.replace(this.contextMenuTargetPageRoute);
       }
     },
@@ -222,7 +222,7 @@ export default {
       let cache = this.keepAliveComponentInstance.cache;
       let keys = this.keepAliveComponentInstance.keys;
       for (let i = 0; i < keys.length; i++) {
-        if (keys[i] == key) {
+        if (keys[i] === key) {
           keys.splice(i, 1);
           if (cache[key] != null) {
             delete cache[key];
@@ -303,6 +303,7 @@ export default {
         }
       }
       &.__is-active {
+        background-color: #faf4e8;
         padding-right: 12px;
         border-bottom: 1px solid #faf4e8;
         color: #409eff;

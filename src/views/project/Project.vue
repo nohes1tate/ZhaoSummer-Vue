@@ -11,7 +11,7 @@
         background-color="#f3f0e1"
         text-color="#000"
         active-text-color="#6667ab">
-      <el-menu-item index="1">
+      <el-menu-item index="1" @click="go('/project/overview')">
         <i class="el-icon-menu"></i>
         <span slot="title">项目概览</span>
       </el-menu-item>
@@ -21,31 +21,25 @@
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
+          <el-menu-item index="2-1">选项1</el-menu-item>
+          <el-menu-item index="2-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-s-marketing"></i>
-          <span>UML图</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
+      <el-menu-item index="3">
+        <i class="el-icon-s-marketing"></i>
+        <span slot="title">UML图</span>
+      </el-menu-item>
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-document"></i>
           <span>项目文档</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
+          <el-menu-item index="4-1">选项1</el-menu-item>
+          <el-menu-item index="4-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="5">
+      <el-menu-item index="5" @click="go('/project')">
         <i class="el-icon-folder-add"></i>
         <span slot="title">新建</span>
       </el-menu-item>
@@ -61,32 +55,6 @@
           </keep-alive>
         </div>
       </div>
-      <div class="top-right-box">
-
-      </div>
-    </div>
-    <div class="create-box">
-      <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="go('/project/testPage')">
-        <div class="top-card">
-          <i class="el-icon-edit"></i>
-        </div>
-        <div class="bottom-card"><div class="text-line">新建页面</div></div>
-      </div>
-      <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
-      <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="go('/project/testUML')">
-        <div class="top-card">
-          <i class="el-icon-set-up"></i>
-        </div>
-        <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
-      </div>
-      <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-      <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
-        <div class="top-card">
-          <i class="el-icon-document-add"></i>
-        </div>
-        <div class="bottom-card"><div class="text-line">新建文档</div></div>
-      </div>
-      <div v-show="showTip3" class="tip3"><div class="tip-line">为项目新建文档</div></div>
     </div>
   </div>
 </div>
@@ -193,6 +161,7 @@ export default {
   display: flex;
   //top: 10px;
   margin-bottom: 5px;
+  background-color: #f3f0e1;
 }
 .create-box{
   //border: solid 3px rosybrown;
