@@ -6,7 +6,7 @@ import HomeView from '../views/home/HomeView.vue'
 import TestUML from "@/components/projectpage/TestUML";
 import designTool from "@/components/InlineAxure/DesignTool";
 import documentEditor from "@/components/documentEdit/DocumentEditor";
-
+import ProjectView from "@/components/projectpage/ProjectView";
 
 Vue.use(VueRouter)
 
@@ -27,7 +27,7 @@ const routes = [
     component: () => import('../views/design/PreviewView')
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },
@@ -49,7 +49,7 @@ const routes = [
       {path:"",
         component: () => import('../components/projectpage/CreateBox'),
         meta:{
-          title:"首页"
+          title:"新建"
         }},
       {
         path: "testDocument",
@@ -75,6 +75,13 @@ const routes = [
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
+      {
+        path: "overview",
+        component:ProjectView,
+        meta: {
+          title: "项目概览",
+        }
+      }
     ]
   },
 ]

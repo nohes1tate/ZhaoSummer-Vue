@@ -188,5 +188,6 @@ export default {
 <style lang="scss" scoped>
 .design-tool {
   height: 100vh;
+  width: 170vh;
 }
 </style>
