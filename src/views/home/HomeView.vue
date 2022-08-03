@@ -4,8 +4,6 @@
       <div style="height: 60px; font-size: 40px; margin-top: 20px">墨书</div>
       <el-menu
           class="select-box"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#f3f0e1"
           text-color="#000"
           active-text-color="#6667ab"
@@ -63,7 +61,7 @@
           <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
         </el-popover>
-          957167412@qq.com tomato
+          {{curUsername}} {{curUserEmail}}
         </div>
         <el-divider style="margin: 0"></el-divider>
       </div>
@@ -170,6 +168,9 @@ export default {
       return {
         activeIndex: '1',
         Index: '1',
+        curUsername: '',
+        curUserID: 0,
+        curUserEmail: '',
         curGroupID: 0,
         curIsManager: false,
         curIsCreator: false,
@@ -221,7 +222,14 @@ export default {
        }]
       };
     },
-    methods: {
+    created() {
+      const user =JSON.parse(localStorage.getItem('user')).user;
+      console.log(user);
+      this.curUsername = localStorage.getItem('username');
+      this.curUserID = user.userID;
+      this.curUserEmail = user.email;
+    },
+  methods: {
       showProject() {
         this.activeIndex = '1';
       },
