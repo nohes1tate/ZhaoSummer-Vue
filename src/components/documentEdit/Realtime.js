@@ -1,6 +1,6 @@
 import { keymap } from 'prosemirror-keymap'
 import { Extension } from 'tiptap'
-import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror'
+import { redo, undo, ySyncPlugin, yUndoPlugin } from 'y-prosemirror'
 import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
 
@@ -19,7 +19,6 @@ export default class RealtimeExtension extends Extension {
   get plugins () {
     return [
       ySyncPlugin(type),
-      yCursorPlugin(provider.awareness),
       yUndoPlugin(),
       keymap({
         'Mod-z': undo,

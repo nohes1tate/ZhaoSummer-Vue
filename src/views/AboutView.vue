@@ -5,13 +5,14 @@
 </template>
 
 <script>
-import designTool from "@/components/InlineAxure/DesignTool";
+import drawioEmbed from "drawio-embed";
+import DesignTool from "@/components/InlineAxure/DesignTool";
+
+
 export default {
-  components: {designTool},
-  data (){
-    return {
-      value: ''
-    }
+  components: {DesignTool},
+  mounted() {
+    drawioEmbed()
   }
 }
 </script>
