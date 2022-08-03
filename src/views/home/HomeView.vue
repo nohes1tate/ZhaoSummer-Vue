@@ -235,6 +235,7 @@ export default {
         is_login:false,
         input1:'',
         input2:'',
+        input3:'',
         personalInfoDialogVisible:false,
         showInfoDialog: false,
         activeIndex: '1',
@@ -311,37 +312,44 @@ export default {
         formData.append("projectCreatorID", localStorage.getItem('userID'));
         formData.append("username", this.curUsername);
         formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'ProjectManager/projectCreate/',
-          data: formData,
-        })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  this.$message({
-                    message: '项目创建成功',
-                    type: 'success'
-                  });
-                  break;
-                case 4001:
-                  this.$message.warning('用户不存在！');
-                  break;
-                case 4002:
-                  this.$message.warning('团队不存在！');
-                  break;
-                case 4003:
-                  this.$message.warning('非团队成员无权限操作！');
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-            .finally(() => {
-              this.newProjectDialogVisible = false;
-              location.reload();
-            })
+        this.$refs.projectForm.validate((valid) =>{
+        if(valid)
+        {
+          this.$axios({
+            method: 'post',
+            url: 'ProjectManager/projectCreate/',
+            data: formData,
+          })
+              .then(res => {
+                switch (res.data.error) {
+                  case 0:
+                    this.$message({
+                      message: '项目创建成功',
+                      type: 'success'
+                    });
+                    break;
+                  case 4001:
+                    this.$message.warning('用户不存在！');
+                    break;
+                  case 4002:
+                    this.$message.warning('团队不存在！');
+                    break;
+                  case 4003:
+                    this.$message.warning('非团队成员无权限操作！');
+                    break;
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              })
+              .finally(() => {
+                this.newProjectDialogVisible = false;
+                location.reload();
+              })
+        }
+        else {
+          return
+        }})
       },
       createGroup() {
         const formData = new FormData();
@@ -350,28 +358,37 @@ export default {
         formData.append("description", this.teamForm.teamIntro);
         formData.append("username", this.curUsername);
         formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'TeamManager/groupBuild/',
-          data: formData,
+
+        this.$refs.teamForm.validate((valid) =>
+        {
+          console.log(valid)
+          if (valid) {
+            this.$axios({
+              method: 'post',
+              url: 'TeamManager/groupBuild/',
+              data: formData,
+            })
+                .then(res => {
+                  switch (res.data.error) {
+                    case 0:
+                      this.$message({
+                        message: '团队创建成功',
+                        type: 'success'
+                      });
+                      break;
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                })
+                .finally(() => {
+                  this.newTeamDialogVisible = false;
+                  location.reload();
+                })
+          } else {
+            return
+          }
         })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  this.$message({
-                    message: '团队创建成功',
-                    type: 'success'
-                  });
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-            .finally(() => {
-              this.newTeamDialogVisible = false;
-              location.reload();
-            })
       },
       getGroup() {
         const formData = new FormData();
