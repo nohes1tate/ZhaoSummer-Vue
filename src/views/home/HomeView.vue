@@ -222,7 +222,7 @@ export default {
       return {
         input1:'',
         input2:'',
-        personalInfoDialogVisible:true,
+        personalInfoDialogVisible:false,
         showInfoDialog: false,
         activeIndex: '1',
         groupIndex: '1',
