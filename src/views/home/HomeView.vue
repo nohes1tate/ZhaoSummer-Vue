@@ -14,7 +14,7 @@
             <span>我的团队</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="1" class="left-bar">小学期</el-menu-item>
+            <el-menu-item index="1" class="left-bar" v-for="group in this.groupList" v-bind:key="group.groupID">{{group.groupName}}</el-menu-item>
             <el-menu-item index="2" class="left-bar">示例团队</el-menu-item>
             <el-menu-item index="3" class="left-bar"
                           @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
@@ -257,7 +257,7 @@ export default {
         formData.append("authorization", localStorage.getItem('authorization'));
         this.$axios({
           method: 'post',
-          url: 'api/ProjectManager/projectCreate/',
+          url: 'ProjectManager/projectCreate/',
           data: formData,
         })
             .then(res => {
@@ -331,7 +331,8 @@ export default {
             .then(res => {
               switch (res.data.error) {
                 case 0:
-                  console.log(res.data.group_list);
+                  //console.log(res.data.group_list);
+                  this.groupList = res.data.group_list;
                   break;
               }
             })
