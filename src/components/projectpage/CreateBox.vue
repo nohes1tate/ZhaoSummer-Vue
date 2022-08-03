@@ -49,10 +49,10 @@ export default {
   //border: solid 3px rosybrown;
   width:80%;
   height: 60%;
-  margin-top: 10vh;
+  margin-top: 17vh;
   display: flex;
   text-align: center;
-  margin-left: 10vh;
+  margin-left: 17vh;
 }
 .box-card{
   width: 43vh;

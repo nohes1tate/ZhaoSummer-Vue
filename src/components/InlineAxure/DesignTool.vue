@@ -40,6 +40,7 @@ export default {
         },
         logo: {
           img: 'https://thumbnail8.baidupcs.com/thumbnail/8922933bamce4e3de85bf3c20436af34?fid=2595694748-250528-496437148589000&time=1659430800&rt=yt&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-xJ7vd2%2BCIl0lkkH0XSS1%2Bsewt7k%3D&expires=24h&chkv=0&chkbd=0&chkpc=&dp-logid=2891203934&dp-callid=0&size=c1536_u864&quality=90&vuk=-&ft=video&autopolicy=1',
+          url: 'http://www.baidu.com',
           target: '_blank'
         },
         menus: defalutMenus,
@@ -186,7 +187,6 @@ export default {
 </script>
 <style lang="scss">
 .design-tool {
-  height: 95vh;
-  width: 180vh;
+  height: 100vh;
 }
 </style>
