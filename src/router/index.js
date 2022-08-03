@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/home/HomeView.vue'
-import TestDocument from "@/components/projectpage/TestDocument";
-import TestPage from "@/components/projectpage/TestPage";
 import TestUML from "@/components/projectpage/TestUML";
-import DesignTool from "@/components/InlineAxure/DesignTool";
+import AboutView from "@/views/AboutView";
+import CreateBox from "@/components/projectpage/CreateBox";
+import DocumentView from "@/views/documentEdit/DocumentView";
 
 Vue.use(VueRouter)
 
@@ -45,12 +45,13 @@ const routes = [
         path: "blank",
       },
       {path:"",
+        component: CreateBox,
         meta:{
-          title:"首页"
+          title:"新建"
         }},
       {
-        path: "testDocument",
-        component: TestDocument,
+        path: "documentEdit",
+        component: DocumentView,
         meta: {
           title: "文档页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
@@ -66,7 +67,7 @@ const routes = [
       },
       {
         path: "testPage",
-        component: DesignTool,
+        component: AboutView,
         meta: {
           title: "页面设计页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
