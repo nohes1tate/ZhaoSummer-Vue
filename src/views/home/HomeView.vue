@@ -150,7 +150,7 @@
               width="180">
           </el-table-column>
           <el-table-column
-              prop="level"
+              prop="isManager"
               label="权限"
               width="80">
           </el-table-column>
@@ -183,7 +183,7 @@ export default {
         personalInfoDialogVisible:false,
         showInfoDialog: false,
         activeIndex: '1',
-        groupIndex: '1',
+        groupIndex: '0',
         curUsername: '',
         curUserID: 0,
         curUserEmail: '',
@@ -221,22 +221,6 @@ export default {
             {required: true, message: '请输入团队简介', trigger: 'blur'}
           ]
         },
-       tableData: [{
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       }, {
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       },{
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       }]
       };
     },
     created() {
@@ -262,15 +246,11 @@ export default {
         console.log('open')
       },
       handleClose() {
-        this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-            })
-            .catch(_ => {});
         console.log('close')
       },
       createProject() {
         const formData = new FormData();
+        console.log('团队ID:' + this.curGroupID);
         formData.append("projectName", this.projectForm.projectName);
         formData.append("projectTeamID", this.curGroupID);
         formData.append("projectIntro", this.projectForm.projectIntro);
@@ -289,7 +269,6 @@ export default {
                     message: '项目创建成功',
                     type: 'success'
                   });
-                  location.reload();
                   break;
                 case 4001:
                   this.$message.warning('用户不存在！');
@@ -353,8 +332,11 @@ export default {
             .then(res => {
               switch (res.data.error) {
                 case 0:
-                  console.log(res.data.group_list);
+                  //console.log(res.data.group_list);
                   this.groupList = res.data.group_list;
+                  if(this.groupList.length > 0) {
+                    this.clickGroup(this.groupList[0].groupID, this.groupList[0].groupName, this.groupList[0].isCreator, this.groupList[0].isManager, this.groupList[0].groupDescription);
+                  }
                   break;
               }
             })
@@ -364,10 +346,33 @@ export default {
       },
       clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
         this.curGroupID = groupID;
+        //console.log('团队ID:' + this.curGroupID);
         this.curGroupName = groupName;
         this.curIsCreator = isCreator;
         this.curIsManager = isManager;
         this.curGroupIntro = groupDescription;
+
+        const projectForm = new FormData();
+        projectForm.append("groupID", this.curGroupID);
+        projectForm.append("username", this.curUsername);
+        projectForm.append("authorization", localStorage.getItem('authorization'));
+        this.$axios({
+          method: 'post',
+          url: 'ProjectManager/groupProjectView/',
+          data: projectForm,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  this.curProjectList = res.data.projectlist;
+                  console.log(this.curProjectList);
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+
         const formData = new FormData();
         formData.append("groupID", this.curGroupID);
         formData.append("username", this.curUsername);
@@ -381,7 +386,7 @@ export default {
               switch (res.data.error) {
                 case 0:
                   this.curMemberList = res.data.member_list;
-                  console.log(this.curMemberList);
+                  //console.log(this.curMemberList);
                   break;
               }
             })
