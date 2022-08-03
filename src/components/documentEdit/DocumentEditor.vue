@@ -130,7 +130,7 @@
           </button>
         </div>
       </editor-menu-bar>
-      <hr style="height: 4px;color: black;background: black;width: 20vh%;margin-left: 0;margin-right: 0"/>
+      <hr style="height: 4px;color: black;background: black;margin-left: 0;margin-right: 0"/>
       <editor-content class="editor__content" :editor="editor"/>
     </div>
   </div>

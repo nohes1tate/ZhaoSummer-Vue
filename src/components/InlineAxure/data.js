@@ -45,14 +45,6 @@ export const defalutMenus = {
 };
 
 export const defalutUserMenus = [
-  { name: '个人中心', router: '/user/home' },
-  {},
-  {
-    name: '账号设置',
-    url: 'https://account.le5le.com/user/profile',
-    target: '_blank'
-  },
-  {},
   { name: '退出', action: 'logout' }
 ];
 
