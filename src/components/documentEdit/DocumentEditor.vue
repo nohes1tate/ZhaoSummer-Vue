@@ -1,5 +1,5 @@
 <template>
-  <div style="border: solid 2px black;border-radius: 8px;width: 170vh;min-height: 70vh">
+  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh;">
     <div class="editor">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         <div class="menubar">
