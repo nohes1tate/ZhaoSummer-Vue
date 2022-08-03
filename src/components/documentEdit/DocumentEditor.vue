@@ -208,8 +208,6 @@ export default {
     this.editor.destroy()
   },
   beforeCreate() {
-    console.log('111')
-    console.log(this.$route.params.documentID)
     this.curRoomName = this.$route.params.documentID
     if (this.curRoomName != localStorage.getItem('roomName')) {
       localStorage.setItem('roomName', this.curRoomName)
