@@ -18,8 +18,7 @@
                           :index="index+''" v-bind:key="group.groupID"
                           @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
               {{group.groupName}}</el-menu-item>
-            <el-menu-item :index="this.groupList.length+''" class="left-bar">示例团队</el-menu-item>
-            <el-menu-item :index="this.groupList.length+ 1 +''" class="left-bar"
+            <el-menu-item :index="this.groupList.length+ ''" class="left-bar"
                           @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -437,7 +436,7 @@ export default {
             })
       },
       updateCode(){
-        const formData = new FormData();
+        //const formData = new FormData();
 
       },
     }
