@@ -78,6 +78,8 @@ export default {
     return {
       keepAliveComponentInstance: null,
       showTip: false,
+      projectName:'小学期项目',
+
     }
   },
   methods: {
@@ -91,7 +93,29 @@ export default {
     },
     handleOpen() {
       console.log('open')
-    }
+    },
+    getProjectInfo(){
+      const formData=new FormData();
+      formData.append('projectName',this.projectName);
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectView/',
+        data: formData,
+      })
+        .then(res =>{
+          switch (res.data.error) {
+            case 0:
+              this.$message({
+                message: '团队创建成功',
+                type: 'success'
+              });
+              break;
+          }
+        })
+          .catch(err => {
+            console.log(err);
+          })
+    },
   },
   created() {
     if (this.$vnode) {
