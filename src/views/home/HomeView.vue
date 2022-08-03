@@ -16,9 +16,9 @@
             <span>我的团队</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="1">小学期</el-menu-item>
-            <el-menu-item index="2">示例团队</el-menu-item>
-            <el-menu-item index="3"
+            <el-menu-item index="1" class="left-bar">小学期</el-menu-item>
+            <el-menu-item index="2" class="left-bar">示例团队</el-menu-item>
+            <el-menu-item index="3" class="left-bar"
                           @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -248,5 +248,8 @@ export default {
   padding: 2px 5px;
   border-radius: 5px;
   margin-left: 15px;
+}
+.left-bar {
+  text-align: left;
 }
 </style>

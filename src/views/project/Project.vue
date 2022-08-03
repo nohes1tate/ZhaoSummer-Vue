@@ -138,7 +138,7 @@ export default {
 }
 .left-side-box{
   position: relative;
-  width: 300px;
+  width: 35vh;
   height: 100%;
   //border: solid 5px lightcoral;
   background-color: #f3f0e1;

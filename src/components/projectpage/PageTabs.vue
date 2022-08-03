@@ -1,7 +1,7 @@
 <template>
-  <div class="__common-layout-pageTabs">
+  <div class="__common-layout-pageTabs" style="height: 5vh">
     <el-scrollbar>
-      <div class="__tabs">
+      <div class="__tabs" style="height: 5vh">
         <div
             class="__tab-item"
             v-for="item in openedPageRouters"
