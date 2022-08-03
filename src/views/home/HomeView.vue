@@ -69,7 +69,9 @@
       </div>
       <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
         <span style="font-size: 30px;">团队名称</span>
-        <span class="member-tag">普通成员</span>
+        <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
+        <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
+        <span class="member-tag normal-member" v-else>普通成员</span>
       </div>
       <div class="nav-team">
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
@@ -168,6 +170,13 @@ export default {
       return {
         activeIndex: '1',
         Index: '1',
+        curGroupID: 0,
+        curIsManager: false,
+        curIsCreator: false,
+        curProjectList: [],
+        curMemberList: [],
+        curGroupIntro: '',
+        curGroupName: '示例团队',
         newProjectDialogVisible: false,
         projectForm: {
           projectName: '',
@@ -301,11 +310,21 @@ export default {
 }
 .member-tag {
   font-size: 15px;
-  background-color: #c0f0db;
-  color: #2ca37f;
   padding: 2px 5px;
   border-radius: 5px;
   margin-left: 15px;
+}
+.normal-member {
+  background-color: #c0f0db;
+  color: #2ca37f;
+}
+.manager-member {
+  background-color: #ecf5ff;
+  color: #409EFF;
+}
+.creator-member {
+  background-color: #fdf6ec;
+  color: orange;
 }
 .left-bar {
   text-align: left;
