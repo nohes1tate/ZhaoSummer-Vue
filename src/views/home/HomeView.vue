@@ -14,7 +14,10 @@
             <span>我的团队</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item class="left-bar" v-for="(group,index) in this.groupList" :index="index+''" v-bind:key="group.groupID">{{group.groupName}}</el-menu-item>
+            <el-menu-item class="left-bar" v-for="(group,index) in this.groupList"
+                          :index="index+''" v-bind:key="group.groupID"
+                          @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
+              {{group.groupName}}</el-menu-item>
             <el-menu-item :index="this.groupList.length+''" class="left-bar">示例团队</el-menu-item>
             <el-menu-item :index="this.groupList.length+ 1 +''" class="left-bar"
                           @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
@@ -65,7 +68,7 @@
         <el-divider style="margin: 0"></el-divider>
       </div>
       <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
-        <span style="font-size: 30px;">团队名称</span>
+        <span style="font-size: 30px;">{{ curGroupName }}</span>
         <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
         <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
         <span class="member-tag normal-member" v-else>普通成员</span>
@@ -115,21 +118,21 @@
       </div>
       <div class="content-team" v-if="activeIndex==='2'">
         <el-table
-            :data="tableData"
+            :data="curMemberList"
             stripe
             style="width: 100%">
           <el-table-column
-              prop="member"
+              prop="username"
               label="成员"
               width="180">
           </el-table-column>
           <el-table-column
-              prop="name"
+              prop="realName"
               label="真实姓名"
               width="100">
           </el-table-column>
           <el-table-column
-              prop="email"
+              prop="useremail"
               label="邮箱"
               width="180">
           </el-table-column>
@@ -267,7 +270,7 @@ export default {
                     message: '项目创建成功',
                     type: 'success'
                   });
-                  this.toRegister();
+                  location.reload();
                   break;
                 case 4001:
                   this.$message.warning('用户不存在！');
@@ -339,7 +342,34 @@ export default {
             .catch(err => {
               console.log(err);
             })
-      }
+      },
+      clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
+        this.curGroupID = groupID;
+        this.curGroupName = groupName;
+        this.curIsCreator = isCreator;
+        this.curIsManager = isManager;
+        this.curGroupIntro = groupDescription;
+        const formData = new FormData();
+        formData.append("groupID", this.curGroupID);
+        formData.append("username", this.curUsername);
+        formData.append("authorization", localStorage.getItem('authorization'));
+        this.$axios({
+          method: 'post',
+          url: 'TeamManager/getMemberInfo/',
+          data: formData,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  this.curMemberList = res.data.member_list;
+                  console.log(this.curMemberList);
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      },
     }
 }
 </script>
