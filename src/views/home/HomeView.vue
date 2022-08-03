@@ -17,10 +17,12 @@
             <el-menu-item class="left-bar" v-for="(group,index) in this.groupList"
                           :index="index+''" v-bind:key="group.groupID"
                           @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
-              {{group.groupName}}</el-menu-item>
+              {{ group.groupName }}
+            </el-menu-item>
             <el-menu-item :index="this.groupList.length+''" class="left-bar">示例团队</el-menu-item>
             <el-menu-item :index="this.groupList.length+ 1 +''" class="left-bar"
-                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
+                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -95,7 +97,7 @@
                 <span style="text-align: left;font-size: 18px;color: white">修改密码</span>
               </div>
               <el-input v-model="input3" placeholder="请输入需要修改的密码"></el-input>
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -109,14 +111,14 @@
       <div class="top-bar">
         <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
           <el-popover
-            placement="bottom"
-            trigger="hover">
-          <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
-          <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
+              placement="bottom"
+              trigger="hover">
+            <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
+            <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
-        </el-popover>
+          </el-popover>
 
-          {{curUsername}} {{curUserEmail}}
+          {{ curUsername }} {{ curUserEmail }}
         </div>
         <el-divider style="margin: 0"></el-divider>
       </div>
@@ -134,7 +136,8 @@
       </div>
       <div class="button--">
         <el-button type="primary" v-if="activeIndex==='1'"
-                   @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目</el-button>
+                   @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目
+        </el-button>
 
         <el-dialog
             title="新建项目"
@@ -198,14 +201,20 @@
               fixed="right"
               label="操作"
               width="100">
-            <el-popover
-                placement="right"
-                width="220"
-                trigger="hover">
-              <el-button size="small" plain>设为管理员</el-button>
-              <el-button size="small" type="danger" plain>移出团队</el-button>
-              <i class="el-icon-more" slot="reference"></i>
-            </el-popover>
+            <template slot-scope="scope">
+              <el-popover
+                  placement="right"
+                  width="220"
+                  trigger="hover">
+                <el-button size="small" :disabled="scope.row.isManager || (!curIsManager)" plain>设为管理员</el-button>
+                <el-button size="small" v-if="scope.row.userID === curUserID"
+                           :disabled="!(curIsCreator || (curIsManager && !scope.row.isManager))" type="danger" plain>
+                  移出团队
+                </el-button>
+                <el-button v-else size="small" type="danger" plain>退出团队</el-button>
+                <i class="el-icon-more" slot="reference"></i>
+              </el-popover>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -215,222 +224,224 @@
 
 <script>
 import ProjectCover from "@/components/homepage/projectCover.vue";
+
 export default {
   name: 'HomeView',
   components: {ProjectCover},
   data() {
-      return {
-        input1:'',
-        input2:'',
-        personalInfoDialogVisible:false,
-        showInfoDialog: false,
-        activeIndex: '1',
-        groupIndex: '1',
-        curUsername: '',
-        curUserID: 0,
-        curUserEmail: '',
-        curGroupID: 0,
-        curIsManager: false,
-        curIsCreator: false,
-        curProjectList: [],
-        curMemberList: [],
-        curGroupIntro: '',
-        curGroupName: '示例团队',
-        groupList: [],
-        newProjectDialogVisible: false,
-        projectForm: {
-          projectName: '',
-          projectIntro: '',
-        },
-        projectRules: {
-          projectName: [
-            {required: true, message: '请输入项目名称', trigger: 'blur'}
-          ],
-          projectIntro: [
-            {required: true, message: '请输入项目简介', trigger: 'blur'}
-          ]
-        },
-        newTeamDialogVisible: false,
-        teamForm: {
-          teamName: '',
-          teamIntro: '',
-        },
-        teamRules: {
-          teamName: [
-            {required: true, message: '请输入团队名称', trigger: 'blur'}
-          ],
-          teamIntro: [
-            {required: true, message: '请输入团队简介', trigger: 'blur'}
-          ]
-        },
-       tableData: [{
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       }, {
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       },{
-         member: '番茄炒西红柿666',
-         name: '陈百铭',
-         level: '管理员',
-         email: '957167412@qq.com'
-       }]
-      };
-    },
-    created() {
-      //console.log(localStorage);
-      this.curUsername = localStorage.getItem('username');
-      this.curUserID = localStorage.getItem('userID');
-      this.getGroup();
-    },
-    methods: {
-    handleSelect(param){
+    return {
+      input1: '',
+      input2: '',
+      input3: '',
+      personalInfoDialogVisible: false,
+      showInfoDialog: false,
+      activeIndex: '1',
+      groupIndex: '1',
+      curUsername: '',
+      curUserID: 0,
+      curUserEmail: '',
+      curGroupID: 0,
+      curIsManager: false,
+      curIsCreator: false,
+      curProjectList: [],
+      curMemberList: [],
+      curGroupIntro: '',
+      curGroupName: '示例团队',
+      groupList: [],
+      newProjectDialogVisible: false,
+      projectForm: {
+        projectName: '',
+        projectIntro: '',
+      },
+      projectRules: {
+        projectName: [
+          {required: true, message: '请输入项目名称', trigger: 'blur'}
+        ],
+        projectIntro: [
+          {required: true, message: '请输入项目简介', trigger: 'blur'}
+        ]
+      },
+      newTeamDialogVisible: false,
+      teamForm: {
+        teamName: '',
+        teamIntro: '',
+      },
+      teamRules: {
+        teamName: [
+          {required: true, message: '请输入团队名称', trigger: 'blur'}
+        ],
+        teamIntro: [
+          {required: true, message: '请输入团队简介', trigger: 'blur'}
+        ]
+      },
+      tableData: [{
+        member: '番茄炒西红柿666',
+        name: '陈百铭',
+        level: '管理员',
+        email: '957167412@qq.com'
+      }, {
+        member: '番茄炒西红柿666',
+        name: '陈百铭',
+        level: '管理员',
+        email: '957167412@qq.com'
+      }, {
+        member: '番茄炒西红柿666',
+        name: '陈百铭',
+        level: '管理员',
+        email: '957167412@qq.com'
+      }]
+    };
+  },
+  created() {
+    //console.log(localStorage);
+    this.curUsername = localStorage.getItem('username');
+    this.curUserID = localStorage.getItem('userID');
+    this.getGroup();
+  },
+  methods: {
+    handleSelect(param) {
       console.log(param)
     },
     logout() {
       console.log('logout')
     },
-      showProject() {
-        this.activeIndex = '1';
-      },
-      showTeam() {
-        this.activeIndex = '2';
-      },
-      handleOpen() {
-        console.log('open')
-      },
-      handleClose() {
-        console.log('close')
-      },
-      createProject() {
-        const formData = new FormData();
-        formData.append("projectName", this.projectForm.projectName);
-        formData.append("projectTeamID", this.curGroupID);
-        formData.append("projectIntro", this.projectForm.projectIntro);
-        formData.append("projectCreatorID", localStorage.getItem('userID'));
-        formData.append("username", this.curUsername);
-        formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'ProjectManager/projectCreate/',
-          data: formData,
-        })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  this.$message({
-                    message: '项目创建成功',
-                    type: 'success'
-                  });
-                  location.reload();
-                  break;
-                case 4001:
-                  this.$message.warning('用户不存在！');
-                  break;
-                case 4002:
-                  this.$message.warning('团队不存在！');
-                  break;
-                case 4003:
-                  this.$message.warning('非团队成员无权限操作！');
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-            .finally(() => {
-              this.newProjectDialogVisible = false;
-              location.reload();
-            })
-      },
-      createGroup() {
-        const formData = new FormData();
-        formData.append("creatorID", this.curUserID);
-        formData.append("groupName", this.teamForm.teamName);
-        formData.append("description", this.teamForm.teamIntro);
-        formData.append("username", this.curUsername);
-        formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'TeamManager/groupBuild/',
-          data: formData,
-        })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  this.$message({
-                    message: '团队创建成功',
-                    type: 'success'
-                  });
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-            .finally(() => {
-              this.newTeamDialogVisible = false;
-              location.reload();
-            })
-      },
-      getGroup() {
-        const formData = new FormData();
-        formData.append("userID", this.curUserID);
-        formData.append("username", this.curUsername);
-        formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'TeamManager/getGroupInfo/',
-          data: formData,
-        })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  console.log(res.data.group_list);
-                  this.groupList = res.data.group_list;
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-      },
-      clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
-        this.curGroupID = groupID;
-        this.curGroupName = groupName;
-        this.curIsCreator = isCreator;
-        this.curIsManager = isManager;
-        this.curGroupIntro = groupDescription;
-        const formData = new FormData();
-        formData.append("groupID", this.curGroupID);
-        formData.append("username", this.curUsername);
-        formData.append("authorization", localStorage.getItem('authorization'));
-        this.$axios({
-          method: 'post',
-          url: 'TeamManager/getMemberInfo/',
-          data: formData,
-        })
-            .then(res => {
-              switch (res.data.error) {
-                case 0:
-                  this.curMemberList = res.data.member_list;
-                  console.log(this.curMemberList);
-                  break;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-      },
-      updateCode(){
-        const formData = new FormData();
-
-      },
-    }
+    showProject() {
+      this.activeIndex = '1';
+    },
+    showTeam() {
+      this.activeIndex = '2';
+    },
+    handleOpen() {
+      console.log('open')
+    },
+    handleClose() {
+      console.log('close')
+    },
+    createProject() {
+      const formData = new FormData();
+      formData.append("projectName", this.projectForm.projectName);
+      formData.append("projectTeamID", this.curGroupID);
+      formData.append("projectIntro", this.projectForm.projectIntro);
+      formData.append("projectCreatorID", localStorage.getItem('userID'));
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectCreate/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '项目创建成功',
+                  type: 'success'
+                });
+                location.reload();
+                break;
+              case 4001:
+                this.$message.warning('用户不存在！');
+                break;
+              case 4002:
+                this.$message.warning('团队不存在！');
+                break;
+              case 4003:
+                this.$message.warning('非团队成员无权限操作！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.newProjectDialogVisible = false;
+            location.reload();
+          })
+    },
+    createGroup() {
+      const formData = new FormData();
+      formData.append("creatorID", this.curUserID);
+      formData.append("groupName", this.teamForm.teamName);
+      formData.append("description", this.teamForm.teamIntro);
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/groupBuild/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '团队创建成功',
+                  type: 'success'
+                });
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.newTeamDialogVisible = false;
+            location.reload();
+          })
+    },
+    getGroup() {
+      const formData = new FormData();
+      formData.append("userID", this.curUserID);
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/getGroupInfo/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                console.log(res.data.group_list);
+                this.groupList = res.data.group_list;
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
+      this.curGroupID = groupID;
+      this.curGroupName = groupName;
+      this.curIsCreator = isCreator;
+      this.curIsManager = isManager;
+      this.curGroupIntro = groupDescription;
+      const formData = new FormData();
+      formData.append("groupID", this.curGroupID);
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/getMemberInfo/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.curMemberList = res.data.member_list;
+                console.log(this.curMemberList);
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    updateCode() {
+      const formData = new FormData();
+      console.log(formData)
+    },
+  }
 }
 </script>
 
@@ -441,6 +452,7 @@ export default {
   flex-direction: row;
   height: 100%;
 }
+
 .nav-left {
   position: relative;
   width: 300px;
@@ -449,49 +461,59 @@ export default {
   border-right: 1px solid #e8e8e8;
   margin-right: 20px;
 }
+
 .content-home {
   display: flex;
   flex-direction: column;
   margin: 10px;
 }
+
 .button-- {
   text-align: left;
   margin-top: 15px;
   margin-left: 10px;
 }
+
 .content-project {
   display: flex;
   flex-direction: column;
   margin-top: 15px;
   margin-left: 10px;
 }
+
 .member-tag {
   font-size: 15px;
   padding: 2px 5px;
   border-radius: 5px;
   margin-left: 15px;
 }
+
 .normal-member {
   background-color: #c0f0db;
   color: #2ca37f;
 }
+
 .manager-member {
   background-color: #ecf5ff;
   color: #409EFF;
 }
+
 .creator-member {
   background-color: #fdf6ec;
   color: orange;
 }
+
 .left-bar {
   text-align: left;
 }
+
 .top-bar {
   margin-top: -10px;
   position: absolute;
   width: 160vh;
   text-align: right;
 }
+
 .el-header, .el-footer {
   background-color: #B3C0D1;
   color: #333;
@@ -512,46 +534,49 @@ export default {
   text-align: center;
   line-height: 160px;
 }
-.container-style{
+
+.container-style {
   color: #1d93ff;
   width: 100%;
   height: 50vh;
-  //border: solid 5px rosybrown;
   display: flex;
   flex-direction: row;
 }
-.left-box{
+
+.left-box {
   display: flex;
   width: 35%;
-  //border-right: solid 1px black;
 }
-.right-box{
+
+.right-box {
   display: flex;
   width: 100%;
-  //border: solid 5px red;
   flex-direction: row;
   background-color: #2c3e50;
 }
-.select-box{
+
+.select-box {
   position: relative;
   width: 100%;
   text-align: left;
   align-items: center;
   justify-content: center;
 }
-.label-line{
+
+.label-line {
   margin-top: 5px;
   margin-left: 5px;
   display: flex;
   flex-direction: row;
 }
-.container-box{
+
+.container-box {
   margin-left: 30px;
   width: 80%;
   margin-top: 20px;
 }
-.right-left-box{
+
+.right-left-box {
   width: 60%;
-  //border: solid 1px black;
 }
 </style>
