@@ -1,13 +1,13 @@
 import { keymap } from 'prosemirror-keymap'
 import { Extension } from 'tiptap'
 import { redo, undo, ySyncPlugin, yUndoPlugin } from 'y-prosemirror'
-import { WebsocketProvider } from 'y-websocket'
+//import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
 
 const ydoc = new Y.Doc()
 const roomName = localStorage.getItem('roomName')
 console.log('websockRoom:',roomName)
-const provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
+//const provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
 const type = ydoc.getXmlFragment('prosemirror')
 
 export default class RealtimeExtension extends Extension {
