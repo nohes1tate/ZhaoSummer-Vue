@@ -1,9 +1,10 @@
 <template>
 <div class="project">
   <div class="left-side-box">
-    <div class="title-line" @click="go('/home')">
+    <div class="title-line" @mouseenter="showTip = true" @mouseleave="showTip = false" @click="go('/home')">
       <span>小学期项目</span>
     </div>
+    <div v-show="showTip" class="tip"><div class="tip-line">切换项目、设置团队/成员/权限</div></div>
     <el-menu
         class="select-box"
         @open="handleOpen"
@@ -25,7 +26,7 @@
           <el-menu-item index="2-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="3" @click="go('/project/testUML')">
         <i class="el-icon-s-marketing"></i>
         <span slot="title">UML图</span>
       </el-menu-item>
@@ -76,9 +77,7 @@ export default {
   data() {
     return {
       keepAliveComponentInstance: null,
-      showTip1: false,
-      showTip2: false,
-      showTip3: false,
+      showTip: false,
     }
   },
   methods: {
@@ -163,140 +162,39 @@ export default {
   margin-bottom: 5px;
   background-color: #f3f0e1;
 }
-.create-box{
-  //border: solid 3px rosybrown;
-  width:80%;
-  height: 60%;
-  margin-top: 120px;
-  display: flex;
-  text-align: center;
-  margin-left: 120px;
-}
-.box-card{
-  width: 300px;
-  height: 360px;
-  margin-top:50px;
-  margin-left: 25px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 1;
-}
-.box-card:hover{
-  border: solid 2px deepskyblue;
-}
-.top-card{
-  width: 100%;
-  height: 300px;
-//border: solid 1px lightpink;
-  background-color: #f4f0e1;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-.bottom-card{
-  width: 100%;
-  height: 60px;
-//border: solid 1px lightpink;
-  background-color: #f1ecda;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.text-line{
-//border: solid 2px lightpink;
-  margin-top: 20px;
-  color: grey;
-}
 .top-card i{
   margin-top: 80px;
 }
-.el-icon-edit,.el-icon-set-up,.el-icon-document-add{
-  font-size: 150px;
-  color: deepskyblue;
-}
-.tip1{
+.tip{
   position: fixed;
-  width: 200px;
-  height: 50px;
+  width: 230px;
+  height: 30px;
+  text-align: center;
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background-color: #f4f0e1;
+  background-color: #faf4e8;
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
-  top:130px;
-  left: 500px;
+  top:70px;
+  left: 5px;
   box-shadow: 0px 5px 15px 2px grey;
 }
-.tip1::before,.tip1::after{
+.tip::before,.tip::after{
   content: '';
   display: block;
   border-width: 6px;
   position: absolute;
-  top: 50px;
-  left: 90px;
+  top: -10px;
+  left: 70px;
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
+  border-bottom: 10px solid #faf4e8;
 }
 .tip-line{
   color: grey;
-  margin-top: 15px;
-}
-.tip2{
-  position: fixed;
-  width: 200px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  background-color: #f4f0e1;
-//border: solid 2px lightpink;
-  border-radius: 5px;
-  z-index: 2;
-  top:130px;
-  left: 830px;
-  box-shadow: 0px 5px 15px 2px grey;
-}
-.tip2::before,.tip2::after{
-  content: '';
-  display: block;
-  border-width: 6px;
-  position: absolute;
-  top: 50px;
-  left: 90px;
-  height: 5px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
-}
-.tip3{
-  position: fixed;
-  width: 200px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  background-color: #f4f0e1;
-//border: solid 2px lightpink;
-  border-radius: 5px;
-  z-index: 2;
-  top:130px;
-  left: 1150px;
-  box-shadow: 0px 5px 15px 2px grey;
-}
-.tip3::before,.tip3::after{
-  content: '';
-  display: block;
-  border-width: 6px;
-  position: absolute;
-  top: 50px;
-  left: 90px;
-  height: 5px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
+  margin-top: 5px;
 }
 </style>
