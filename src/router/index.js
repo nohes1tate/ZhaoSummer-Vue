@@ -24,7 +24,7 @@ const routes = [
     component: () => import('../views/design/PreviewView')
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },

@@ -1,7 +1,6 @@
 <template>
 <div>
   <document-editor></document-editor>
-  <h1>114514</h1>
 </div>
 </template>
 
