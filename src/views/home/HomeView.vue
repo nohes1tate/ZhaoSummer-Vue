@@ -7,7 +7,7 @@
           background-color="#f3f0e1"
           text-color="#000"
           active-text-color="#6667ab"
-          :default-active="Index">
+          :default-active="groupIndex">
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-user"></i>
@@ -166,7 +166,7 @@ export default {
       return {
         showInfoDialog: false,
         activeIndex: '1',
-        Index: '1',
+        groupIndex: '1',
         curUsername: '',
         curUserID: 0,
         curUserEmail: '',
