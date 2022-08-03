@@ -72,7 +72,7 @@
             placement="bottom"
             trigger="hover">
           <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
-          <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
+          <el-button size="small" type="danger" plain @click="logoutDialogVisible = true">退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
         </el-popover>
 
@@ -123,7 +123,25 @@
   </span>
         </el-dialog>
 
-        <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
+        <el-dialog
+            title="邀请成员"
+            :visible.sync="showInviteDialog"
+            width="30%">
+          <el-form :model="inviteForm" :rules="inviteRules" ref="inviteForm" label-width="100px">
+            <el-form-item label="成员用户名" prop="inviteName">
+              <el-input
+                  maxlength="20"
+                  show-word-limit
+                  :rows="1"
+                  v-model="inviteForm.inviteName"></el-input>
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+    <el-button @click="showInviteDialog = false">取 消</el-button>
+    <el-button type="primary" @click="inviteMember">确 定</el-button>
+  </span>
+        </el-dialog>
+        <el-button type="primary" v-if="activeIndex==='2'" @click="showInviteDialog = true"><i class="el-icon-plus"></i> 邀请成员</el-button>
       </div>
       <div class="content-project" v-if="activeIndex==='1'">
         <projectCover projectName='项目1'></projectCover>
@@ -181,6 +199,7 @@ export default {
   data() {
       return {
         personalInfoDialogVisible:false,
+        showInviteDialog: false,
         showInfoDialog: false,
         activeIndex: '1',
         groupIndex: '1',
@@ -196,6 +215,14 @@ export default {
         curGroupName: '示例团队',
         groupList: [],
         newProjectDialogVisible: false,
+        inviteForm: {
+          inviteName: '',
+        },
+        inviteRules: {
+          inviteName: [
+            {required: true, message: '请输入成员用户名', trigger: 'blur'}
+          ],
+        },
         projectForm: {
           projectName: '',
           projectIntro: '',
@@ -246,6 +273,11 @@ export default {
       this.getGroup();
     },
     methods: {
+    inviteMember(){
+      console.log('invite!')
+      let data = new FormData()
+      data.append('authorization',localStorage.getItem('authorization'))
+    },
     handleSelect(param){
       console.log(param)
     },
@@ -262,11 +294,7 @@ export default {
         console.log('open')
       },
       handleClose() {
-        this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-            })
-            .catch(_ => {});
+      this.personalInfoDialogVisible=false
         console.log('close')
       },
       createProject() {
