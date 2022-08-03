@@ -104,7 +104,7 @@
         </span>
     </el-dialog>
 
-    <div class="content-home">
+    <div class="content-home" >
       <div class="top-bar">
         <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
           <el-popover
@@ -119,94 +119,101 @@
         </div>
         <el-divider style="margin: 0"></el-divider>
       </div>
-      <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
-        <span style="font-size: 30px;">{{ curGroupName }}</span>
-        <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
-        <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
-        <span class="member-tag normal-member" v-else>普通成员</span>
-      </div>
-      <div class="nav-team">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
-          <el-menu-item index="1" @click="showProject">团队项目</el-menu-item>
-          <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
-        </el-menu>
-      </div>
-      <div class="button--">
-        <el-button type="primary" v-if="activeIndex==='1'"
-                   @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目</el-button>
+      <div v-if="hasGroup">
+        <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
+          <span style="font-size: 30px;">{{ curGroupName }}</span>
+          <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
+          <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
+          <span class="member-tag normal-member" v-else>普通成员</span>
+        </div>
+        <div class="nav-team">
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+            <el-menu-item index="1" @click="showProject">团队项目</el-menu-item>
+            <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
+          </el-menu>
+        </div>
+        <div class="button--">
+          <el-button type="primary" v-if="activeIndex==='1'"
+                     @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目</el-button>
 
-        <el-dialog
-            title="新建项目"
-            :visible.sync="newProjectDialogVisible"
-            width="30%">
-          <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
-            <el-form-item label="项目名称" prop="projectName">
-              <el-input
-                  maxlength="10"
-                  show-word-limit
-                  :rows="1"
-                  v-model="projectForm.projectName"></el-input>
-            </el-form-item>
-            <el-form-item label="项目简介" prop="projectIntro">
-              <el-input
-                  type="textarea"
-                  maxlength="100"
-                  show-word-limit
-                  :rows="4"
-                  v-model="projectForm.projectIntro"></el-input>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-    <el-button @click="newProjectDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="createProject">确 定</el-button>
-  </span>
-        </el-dialog>
+          <el-dialog
+              title="新建项目"
+              :visible.sync="newProjectDialogVisible"
+              width="30%">
+            <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
+              <el-form-item label="项目名称" prop="projectName">
+                <el-input
+                    maxlength="10"
+                    show-word-limit
+                    :rows="1"
+                    v-model="projectForm.projectName"></el-input>
+              </el-form-item>
+              <el-form-item label="项目简介" prop="projectIntro">
+                <el-input
+                    type="textarea"
+                    maxlength="100"
+                    show-word-limit
+                    :rows="4"
+                    v-model="projectForm.projectIntro"></el-input>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+      <el-button @click="newProjectDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="createProject">确 定</el-button>
+    </span>
+          </el-dialog>
 
-        <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
+          <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
+        </div>
+        <div class="content-project" v-if="activeIndex==='1'">
+          <projectCover projectName='项目1'></projectCover>
+          <projectCover projectName='项目2'></projectCover>
+        </div>
+        <div class="content-team" v-if="activeIndex==='2'">
+          <el-table
+              :data="curMemberList"
+              stripe
+              style="width: 100%">
+            <el-table-column
+                prop="username"
+                label="成员"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="realName"
+                label="真实姓名"
+                width="100">
+            </el-table-column>
+            <el-table-column
+                prop="useremail"
+                label="邮箱"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="isManager"
+                label="权限"
+                width="80">
+            </el-table-column>
+            <el-table-column
+                fixed="right"
+                label="操作"
+                width="100">
+              <el-popover
+                  placement="right"
+                  width="220"
+                  trigger="hover">
+                <el-button size="small" plain>设为管理员</el-button>
+                <el-button size="small" type="danger" plain>移出团队</el-button>
+                <i class="el-icon-more" slot="reference"></i>
+              </el-popover>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
-      <div class="content-project" v-if="activeIndex==='1'">
-        <projectCover projectName='项目1'></projectCover>
-        <projectCover projectName='项目2'></projectCover>
-      </div>
-      <div class="content-team" v-if="activeIndex==='2'">
-        <el-table
-            :data="curMemberList"
-            stripe
-            style="width: 100%">
-          <el-table-column
-              prop="username"
-              label="成员"
-              width="180">
-          </el-table-column>
-          <el-table-column
-              prop="realName"
-              label="真实姓名"
-              width="100">
-          </el-table-column>
-          <el-table-column
-              prop="useremail"
-              label="邮箱"
-              width="180">
-          </el-table-column>
-          <el-table-column
-              prop="isManager"
-              label="权限"
-              width="80">
-          </el-table-column>
-          <el-table-column
-              fixed="right"
-              label="操作"
-              width="100">
-            <el-popover
-                placement="right"
-                width="220"
-                trigger="hover">
-              <el-button size="small" plain>设为管理员</el-button>
-              <el-button size="small" type="danger" plain>移出团队</el-button>
-              <i class="el-icon-more" slot="reference"></i>
-            </el-popover>
-          </el-table-column>
-        </el-table>
+      <div class="no-group" v-else>
+        <span style="font-size: 40px; color: #595959">创建团队</span>
+        <span style="font-size: 15px; color: #999999; margin-top: 4vh;">当前账号下无团队，请先创建</span>
+        <el-button type="primary" style="width: 20vh; margin-top: 4vh;" @click="newTeamDialogVisible = true">创  建  团  队</el-button>
       </div>
     </div>
   </div>
@@ -221,6 +228,7 @@ export default {
       return {
         input1:'',
         input2:'',
+        hasGroup: false,
         personalInfoDialogVisible:false,
         showInfoDialog: false,
         activeIndex: '1',
@@ -376,7 +384,10 @@ export default {
                   //console.log(res.data.group_list);
                   this.groupList = res.data.group_list;
                   if(this.groupList.length > 0) {
+                    this.hasGroup = true;
                     this.clickGroup(this.groupList[0].groupID, this.groupList[0].groupName, this.groupList[0].isCreator, this.groupList[0].isManager, this.groupList[0].groupDescription);
+                  } else{
+                    this.hasGroup = false;
                   }
                   break;
               }
@@ -562,5 +573,14 @@ export default {
 .right-left-box{
   width: 60%;
   //border: solid 1px black;
+}
+.no-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  margin-top: 30vh;
+  margin-left: 60vh;
 }
 </style>
