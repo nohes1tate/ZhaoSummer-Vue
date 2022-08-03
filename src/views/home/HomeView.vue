@@ -54,15 +54,55 @@
     </el-dialog>
 
     <el-dialog
-        title="提示"
+        title="账号设置"
         :visible.sync="personalInfoDialogVisible"
-        width="30%"
-        :before-close="handleClose">
-      <span>这是一段信息</span>
+        width="60%">
+      <div class="container-style">
+        <div class="left-box">
+          <el-menu
+              default-active="1"
+              class="select-box"
+              @open="handleOpen"
+              @close="handleClose"
+              background-color="#545c64"
+              text-color="#fff"
+              active-text-color="#ffd04b">
+            <el-menu-item index="1">
+              <i class="el-icon-setting"></i>
+              <span slot="title">账号设置</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
+        <div class="right-box">
+          <div class="right-left-box">
+            <div class="container-box">
+              <div class="label-line">
+                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
+                <span style="text-align: left;font-size: 18px;color: white">绑定邮箱</span>
+              </div>
+              <el-input v-model="input1" placeholder="请输入邮箱"></el-input>
+            </div>
+            <div class="container-box">
+              <div class="label-line">
+                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
+                <span style="text-align: left;font-size: 18px;color: white">当前密码</span>
+              </div>
+              <el-input v-model="input2" placeholder="请输入密码"></el-input>
+            </div>
+            <div class="container-box">
+              <div class="label-line">
+                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
+                <span style="text-align: left;font-size: 18px;color: white">修改密码</span>
+              </div>
+              <el-input v-model="input3" placeholder="请输入需要修改的密码"></el-input>
+          </div>
+          </div>
+        </div>
+      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="personalInfoDialogVisible= false">取 消</el-button>
     <el-button type="primary" @click="personalInfoDialogVisible = false">确 定</el-button>
-  </span>
+        </span>
     </el-dialog>
 
     <div class="content-home">
@@ -72,7 +112,7 @@
             placement="bottom"
             trigger="hover">
           <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
-          <el-button size="small" type="danger" plain @click="logoutDialogVisible = true">退出登录</el-button>
+          <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
             <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
         </el-popover>
 
@@ -123,25 +163,7 @@
   </span>
         </el-dialog>
 
-        <el-dialog
-            title="邀请成员"
-            :visible.sync="showInviteDialog"
-            width="30%">
-          <el-form :model="inviteForm" :rules="inviteRules" ref="inviteForm" label-width="100px">
-            <el-form-item label="成员用户名" prop="inviteName">
-              <el-input
-                  maxlength="20"
-                  show-word-limit
-                  :rows="1"
-                  v-model="inviteForm.inviteName"></el-input>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-    <el-button @click="showInviteDialog = false">取 消</el-button>
-    <el-button type="primary" @click="inviteMember">确 定</el-button>
-  </span>
-        </el-dialog>
-        <el-button type="primary" v-if="activeIndex==='2'" @click="showInviteDialog = true"><i class="el-icon-plus"></i> 邀请成员</el-button>
+        <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
       </div>
       <div class="content-project" v-if="activeIndex==='1'">
         <projectCover projectName='项目1'></projectCover>
@@ -198,8 +220,9 @@ export default {
   components: {ProjectCover},
   data() {
       return {
+        input1:'',
+        input2:'',
         personalInfoDialogVisible:false,
-        showInviteDialog: false,
         showInfoDialog: false,
         activeIndex: '1',
         groupIndex: '1',
@@ -215,14 +238,6 @@ export default {
         curGroupName: '示例团队',
         groupList: [],
         newProjectDialogVisible: false,
-        inviteForm: {
-          inviteName: '',
-        },
-        inviteRules: {
-          inviteName: [
-            {required: true, message: '请输入成员用户名', trigger: 'blur'}
-          ],
-        },
         projectForm: {
           projectName: '',
           projectIntro: '',
@@ -273,11 +288,6 @@ export default {
       this.getGroup();
     },
     methods: {
-    inviteMember(){
-      console.log('invite!')
-      let data = new FormData()
-      data.append('authorization',localStorage.getItem('authorization'))
-    },
     handleSelect(param){
       console.log(param)
     },
@@ -294,7 +304,6 @@ export default {
         console.log('open')
       },
       handleClose() {
-      this.personalInfoDialogVisible=false
         console.log('close')
       },
       createProject() {
@@ -417,6 +426,10 @@ export default {
               console.log(err);
             })
       },
+      updateCode(){
+        const formData = new FormData();
+
+      },
     }
 }
 </script>
@@ -478,5 +491,67 @@ export default {
   position: absolute;
   width: 160vh;
   text-align: right;
+}
+.el-header, .el-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+.container-style{
+  color: #1d93ff;
+  width: 100%;
+  height: 50vh;
+  //border: solid 5px rosybrown;
+  display: flex;
+  flex-direction: row;
+}
+.left-box{
+  display: flex;
+  width: 35%;
+  //border-right: solid 1px black;
+}
+.right-box{
+  display: flex;
+  width: 100%;
+  //border: solid 5px red;
+  flex-direction: row;
+  background-color: #2c3e50;
+}
+.select-box{
+  position: relative;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+}
+.label-line{
+  margin-top: 5px;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+}
+.container-box{
+  margin-left: 30px;
+  width: 80%;
+  margin-top: 20px;
+}
+.right-left-box{
+  width: 60%;
+  //border: solid 1px black;
 }
 </style>
