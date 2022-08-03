@@ -17,12 +17,9 @@
             <el-menu-item class="left-bar" v-for="(group,index) in this.groupList"
                           :index="index+''" v-bind:key="group.groupID"
                           @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
-              {{ group.groupName }}
-            </el-menu-item>
-            <el-menu-item :index="this.groupList.length+''" class="left-bar">示例团队</el-menu-item>
-            <el-menu-item :index="this.groupList.length+ 1 +''" class="left-bar"
-                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队
-            </el-menu-item>
+              {{group.groupName}}</el-menu-item>
+            <el-menu-item :index="this.groupList.length+ ''" class="left-bar"
+                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -193,7 +190,7 @@
               width="180">
           </el-table-column>
           <el-table-column
-              prop="level"
+              prop="isManager"
               label="权限"
               width="80">
           </el-table-column>
@@ -224,7 +221,6 @@
 
 <script>
 import ProjectCover from "@/components/homepage/projectCover.vue";
-
 export default {
   name: 'HomeView',
   components: {ProjectCover},
@@ -236,7 +232,7 @@ export default {
       personalInfoDialogVisible: false,
       showInfoDialog: false,
       activeIndex: '1',
-      groupIndex: '1',
+      groupIndex: '0',
       curUsername: '',
       curUserID: 0,
       curUserEmail: '',
@@ -273,23 +269,8 @@ export default {
         teamIntro: [
           {required: true, message: '请输入团队简介', trigger: 'blur'}
         ]
+
       },
-      tableData: [{
-        member: '番茄炒西红柿666',
-        name: '陈百铭',
-        level: '管理员',
-        email: '957167412@qq.com'
-      }, {
-        member: '番茄炒西红柿666',
-        name: '陈百铭',
-        level: '管理员',
-        email: '957167412@qq.com'
-      }, {
-        member: '番茄炒西红柿666',
-        name: '陈百铭',
-        level: '管理员',
-        email: '957167412@qq.com'
-      }]
     };
   },
   created() {
@@ -319,7 +300,7 @@ export default {
     },
     createProject() {
       const formData = new FormData();
-      formData.append("projectName", this.projectForm.projectName);
+      console.log('团队ID:' + this.curGroupID);formData.append("projectName", this.projectForm.projectName);
       formData.append("projectTeamID", this.curGroupID);
       formData.append("projectIntro", this.projectForm.projectIntro);
       formData.append("projectCreatorID", localStorage.getItem('userID'));
@@ -337,7 +318,7 @@ export default {
                   message: '项目创建成功',
                   type: 'success'
                 });
-                location.reload();
+
                 break;
               case 4001:
                 this.$message.warning('用户不存在！');
@@ -401,9 +382,11 @@ export default {
           .then(res => {
             switch (res.data.error) {
               case 0:
-                console.log(res.data.group_list);
+                //console.log(res.data.group_list);
                 this.groupList = res.data.group_list;
-                break;
+                if(this.groupList.length > 0) {
+                    this.clickGroup(this.groupList[0].groupID, this.groupList[0].groupName, this.groupList[0].isCreator, this.groupList[0].isManager, this.groupList[0].groupDescription);
+                  }break;
             }
           })
           .catch(err => {
@@ -412,10 +395,29 @@ export default {
     },
     clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
       this.curGroupID = groupID;
-      this.curGroupName = groupName;
+      //console.log('团队ID:' + this.curGroupID);this.curGroupName = groupName;
       this.curIsCreator = isCreator;
       this.curIsManager = isManager;
-      this.curGroupIntro = groupDescription;
+      this.curGroupIntro = groupDescription;const projectForm = new FormData();
+        projectForm.append("groupID", this.curGroupID);
+        projectForm.append("username", this.curUsername);
+        projectForm.append("authorization", localStorage.getItem('authorization'));
+        this.$axios({
+          method: 'post',
+          url: 'ProjectManager/groupProjectView/',
+          data: projectForm,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  this.curProjectList = res.data.projectlist;
+                  console.log(this.curProjectList);
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
       const formData = new FormData();
       formData.append("groupID", this.curGroupID);
       formData.append("username", this.curUsername);
@@ -429,7 +431,7 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.curMemberList = res.data.member_list;
-                console.log(this.curMemberList);
+                //console.log(this.curMemberList);
                 break;
             }
           })
@@ -438,7 +440,7 @@ export default {
           })
     },
     updateCode() {
-      const formData = new FormData();
+      //const formData = new FormData();
       console.log(formData)
     },
   }
