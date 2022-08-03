@@ -26,8 +26,7 @@
     <el-dialog
         title="新建团队"
         :visible.sync="newTeamDialogVisible"
-        width="30%"
-        :before-close="handleClose">
+        width="30%">
       <el-form :model="teamForm" :rules="teamRules" ref="teamForm" label-width="100px">
         <el-form-item label="团队名称" prop="teamName">
           <el-input
@@ -47,7 +46,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="newTeamDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="newTeamDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="createGroup">确 定</el-button>
   </span>
     </el-dialog>
 
@@ -72,7 +71,7 @@
         <span class="member-tag normal-member" v-else>普通成员</span>
       </div>
       <div class="nav-team">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
           <el-menu-item index="1" @click="showProject">团队项目</el-menu-item>
           <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
         </el-menu>
@@ -84,8 +83,7 @@
         <el-dialog
             title="新建项目"
             :visible.sync="newProjectDialogVisible"
-            width="30%"
-            :before-close="handleClose">
+            width="30%">
           <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
             <el-form-item label="项目名称" prop="projectName">
               <el-input
@@ -178,6 +176,7 @@ export default {
         curMemberList: [],
         curGroupIntro: '',
         curGroupName: '示例团队',
+        groupList: [],
         newProjectDialogVisible: false,
         projectForm: {
           projectName: '',
@@ -223,11 +222,10 @@ export default {
       };
     },
     created() {
-      const user =JSON.parse(localStorage.getItem('user')).user;
-      console.log(user);
+      //console.log(localStorage);
       this.curUsername = localStorage.getItem('username');
-      this.curUserID = user.userID;
-      this.curUserEmail = user.email;
+      this.curUserID = localStorage.getItem('userID');
+      this.getGroup();
     },
   methods: {
       showProject() {
@@ -242,6 +240,8 @@ export default {
         formData.append("projectTeamID", this.curGroupID);
         formData.append("projectIntro", this.projectForm.projectIntro);
         formData.append("projectCreatorID", localStorage.getItem('userID'));
+        formData.append("username", this.curUsername);
+        formData.append("authorization", localStorage.getItem('authorization'));
         this.$axios({
           method: 'post',
           url: 'api/ProjectManager/projectCreate/',
@@ -273,8 +273,59 @@ export default {
             .finally(() => {
               this.newProjectDialogVisible = false;
               location.reload();
-            });
+            })
       },
+      createGroup() {
+        const formData = new FormData();
+        formData.append("creatorID", this.curUserID);
+        formData.append("groupName", this.teamForm.teamName);
+        formData.append("description", this.teamForm.teamIntro);
+        formData.append("username", this.curUsername);
+        formData.append("authorization", localStorage.getItem('authorization'));
+        this.$axios({
+          method: 'post',
+          url: 'TeamManager/groupBuild/',
+          data: formData,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  this.$message({
+                    message: '团队创建成功',
+                    type: 'success'
+                  });
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+            .finally(() => {
+              this.newTeamDialogVisible = false;
+              location.reload();
+            })
+      },
+      getGroup() {
+        const formData = new FormData();
+        formData.append("userID", this.curUserID);
+        formData.append("username", this.curUsername);
+        formData.append("authorization", localStorage.getItem('authorization'));
+        this.$axios({
+          method: 'post',
+          url: 'TeamManager/getGroupInfo/',
+          data: formData,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  console.log(res.data.group_list);
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      }
     }
 }
 </script>
