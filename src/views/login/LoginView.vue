@@ -187,6 +187,7 @@ export default {
                   localStorage.setItem('authorization',res.data.authorization)
                   localStorage.setItem('username',res.data.username)
                   localStorage.setItem('userID',res.data.userID)
+                  this.$router.push('/home');
                   }
                 else {
                   this.$message.error(res.data.msg)}

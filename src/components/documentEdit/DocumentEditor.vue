@@ -1,5 +1,5 @@
 <template>
-  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh">
+  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh;width: 170vh">
     <div class="editor">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         <div class="menubar">
@@ -34,14 +34,6 @@
               @click="commands.underline"
           >
             underline
-          </button>
-
-          <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.code() }"
-              @click="commands.code"
-          >
-            code
           </button>
 
           <button
@@ -128,17 +120,23 @@
           >
             redo
           </button>
+          <button
+              class="menubar__button"
+              @click="test()"
+          >
+            test
+          </button>
           <hr style="height: 4px;color: black;background: black"/>
         </div>
       </editor-menu-bar>
 
-      <editor-content class="editor__content" :editor="editor"/>
+      <editor-content class="editor__content" :editor="editor" style="margin-left: 10vh"/>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import './main.scss';
+<style lang="scss" src="./main.scss" scoped>
+
 </style>
 
 <script>
@@ -202,8 +200,10 @@ export default {
     exportText() {
       console.log(this.editor.getHTML())
     },
+    test() {
+      this.editor.clearContent()
+    },
   },
-
   beforeDestroy() {
     this.editor.destroy()
   },
@@ -214,6 +214,6 @@ export default {
       console.log('reload')
       //location.reload()
     }
-  }
+  },
 }
 </script>

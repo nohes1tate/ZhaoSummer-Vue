@@ -7,7 +7,7 @@
       <div class="bottom-card"><div class="text-line">新建页面</div></div>
     </div>
     <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
-    <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="go('/project/testUML')">
+    <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="toDrawio()">
       <div class="top-card">
         <i class="el-icon-set-up"></i>
       </div>
@@ -35,6 +35,9 @@ export default {
     }
   },
   methods: {
+    toDrawio(){
+      window.open('https://app.diagrams.net/')
+    },
     go(path) {
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
