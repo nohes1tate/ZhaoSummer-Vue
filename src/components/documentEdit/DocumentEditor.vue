@@ -1,148 +1,167 @@
 <template>
-  <div class="editor">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
+  <div style="border: solid 2px black;width: 40%;border-radius: 8px">
+    <div class="editor">
+      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+        <div class="menubar">
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
-          @click="commands.bold"
-        >
-          bold
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.bold() }"
+              @click="commands.bold"
+          >
+            bold
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
-          @click="commands.italic"
-        >
-          italic
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.italic() }"
+              @click="commands.italic"
+          >
+            italic
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-        >
-          strike
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.strike() }"
+              @click="commands.strike"
+          >
+            strike
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
-          @click="commands.underline"
-        >
-          underline
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.underline() }"
+              @click="commands.underline"
+          >
+            underline
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code() }"
-          @click="commands.code"
-        >
-          code
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.code() }"
+              @click="commands.code"
+          >
+            code
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-        >
-          paragraph
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.paragraph() }"
+              @click="commands.paragraph"
+          >
+            paragraph
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
-        >
-          H1
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+              @click="commands.heading({ level: 1 })"
+          >
+            H1
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
-        >
-          H2
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+              @click="commands.heading({ level: 2 })"
+          >
+            H2
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-        >
-          H3
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+              @click="commands.heading({ level: 3 })"
+          >
+            H3
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-        >
-          ul
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.bullet_list() }"
+              @click="commands.bullet_list"
+          >
+            ul
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.ordered_list() }"
-          @click="commands.ordered_list"
-        >
-          ol
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.ordered_list() }"
+              @click="commands.ordered_list"
+          >
+            ol
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.blockquote() }"
-          @click="commands.blockquote"
-        >
-          quote
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.blockquote() }"
+              @click="commands.blockquote"
+          >
+            quote
+          </button>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code_block() }"
-          @click="commands.code_block"
-        >
-          code
-        </button>
+          <button
+              class="menubar__button"
+              :class="{ 'is-active': isActive.code_block() }"
+              @click="commands.code_block"
+          >
+            code
+          </button>
 
-        <button
-          class="menubar__button"
-          @click="commands.horizontal_rule"
-        >
-          hr
-        </button>
+          <button
+              class="menubar__button"
+              @click="commands.horizontal_rule"
+          >
+            hr
+          </button>
 
-        <button
-          class="menubar__button"
-          @click="commands.undo"
-        >
-          undo
-        </button>
+          <button
+              class="menubar__button"
+              @click="commands.undo"
+          >
+            undo
+          </button>
 
-        <button
-          class="menubar__button"
-          @click="commands.redo"
-        >
-          redo
-        </button>
+          <button
+              class="menubar__button"
+              @click="commands.redo"
+          >
+            redo
+          </button>
+          <hr style="height: 4px;color: black;background: black"/>
+        </div>
+      </editor-menu-bar>
 
-
-      </div>
-    </editor-menu-bar>
-
-    <editor-content class="editor__content" :editor="editor"/>
+      <editor-content class="editor__content" :editor="editor"/>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
-  @import './main.scss';
+@import './main.scss';
 </style>
 
 <script>
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import { Blockquote, Bold, BulletList, Code, CodeBlock, HardBreak, Heading, History, HorizontalRule, Italic, Link, ListItem, OrderedList, Strike, TodoItem, TodoList, Underline } from 'tiptap-extensions'
+import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
+import {
+  Blockquote,
+  Bold,
+  BulletList,
+  Code,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  History,
+  HorizontalRule,
+  Italic,
+  Link,
+  ListItem,
+  OrderedList,
+  Strike,
+  TodoItem,
+  TodoList,
+  Underline
+} from 'tiptap-extensions'
 import RealtimeExtension from './Realtime'
 
 
@@ -161,7 +180,7 @@ export default {
           new BulletList(),
           new CodeBlock(),
           new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
+          new Heading({levels: [1, 2, 3]}),
           new HorizontalRule(),
           new ListItem(),
           new OrderedList(),
@@ -179,6 +198,11 @@ export default {
       }),
     }
   },
+  methods: {
+    exportText() {
+      console.log(this.editor.getHTML())
+    },
+  },
 
   beforeDestroy() {
     this.editor.destroy()
@@ -187,9 +211,9 @@ export default {
     console.log('111')
     console.log(this.$route.params.documentID)
     this.curRoomName = this.$route.params.documentID
-    if(this.curRoomName != localStorage.getItem('roomName')){
-    localStorage.setItem('roomName',this.curRoomName)
-    console.log('reload')
+    if (this.curRoomName != localStorage.getItem('roomName')) {
+      localStorage.setItem('roomName', this.curRoomName)
+      console.log('reload')
       location.reload()
     }
   }
