@@ -6,7 +6,7 @@
     <div style="float: right; margin-top: 16px">
       <el-popover
           placement="right"
-          width="170"
+          width="200"
           trigger="hover">
         <el-button size="small" plain @click="newProjectNameDialogVisible = true">修改名称</el-button>
         <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">删除项目</el-button>

@@ -54,7 +54,20 @@
     </el-dialog>
 
     <div class="content-home">
-      <div style="text-align: left; margin-top: 50px; margin-bottom: 20px;">
+      <div class="top-bar">
+        <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
+          <el-popover
+            placement="bottom"
+            trigger="hover">
+          <el-button size="small" plain @click="newProjectNameDialogVisible = true">个人信息</el-button>
+          <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">退出登录</el-button>
+            <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
+        </el-popover>
+          957167412@qq.com tomato
+        </div>
+        <el-divider style="margin: 0"></el-divider>
+      </div>
+      <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
         <span style="font-size: 30px;">团队名称</span>
         <span class="member-tag">普通成员</span>
       </div>
@@ -64,7 +77,7 @@
           <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
         </el-menu>
       </div>
-      <div class="button">
+      <div class="button--">
         <el-button type="primary" v-if="activeIndex==='1'"
                    @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目</el-button>
 
@@ -92,7 +105,7 @@
           </el-form>
           <span slot="footer" class="dialog-footer">
     <el-button @click="newProjectDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="newProjectDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="createProject">确 定</el-button>
   </span>
         </el-dialog>
 
@@ -133,7 +146,7 @@
               width="100">
             <el-popover
                 placement="right"
-                width="190"
+                width="220"
                 trigger="hover">
               <el-button size="small" plain>设为管理员</el-button>
               <el-button size="small" type="danger" plain>移出团队</el-button>
@@ -206,6 +219,51 @@ export default {
       showTeam() {
         this.activeIndex = '2';
       },
+      createProject() {
+        const formData = new FormData();
+        formData.append("projectName", this.projectForm.projectName);
+        formData.append("password1", this.registerForm.password);
+        formData.append("password2", this.registerForm.confirmPassword);
+        formData.append("email", this.registerForm.email);
+        formData.append("realName", this.registerForm.realName);
+        this.$axios({
+          method: 'post',
+          url: 'api/Login/register/',
+          data: formData,
+        })
+            .then(res => {
+              switch (res.data.error) {
+                case 0:
+                  this.$message({
+                    message: '注册成功',
+                    type: 'success'
+                  });
+                  this.toRegister();
+                  break;
+                case 4001:
+                  this.$message.warning('用户名已存在！');
+                  break;
+                case 4002:
+                  this.$message.warning('邮箱已注册！');
+                  break;
+                case 4003:
+                  this.$message.warning('密码不符合规范！');
+                  break;
+                case 4004:
+                  this.$message.warning('两次密码不一致！');
+                  break;
+                case 4005:
+                  this.$message.warning('验证邮箱发送失败！');
+                  break;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+            .finally(() => {
+              this.newProjectDialogVisible = false;
+            });
+      },
     }
 }
 </script>
@@ -230,7 +288,7 @@ export default {
   flex-direction: column;
   margin: 10px;
 }
-.button {
+.button-- {
   text-align: left;
   margin-top: 15px;
   margin-left: 10px;
@@ -251,5 +309,11 @@ export default {
 }
 .left-bar {
   text-align: left;
+}
+.top-bar {
+  margin-top: -10px;
+  position: absolute;
+  width: 160vh;
+  text-align: right;
 }
 </style>
