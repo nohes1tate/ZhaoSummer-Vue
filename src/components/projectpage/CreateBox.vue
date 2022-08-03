@@ -14,7 +14,7 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/documentEdit')">
+    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
       <div class="top-card">
         <i class="el-icon-document-add"></i>
       </div>

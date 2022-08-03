@@ -1,5 +1,5 @@
 <template>
-  <div style="border: solid 2px black;width: 40%;border-radius: 8px">
+  <div style="border: solid 2px black;border-radius: 8px">
     <div class="editor">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         <div class="menubar">
@@ -137,7 +137,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './main.scss';
 </style>
 
@@ -214,7 +214,7 @@ export default {
     if (this.curRoomName != localStorage.getItem('roomName')) {
       localStorage.setItem('roomName', this.curRoomName)
       console.log('reload')
-      location.reload()
+      //location.reload()
     }
   }
 }

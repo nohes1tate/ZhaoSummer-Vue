@@ -86,6 +86,12 @@ export default {
         this.$router.push(path);
       }
     },
+    handleClose() {
+      console.log('close')
+    },
+    handleOpen() {
+      console.log('open')
+    }
   },
   created() {
     if (this.$vnode) {

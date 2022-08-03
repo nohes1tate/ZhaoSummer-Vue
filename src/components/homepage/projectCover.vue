@@ -64,6 +64,11 @@ export default {
       deleteProjectDialogVisible: false,
     }
   },
+  methods: {
+    handleClose() {
+      console.log('projectClose')
+    }
+  },
   props:{
     projectName:{default:'项目名称'}
   },
