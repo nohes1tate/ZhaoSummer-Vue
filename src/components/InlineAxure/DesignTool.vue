@@ -95,15 +95,15 @@ export default {
   },
   activated() {
     //window.open('https://www.bing.com')
+    console.log('114514')
+    console.log(this.$route.path)
+    console.log('5674')
     if(this.content) {
       window.topology.open(this.content)
     }
   },
   beforeDestroy() {
     //window.open('https://www.baidu.com')
-  },
-  destroyed() {
-    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
   },
   mounted() {
 

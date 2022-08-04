@@ -9,9 +9,11 @@
         class="select-box"
         @open="handleOpen"
         @close="handleClose"
-        background-color="#8AB6C9"
+        background-color="#4ab2cf"
         active-text-color="#112F4B"
         text-color="#FBF1E3"
+        :default-active="this.$route.path"
+        :key="dateKey"
         >
       <el-menu-item index="1" @click="getOverview">
         <i class="el-icon-menu" style="color: #FBF1E3"></i>
@@ -23,7 +25,7 @@
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList" :index="index+''" v-bind:key="index" @click="goAxure(item.axureID)"><span style="  display:block;
+          <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList" :index="'/project/' + projectID + '/axure/' + item.axureID" v-bind:key="index" @click="goAxure(item.axureID)"><span style="  display:block;
   width:90%;
   overflow:hidden;
   white-space:nowrap;
@@ -40,14 +42,14 @@
           <span>项目文档</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item v-for="(item,index) in documentList" :index="index+''" v-bind:key="index" @click="goDocument(item.documentID)"><span  style="  display:block;
+          <el-menu-item v-for="(item,index) in documentList" :index="'/project/' + projectID + '/document/' + item.documentID" v-bind:key="index" @click="goDocument(item.documentID)"><span  style="  display:block;
   width:90%;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;">{{item.documentName}}</span></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="5" @click="backToNew">
+      <el-menu-item :index="'/project/' + projectID" @click="backToNew">
         <i class="el-icon-folder-add" style="color: #FBF1E3"></i>
         <span slot="title">新建</span>
       </el-menu-item>
@@ -77,12 +79,16 @@ export default {
     PageTabs
   },
   mounted() {
+    console.log(this.$route.path)
+    this.dateKey = !this.dateKey
+    this.projectID=this.$route.params.projectID
     if (this.$refs.keepAliveContainer) {
       this.keepAliveComponentInstance = this.$refs.keepAliveContainer.childNodes[0].__vue__;
     }
   },
   data() {
     return {
+      dateKey: false,
       keepAliveComponentInstance: null,
       showTip: false,
       projectName:'小学期项目',
@@ -166,7 +172,7 @@ export default {
 .project{
   width: 100%;
   height: 100vh;
-  background-color: #FBC2A6;
+  background-color: #FBF1E3;
   display: flex;
   position: absolute;
 }
@@ -176,7 +182,7 @@ export default {
   position: relative;
   width: 35vh;
   height: 100vh;
-  background-color: #8AB6C9;
+  background-color: #4ab2cf;
 
   text-align: left;
 }
@@ -226,7 +232,7 @@ export default {
   height: 5%;
   display: flex;
   margin-bottom: 5px;
-  background-color: #8AB6C9;
+  background-color: #4ab2cf;
 }
 .top-card i{
   margin-top: 80px;

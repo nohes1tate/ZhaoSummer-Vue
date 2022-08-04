@@ -263,11 +263,11 @@ export default {
     }
   }
 
-  $c-tab-border-color: grey;
+  $c-tab-border-color: #112f4b;
   position: relative;
   &::before {
     content: "";
-    border-bottom: 1px solid $c-tab-border-color;
+    border-bottom: 2px solid $c-tab-border-color;
     position: absolute;
     left: 0;
     right: 0;
@@ -281,7 +281,7 @@ export default {
       padding: 8px 6px 8px 18px;
       font-size: 12px;
       color: white;
-      border: 1px solid $c-tab-border-color;
+      border: 2px solid $c-tab-border-color;
       border-left: none;
       border-bottom: 0px;
       line-height: 14px;
@@ -289,7 +289,7 @@ export default {
       transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
       padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       &:first-child {
-        border-left: 1px solid $c-tab-border-color;
+        border-left: 2px solid $c-tab-border-color;
         border-top-left-radius: 2px;
         //margin-left: 10px;
       }
@@ -305,9 +305,9 @@ export default {
         }
       }
       &.__is-active {
-        background-color: #FBC2A6;
+        background-color: #FBF1E3;
         padding-right: 12px;
-        border-bottom: 1px solid #FBC2A6;
+        border-bottom: 4px solid #FBF1E3;
         color: dimgrey;
         .el-icon-close {
           width: 12px;
