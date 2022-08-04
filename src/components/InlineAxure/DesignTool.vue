@@ -32,7 +32,7 @@ export default {
   data: function () {
     return {
       refleshKey: false,
-      content: '{"pens":[],"lineName":"curve","fromArrow":"","toArrow":"triangleSolid","scale":1,"locked":0,"x":0,"y":0,"websocket":"","mqttUrl":"","mqttOptions":{"clientId":"7989c"},"bkColor":"#66ccff","grid":true,"name":""}',
+      content: null,
       topologyConfigs: {
         license: {
           key: 'le5le',
@@ -95,21 +95,36 @@ export default {
   },
   activated() {
     //window.open('https://www.bing.com')
+    console.log('114514')
+    console.log(this.$route.path)
+    console.log('5674')
     if(this.content) {
       window.topology.open(this.content)
     }
-  },
-  beforeDestroy() {
-    //window.open('https://www.baidu.com')
-  },
-  destroyed() {
-    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
   },
   mounted() {
 
-    if(this.content) {
-      window.topology.open(this.content)
-    }
+    let data = new FormData()
+    data.append('username',localStorage.getItem('username'))
+    data.append('authorization',localStorage.getItem('authorization'))
+    data.append('axureID',this.$route.params.axureID)
+    let self = this
+    this.$axios({
+      method: 'post',
+      url: 'ProjectManager/viewAxure/',
+      data: data
+    }).then(res => {
+      console.log('getAxure:',res.data)
+      if(res.data.error===0) {
+        self.content = res.data.axureContent
+        //console.log('content:',res.data.data.axureContent)
+        //console.log(JSON.parse(res.data.axureContent))
+        window.topology.open(res.data.data.axureContent)
+      }
+      else {
+        self.$message.error(res.data.msg)
+      }
+    })
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     this.user.username=localStorage.getItem('username')
     if (window.registerTools) {
@@ -131,6 +146,30 @@ export default {
   methods: {
     nani() {
       console.log('click!')
+      this.$emit('fuck')
+    },
+    saveAxure() {
+      let data = new FormData()
+
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      data.append('axureID',this.$route.params.axureID)
+      data.append('axureData',JSON.stringify(window.topology.data))
+      console.log(JSON.stringify(window.topology.data))
+
+      let self = this
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/axureSave/',
+        data: data
+      }).then(res => {
+        if(res.data.error === 0) {
+          self.$message.success(res.data.msg)
+        }
+        else {
+          self.$message.error(res.data.msg)
+        }
+      })
     },
     onEvent(e) {
       switch (e.name) {
@@ -174,6 +213,7 @@ export default {
         case 'save':
           // 导航菜单configs.menus里面定义的action
           console.log(window.topology.data)
+            this.saveAxure()
           // window.topology.open(this.content)
           // 比如这里表示保存文件
           break;

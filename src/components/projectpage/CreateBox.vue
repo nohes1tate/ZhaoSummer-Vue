@@ -14,13 +14,6 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="toNewDocument">
-      <div class="top-card">
-        <i class="el-icon-document-add"></i>
-      </div>
-      <div class="bottom-card"><div class="text-line">新建文档</div></div>
-    </div>
-    <div v-show="showTip3" class="tip3"><div class="tip-line">为项目新建文档</div></div>
   </div>
 </template>
 
@@ -40,10 +33,11 @@ export default {
       //console.log(this.$route.params.projectID)
     },
     toDrawio(){
-      window.open('https://app.diagrams.net/');
+      //window.open('https://app.diagrams.net/');
       this.showTip1=false;
       this.showTip2=false;
       this.showTip3=false;
+      this.$emit("fuck")
     },
     backToNew(){
       this.projectID=this.$route.params.projectID;
@@ -56,26 +50,46 @@ export default {
       this.showTip3=false;
     },
     toNewPage(){
-      this.projectID=this.$route.params.projectID;
-      let path ='/project/'+this.projectID+'/axure/0';
-      if (path !== this.$route.fullPath) {
-        this.$router.push(path);
-      }
-      this.showTip1=false;
-      this.showTip2=false;
-      this.showTip3=false;
+      const self = this
+      const data = new FormData
+      data.append('userID',localStorage.getItem('userID'))
+      data.append('projectID',this.$route.params.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      this.$prompt('原型名称','创建原型',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{3,20}$/,
+        inputErrorMessage: '原型名在3~20字之间'
+      }).then(({ value }) => {
+        data.append('axureName',value)
+        self.$axios({
+          method: 'post',
+          url: 'ProjectManager/axureCreate/',
+          data: data
+        })
+            .then(res => {
+              console.log(res)
+              if(res.data.error !==0) {
+                this.$message.error(res.data.msg)
+              }
+              else {
+                this.$message.success('创建成功')
+                this.$emit('createAxure',{axureID: res.data.pageID,axureName: value})
+              }
+            })
+      }).catch(() => {
+      });
+
     },
     toNewDocument(){
       const self = this
       const data = new FormData
       data.append('userID',localStorage.getItem('userID'))
-      console.log(localStorage.getItem('userID'))
       data.append('projectID',this.$route.params.projectID)
-      console.log(this.$route.params.projectID)
       data.append('username',localStorage.getItem('username'))
-      console.log(localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
-      console.log(localStorage.getItem('authorization'))
+      data.append('content',' ')
       this.$prompt('文档名称','创建文档',{
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -90,11 +104,12 @@ export default {
         })
         .then(res => {
           console.log(res)
-          if(res.data.error !==0) {
+          if(res.data.errno !==0) {
             this.$message.error(res.data.msg)
           }
           else {
-            console.log('111')
+            this.$message.success('创建成功')
+            this.$emit('createDoc',{documentID:res.data.data.docID,documentName:res.data.data.title})
           }
         })
       }).catch(() => {
@@ -108,13 +123,12 @@ export default {
 
 <style scoped>
 .create-box{
-  //border: solid 3px rosybrown;
   width:80%;
   height: 60%;
   margin-top: 17vh;
   display: flex;
   text-align: center;
-  margin-left: 17vh;
+  margin-left: 37vh;
 }
 .box-card{
   width: 43vh;
@@ -164,7 +178,6 @@ export default {
   justify-content: center;
   font-size: 15px;
   background-color: #f1f1f1;
-//border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
   top:16vh;
@@ -195,7 +208,6 @@ export default {
   justify-content: center;
   font-size: 15px;
   background-color: #f1f1f1;
-//border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
   top:16vh;
@@ -222,7 +234,6 @@ export default {
   justify-content: center;
   font-size: 15px;
   background-color: #f1f1f1;
-//border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
   top:16vh;
