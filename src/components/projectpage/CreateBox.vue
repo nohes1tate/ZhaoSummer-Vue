@@ -53,9 +53,7 @@ export default {
       const self = this
       const data = new FormData
       data.append('userID',localStorage.getItem('userID'))
-      console.log(localStorage.getItem('userID'))
       data.append('projectID',this.$route.params.projectID)
-      console.log(this.$route.params.projectID)
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
       this.$prompt('原型名称','创建原型',{

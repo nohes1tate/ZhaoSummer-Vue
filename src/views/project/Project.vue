@@ -80,6 +80,22 @@ export default {
     if (this.$refs.keepAliveContainer) {
       this.keepAliveComponentInstance = this.$refs.keepAliveContainer.childNodes[0].__vue__;
     }
+
+    let data = new FormData()
+
+    data.append('projectID',this.$route.params.projectID)
+    data.append('username',localStorage.getItem('username'))
+    data.append('authorization',localStorage.getItem('authorization'))
+
+    this.$axios({
+      method: 'post',
+      url: 'ProjectManager/viewAxureList/',
+      data: data
+    })
+        .then(res=>{
+          console.log(res.data)
+          this.axureList=res.data.axure_list;
+        })
   },
   data() {
     return {
