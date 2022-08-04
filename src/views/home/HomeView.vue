@@ -234,9 +234,12 @@
                     placement="right"
                     width="220"
                     trigger="hover">
-                  <el-button size="small" :disabled="scope.row.isManager || (!curIsManager)" plain>设为管理员</el-button>
-                  <el-button size="small" v-if="scope.row.userID === curUserID"
-                             :disabled="!(curIsCreator || (curIsManager && !scope.row.isManager))" type="danger" plain>
+                  <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
+                              v-if="!scope.row.isManager" @click="setManager(scope.row.username)">设为管理员</el-button>
+                  <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
+                             v-else @click="deleteManager(scope.row.username)">取消管理员</el-button>
+                  <el-button size="small" v-if="scope.row.username !== curUsername"
+                             :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain>
                     移出团队
                   </el-button>
                   <el-button v-else size="small" type="danger" plain>退出团队</el-button>
@@ -327,6 +330,58 @@ export default {
       this.is_login = true
   },
   methods: {
+    setManager(operatedUsername) {
+      const dataForm = new FormData();
+      dataForm.append("hostID", this.curUserID);
+      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("groupID", this.curGroupID);
+      dataForm.append("username", this.curUsername);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/addManager/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '设置成功',
+                  type: 'success'
+                });
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    deleteManager(operatedUsername) {
+      const dataForm = new FormData();
+      dataForm.append("hostID", this.curUserID);
+      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("groupID", this.curGroupID);
+      dataForm.append("username", this.curUsername);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/deleteManager/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '设置成功',
+                  type: 'success'
+                });
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     handleSelect(param) {
       console.log(param)
     },
