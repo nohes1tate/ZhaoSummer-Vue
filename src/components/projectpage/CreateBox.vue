@@ -50,14 +50,39 @@ export default {
       this.showTip3=false;
     },
     toNewPage(){
-      this.projectID=this.$route.params.projectID;
-      let path ='/project/'+this.projectID+'/axure/0';
-      if (path !== this.$route.fullPath) {
-        this.$router.push(path);
-      }
-      this.showTip1=false;
-      this.showTip2=false;
-      this.showTip3=false;
+      const self = this
+      const data = new FormData
+      data.append('userID',localStorage.getItem('userID'))
+      console.log(localStorage.getItem('userID'))
+      data.append('projectID',this.$route.params.projectID)
+      console.log(this.$route.params.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      this.$prompt('原型名称','创建原型',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{3,20}$/,
+        inputErrorMessage: '原型名在3~20字之间'
+      }).then(({ value }) => {
+        data.append('axureName',value)
+        self.$axios({
+          method: 'post',
+          url: 'ProjectManager/axureCreate/',
+          data: data
+        })
+            .then(res => {
+              console.log(res)
+              if(res.data.error !==0) {
+                this.$message.error(res.data.msg)
+              }
+              else {
+                this.$message.success('创建成功')
+                this.$emit('createAxure',{axureID: res.data.pageID,axureName: value})
+              }
+            })
+      }).catch(() => {
+      });
+
     },
     toNewDocument(){
       const self = this
@@ -66,7 +91,6 @@ export default {
       data.append('projectID',this.$route.params.projectID)
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
-      data.append('groupID',1)
       data.append('content',' ')
       this.$prompt('文档名称','创建文档',{
         confirmButtonText: '确定',

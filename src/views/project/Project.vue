@@ -55,7 +55,7 @@
           <page-tabs :keep-alive-component-instance="keepAliveComponentInstance"/>
           <div ref="keepAliveContainer">
             <keep-alive>
-              <router-view :key="$route.fullPath" @createDoc="appendNewDoc"/>
+              <router-view :key="$route.fullPath" @createDoc="appendNewDoc" @createAxure="appendNewAxure"/>
             </keep-alive>
           </div>
         </div>
@@ -174,6 +174,11 @@ export default {
       this.documentList.push(data)
       this.goDocument(data.documentID)
     },
+    appendNewAxure(data) {
+      console.log(data)
+      this.axureList.push(data)
+      this.goAxure(data.axureID)
+    }
   },
 }
 </script>
