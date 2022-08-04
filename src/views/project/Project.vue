@@ -40,7 +40,7 @@
           <el-menu-item index="4-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="5" @click="go('/project')">
+      <el-menu-item index="5" @click="go('/project/' + curProjectID )">
         <i class="el-icon-folder-add"></i>
         <span slot="title">新建</span>
       </el-menu-item>
@@ -79,7 +79,7 @@ export default {
       keepAliveComponentInstance: null,
       showTip: false,
       projectName:'小学期项目',
-
+      curProjectID: ''
     }
   },
   methods: {
@@ -123,6 +123,7 @@ export default {
   created() {
     console.log(this.$route.params.projectID)
     console.log(this.$route.params.documentID)
+    this.curProjectID=this.$route.params.projectID
   }
 }
 </script>
