@@ -250,7 +250,7 @@ export default {
   },
   beforeCreate() {
     this.curRoomName = this.$route.params.documentID
-    roomName = this.curRoomName
+    roomName ='Zhao-Summer' + this.curRoomName
     provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
     awareness = provider.awareness
     awareness.setLocalStateField('user', {

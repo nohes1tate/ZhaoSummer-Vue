@@ -219,6 +219,7 @@ export default {
     },
     //删除页面缓存
     delRouteCache(key) {
+      window.open('https://101.qq.com')
       let cache = this.keepAliveComponentInstance.cache;
       let keys = this.keepAliveComponentInstance.keys;
       for (let i = 0; i < keys.length; i++) {

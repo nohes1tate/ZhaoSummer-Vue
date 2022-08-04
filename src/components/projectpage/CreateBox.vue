@@ -29,7 +29,6 @@ export default {
   name: "CreateBox",
   data() {
     return{
-      projectID:0,
       showTip1: false,
       showTip2: false,
       showTip3: false,

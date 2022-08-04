@@ -1,5 +1,5 @@
 <template>
-  <div id="project-cover">
+  <div id="project-cover" @click="toProjectPage">
     <div style="margin-left: 10px; margin-top: 15px; width: 450px">
       {{projectName}}
     </div>
@@ -68,6 +68,12 @@ export default {
     handleClose() {
       this.newProjectNameDialogVisible = false;
       this.deleteProjectDialogVisible = false;
+    },
+    toProjectPage() {
+      let path ='/project/' + this.projectID
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
     },
     renameProject() {
       const formData = new FormData();

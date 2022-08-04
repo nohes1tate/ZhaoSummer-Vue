@@ -85,15 +85,29 @@ export default {
       data: {}
     };
   },
-  created: function () {
+  created() {
+    window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
   },
   beforeRouteLeave (to, from, next) {
     // 这里需要elementui的支持，如果使用其他界面组件自行替换即可
     console.log('leaveDesignTool!')
     next()
   },
+  deactivated() {
+    //window.open('https://www.bilibili.com')
+  },
+  activated() {
+    //window.open('https://www.bing.com')
+  },
+  beforeDestroy() {
+    //window.open('https://www.baidu.com')
+  },
+  destroyed() {
+    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+  },
   mounted() {
     console.log('tool created!11')
+    //window.open('https://www.baidu.com')
     console.log(this.$route.fullPath)
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     this.user.username=localStorage.getItem('username')
@@ -114,11 +128,13 @@ export default {
     }
   },
   methods: {
+    beforeunloadFn() {
+      console.log('刷新或关闭')
+      //window.open('https://www.baidu.com')
+      // ...
+    },
     nani() {
       console.log('click!')
-    },
-    beforeDestroy(){
-      console.log('destroy')
     },
     onEvent(e) {
       switch (e.name) {
