@@ -1,17 +1,37 @@
 <template>
-  <div id="project-cover">
-    <div style="margin-left: 10px; margin-top: 15px; width: 450px" @click="toProjectPage">
-      {{projectName}}
-    </div>
-    <div style="float: right; margin-top: 16px" >
+  <div id="project-cover" @mouseover="dotdotdot = true" @mouseout="dotdotdot = false">
+    <div style="margin-left: 195px; margin-top: 8px; position: absolute" >
       <el-popover
           placement="right"
           width="200"
           trigger="hover">
         <el-button size="small" plain @click="newProjectNameDialogVisible = true">修改名称</el-button>
         <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">删除项目</el-button>
-        <i class="el-icon-more" slot="reference"></i>
+        <i class="el-icon-edit" slot="reference" ></i>
       </el-popover>
+    </div>
+    <div class="project-name" @click="toProjectPage">
+      <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
+    </div>
+    <div class="info-row">
+      <div class="info-tag">创建者：</div>
+      <div>{{projectCreator}}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-tag">创建时间：</div>
+      <div>{{projectCreateTime}}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-tag">原型数：</div>
+      <div>{{pageNum}}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-tag">文档数：</div>
+      <div>{{docNum}}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-tag">项目简介：</div>
+      <div class="intro-text">{{projectIntro}}</div>
     </div>
 
     <el-dialog
@@ -52,6 +72,7 @@ export default {
   name: "projectCover",
   data(){
     return{
+      dotdotdot: false,
       newProjectNameDialogVisible: false,
       newProjectNameForm: {
         newProjectName: '',
@@ -169,8 +190,8 @@ export default {
     userID:{default: 0},
     username:{default: ''},
     projectID:{default: 0},
-    projectIntro:{default: '项目简介'},
-    projectCreator:{default: '项目创建者'},
+    projectIntro:{default: '项目简介简介简介简介简介简介简介简介简介简'},
+    projectCreator:{default: '项目创建者啊啊啊啊啊'},
     projectCreateTime:{default: '2022-10-10'},
     docNum:{default: 0},
     pageNum:{default: 0},
@@ -182,14 +203,42 @@ export default {
 #project-cover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   border-radius: 20px;
-  width: 500px;
-  height: 50px;
+  width: 220px;
+  height: 250px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-align: left;
   cursor: pointer;
+  background: #FBF1E3;
 }
 #project-cover:hover {
   border: solid 2px deepskyblue;
+  background: #d9d9d9;
+}
+.info-row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.info-tag {
+  font-family: "black",serif;
+  width: 60px;
+  margin-left: 20px;
+}
+.project-name {
+  font-size: 20px;
+  color: #46a6ff;
+  text-align: center;
+  width: 100%;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+.intro-text {
+  width: 130px;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

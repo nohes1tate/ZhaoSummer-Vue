@@ -125,14 +125,14 @@ export default {
 .top-card{
   width: 100%;
   height: 40vh;
-  background-color: #fbfbfb;
+  background-color: #f4f0e1;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 .bottom-card{
   width: 100%;
   height: 10vh;
-  background-color: #f3f5f6;
+  background-color: #f1ecda;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }

@@ -34,4 +34,9 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+@font-face {
+  font-family: "black";
+  src: url("./assets/fonts/AaJueXingHei-55J-2.ttf");
+}
 </style>

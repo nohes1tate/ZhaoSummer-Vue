@@ -55,7 +55,8 @@
     <el-dialog
         title="账号设置"
         :visible.sync="personalInfoDialogVisible"
-        width="60%">
+        width="60%"
+        v-model="newCodeForm,newEmailForm">
       <div class="container-style">
         <div class="left-box">
           <el-menu
@@ -83,14 +84,14 @@
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
                 <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
               </div>
-              <el-input v-model="newEmailForm.currentEmail" placeholder="请输入当前邮箱"></el-input>
+              <el-input v-model="currentUserEmail" placeholder="请输入当前邮箱"></el-input>
             </div>
             <div class="container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
                 <span style="text-align: left;font-size: 18px;color: white">新邮箱</span>
               </div>
-              <el-input v-model="newEmailForm.newEmail" placeholder="请输入新邮箱"></el-input>
+              <el-input v-model="newUserEmail" placeholder="请输入新邮箱"></el-input>
             </div>
             <div class="container-button-box">
               <el-button type="primary" @click="updateEmail">修 改 邮 箱</el-button>
@@ -104,21 +105,21 @@
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
                 <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
               </div>
-              <el-input v-model="newCodeForm.email" placeholder="请输入当前邮箱"></el-input>
+              <el-input v-model="currentUserEmail" placeholder="请输入当前邮箱"></el-input>
             </div>
             <div class="right-container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
                 <span style="text-align: left;font-size: 18px;color: white">验证码</span>
               </div>
-              <el-input v-model="newCodeForm.code" placeholder="请输入验证码"></el-input>
+              <el-input v-model="checkCode" placeholder="请输入验证码"></el-input>
             </div>
             <div class="right-container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
                 <span style="text-align: left;font-size: 18px;color: white">新密码</span>
               </div>
-              <el-input v-model="newCodeForm.password" placeholder="请输入新密码"></el-input>
+              <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
             </div>
           </div>
           <div class="right-right-button-box">
@@ -231,8 +232,11 @@
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
           <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
+                        :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
+                        :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
                         v-for="project in curProjectList" v-bind:key="project.projectID"
-                        @click="toProject(project.projectID)"></projectCover>
+                        @click="toProject(project.projectID)"
+                        style="margin-left: 7vh; margin-top: 4vh"></projectCover>
         </div>
         <div class="content-team" v-if="activeIndex==='2'">
           <el-table
@@ -303,15 +307,10 @@ export default {
   components: {ProjectCover},
   data() {
     return {
-      newCodeForm: {
-        email: '',
-        password: '',
-        code:'',
-      },
-      newEmailForm:{
-        currentEmail:'',
-        newEmail:''
-      },
+      currentUserEmail:'',
+      newUserEmail:'',
+      checkCode:'',
+      newPassword:'',
       userSetting:true,
       updateCode:false,
       is_login: false,
@@ -380,7 +379,8 @@ export default {
       const self = this;
       const formData = new FormData();
       formData.append("userID", self.curUserID);
-      formData.append("email",self.newEmailForm.newEmail);
+      formData.append("email",self.newUserEmail);
+      console.log(self.newUserEmail);
       self.$axios({
         method: 'post',
         url: 'Login/editUserInfo/',
@@ -405,9 +405,9 @@ export default {
     update(){
       const self = this;
       const formData = new FormData();
-      formData.append("useremail", self.newCodeForm.email);
-      formData.append("password",self.newCodeForm.password);
-      formData.append("code",self.newCodeForm.code);
+      formData.append("useremail", self.currentUserEmail);
+      formData.append("password",self.newPassword);
+      formData.append("code",self.checkCode);
       //console.log(self.code)
       self.$axios({
         method: 'post',
@@ -439,7 +439,8 @@ export default {
     forget(){
       const self = this;
       const formData = new FormData();
-      formData.append("email", self.newCodeForm.email);
+      formData.append("email", self.currentUserEmail);
+      console.log(self.currentUserEmail);
       self.$axios({
         method: 'post',
         url: 'Login/forget/',
@@ -899,9 +900,8 @@ export default {
 
 .content-project {
   display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  margin-left: 10px;
+  flex-wrap: wrap;
+  width: 150vh;
 }
 
 .member-tag {
