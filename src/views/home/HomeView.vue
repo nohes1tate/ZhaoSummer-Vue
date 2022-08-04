@@ -243,10 +243,11 @@
                   <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
                              v-else @click="deleteManager(scope.row.username)">取消管理员</el-button>
                   <el-button size="small" v-if="scope.row.username !== curUsername"
-                             :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain>
+                             :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain
+                              @click="kickOut(scope.row.username)">
                     移出团队
                   </el-button>
-                  <el-button v-else size="small" type="danger" plain>退出团队</el-button>
+                  <el-button v-else size="small" type="danger" plain @click="quitTeam(scope.row.username)">退出团队</el-button>
                   <i class="el-icon-more" slot="reference"></i>
                 </el-popover>
               </template>
@@ -272,8 +273,6 @@ export default {
   components: {ProjectCover},
   data() {
     return {
-      kickDialogVisible: false,
-      quitDialogVisible: false,
       is_login: false,
       input1: '',
       input2: '',
@@ -339,7 +338,7 @@ export default {
     kickOut(operatedUsername) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
-      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("name", operatedUsername);
       dataForm.append("groupID", this.curGroupID);
       dataForm.append("username", this.curUsername);
       dataForm.append("authorization", localStorage.getItem('authorization'));
@@ -352,9 +351,39 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.$message({
-                  message: '操作成功',
+                  message: '移出成功',
                   type: 'success'
                 });
+                this.kickDialogVisible = false;
+                location.reload();
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    quitTeam(operatedUsername) {
+      const dataForm = new FormData();
+      dataForm.append("hostID", this.curUserID);
+      dataForm.append("name", operatedUsername);
+      dataForm.append("groupID", this.curGroupID);
+      dataForm.append("username", this.curUsername);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/deleteMember/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '退出成功',
+                  type: 'success'
+                });
+                this.quitDialogVisible = false;
+                location.reload();
                 break;
             }
           })
@@ -365,7 +394,7 @@ export default {
     setManager(operatedUsername) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
-      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("name", operatedUsername);
       dataForm.append("groupID", this.curGroupID);
       dataForm.append("username", this.curUsername);
       dataForm.append("authorization", localStorage.getItem('authorization'));
@@ -375,12 +404,14 @@ export default {
         data: dataForm,
       })
           .then(res => {
+            //console.log(res);
             switch (res.data.error) {
               case 0:
                 this.$message({
                   message: '设置成功',
                   type: 'success'
                 });
+                location.reload();
                 break;
             }
           })
@@ -391,7 +422,7 @@ export default {
     deleteManager(operatedUsername) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
-      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("name", operatedUsername);
       dataForm.append("groupID", this.curGroupID);
       dataForm.append("username", this.curUsername);
       dataForm.append("authorization", localStorage.getItem('authorization'));
@@ -407,6 +438,7 @@ export default {
                   message: '设置成功',
                   type: 'success'
                 });
+                location.reload();
                 break;
             }
           })
