@@ -160,7 +160,48 @@ import {
   TodoList,
   Underline
 } from 'tiptap-extensions'
-import RealtimeExtension from './Realtime'
+
+import { keymap } from 'prosemirror-keymap'
+import { Extension } from 'tiptap'
+import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror'
+import { WebsocketProvider } from 'y-websocket'
+import * as Y from 'yjs'
+
+const ydoc = new Y.Doc()
+let roomName = null
+let provider = null
+let type = ydoc.getXmlFragment('prosemirror')
+let awareness = null
+
+
+function getColor() {
+  const str = "0123456789abcdef";
+  let color = "#";
+  for (let i = 1; i <= 6; i++) {
+    color += str[parseInt(Math.random() * 16)]
+  }
+  return color
+}
+
+class RealtimeExtension extends Extension {
+  get name () {
+    return 'realtime'
+  }
+
+  get plugins () {
+    return [
+      ySyncPlugin(type),
+      yCursorPlugin(provider.awareness),
+      yUndoPlugin(),
+      keymap({
+        'Mod-z': undo,
+        'Mod-y': redo,
+        'Mod-Shift-z': redo
+      })
+    ]
+  }
+}
+
 
 
 export default {
@@ -208,12 +249,23 @@ export default {
     this.editor.destroy()
   },
   beforeCreate() {
+    console.log('fuck')
     this.curRoomName = this.$route.params.documentID
-    if (this.curRoomName != localStorage.getItem('roomName')) {
+    roomName = this.curRoomName
+    provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
+    console.log(roomName)
+    awareness = provider.awareness
+    awareness.setLocalStateField('user', {
+      // Define a print name that should be displayed
+      name: localStorage.getItem('username'),
+      // Define a color that should be associated to the user:
+      color: getColor() // should be a hex color
+    })
+    /*if (this.curRoomName != localStorage.getItem('roomName')) {
       localStorage.setItem('roomName', this.curRoomName)
       console.log('reload')
       //location.reload()
-    }
+    }*/
   },
 }
 </script>

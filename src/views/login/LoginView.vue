@@ -203,7 +203,7 @@ export default {
       data.append('password1',this.registerForm.password)
       data.append('password2',this.registerForm.confirmPassword)
       data.append('email',this.registerForm.email)
-      data.append('realName',this.registerForm.email)
+      data.append('realName',this.registerForm.realname)
       this.$refs.registerFormRef.validate((valid) => {
         if (valid) {
           this.$axios({
