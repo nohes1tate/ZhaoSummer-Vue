@@ -66,38 +66,67 @@
               background-color="#545c64"
               text-color="#fff"
               active-text-color="#ffd04b">
-            <el-menu-item index="1">
+            <el-menu-item index="1" @click="userSetting=true,updateCode=false">
               <i class="el-icon-setting"></i>
               <span slot="title">账号设置</span>
             </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-setting"></i>
-              <span slot="title">账号设置</span>
+            <el-menu-item index="2" @click="updateCode=true,userSetting=false">
+              <i class="el-icon-edit-outline"></i>
+              <span slot="title">更改密码</span>
             </el-menu-item>
           </el-menu>
         </div>
-        <div class="right-box">
+        <div class="right-box" v-show="userSetting">
           <div class="right-left-box">
             <div class="container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">绑定邮箱</span>
+                <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
               </div>
-              <el-input v-model="input1" placeholder="请输入邮箱"></el-input>
+              <el-input v-model="newEmailForm.currentEmail" placeholder="请输入当前邮箱"></el-input>
             </div>
             <div class="container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">当前密码</span>
+                <span style="text-align: left;font-size: 18px;color: white">新邮箱</span>
               </div>
-              <el-input v-model="input2" placeholder="请输入密码"></el-input>
+              <el-input v-model="newEmailForm.newEmail" placeholder="请输入新邮箱"></el-input>
             </div>
-            <div class="container-box">
+            <div class="container-button-box">
+              <el-button type="primary" @click="updateEmail">修 改 邮 箱</el-button>
+            </div>
+          </div>
+        </div>
+        <div class="right-box" v-show="updateCode">
+          <div class="right-right-box">
+            <div class="right-container-box">
               <div class="label-line">
                 <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">修改密码</span>
+                <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
               </div>
-              <el-input v-model="input3" placeholder="请输入需要修改的密码"></el-input>
+              <el-input v-model="newCodeForm.email" placeholder="请输入当前邮箱"></el-input>
+            </div>
+            <div class="right-container-box">
+              <div class="label-line">
+                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
+                <span style="text-align: left;font-size: 18px;color: white">验证码</span>
+              </div>
+              <el-input v-model="newCodeForm.code" placeholder="请输入验证码"></el-input>
+            </div>
+            <div class="right-container-box">
+              <div class="label-line">
+                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
+                <span style="text-align: left;font-size: 18px;color: white">新密码</span>
+              </div>
+              <el-input v-model="newCodeForm.password" placeholder="请输入新密码"></el-input>
+            </div>
+          </div>
+          <div class="right-right-button-box">
+            <div class="right-button-box">
+              <el-button type="primary" @click="forget">获取验证码</el-button>
+            </div>
+            <div class="right-button-under-box">
+              <el-button type="primary" @click="update">确 认 修 改</el-button>
             </div>
           </div>
         </div>
@@ -269,12 +298,23 @@ export default {
   components: {ProjectCover},
   data() {
     return {
+      newCodeForm: {
+        email: '',
+        password: '',
+        code:'',
+      },
+      newEmailForm:{
+        currentEmail:'',
+        newEmail:''
+      },
+      userSetting:true,
+      updateCode:false,
       is_login: false,
       input1: '',
       input2: '',
       input3: '',
       hasGroup: false,
-      personalInfoDialogVisible: false,
+      personalInfoDialogVisible: true,
       showInfoDialog: false,
       showInviteDialog: false,
       inviteMemberName: '',
@@ -331,6 +371,96 @@ export default {
       this.is_login = true
   },
   methods: {
+    updateEmail(){
+      const self = this;
+      const formData = new FormData();
+      formData.append("userID", self.curUserID);
+      formData.append("email",self.newEmailForm.newEmail);
+      self.$axios({
+        method: 'post',
+        url: 'Login/editUserInfo/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                // 前端保存用户信息
+                this.$message.success("邮箱修改成功！");
+                location.reload();
+                break;
+              default:
+                this.$message.error('邮箱修改失败！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    update(){
+      const self = this;
+      const formData = new FormData();
+      formData.append("useremail", self.newCodeForm.email);
+      formData.append("password",self.newCodeForm.password);
+      formData.append("code",self.newCodeForm.code);
+      //console.log(self.code)
+      self.$axios({
+        method: 'post',
+        url: 'Login/update/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                // 前端保存用户信息
+                this.$message.success("密码修改成功！");
+                this.$router.push('/login');
+                break;
+              case 4001:
+                this.$message.error('密码违规！');
+                break;
+              case 4002:
+                this.$message.error('验证码错误！');
+                break;
+              case 2001:
+                this.$message.error('请求方式错误！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    forget(){
+      const self = this;
+      const formData = new FormData();
+      formData.append("email", self.newCodeForm.email);
+      self.$axios({
+        method: 'post',
+        url: 'Login/forget/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                // 前端保存用户信息
+                this.$message.success("验证码已发送，请前往邮箱确认！");
+                break;
+              case 3001:
+                this.$message.error('表单信息错误（未全部填写或数据类型有误）！');
+                break;
+              case 4001:
+                this.$message.warning('邮件发送失败！');
+                break;
+              case 4002:
+                this.$message.error('邮箱未注册！');
+                break;
+              case 2001:
+                this.$message.error('请求方式错误！');
+                break;
+            }
+          })
+    },
     handleSelect(param) {
       console.log(param)
     },
@@ -730,10 +860,17 @@ export default {
 }
 
 .right-box {
-  display: flex;
   width: 100%;
-  flex-direction: row;
   background-color: #2c3e50;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.right-container-box {
+  margin-left: 5vh;
+  width: 80%;
+  margin-top: 3vh;
 }
 
 .select-box {
@@ -745,22 +882,40 @@ export default {
 }
 
 .label-line {
-  margin-top: 5px;
-  margin-left: 5px;
+  margin-top: 3vh;
   display: flex;
   flex-direction: row;
 }
 
 .container-box {
-  margin-left: 30px;
+  margin-left: 5vh;
   width: 80%;
-  margin-top: 20px;
+  margin-top: 3vh;
 }
-
+.container-button-box{
+  position: relative;
+  margin-top: 8vh;
+  margin-left: -14vh;
+  width: 100%;
+}
+.right-button-box{
+  margin-top: 8vh;
+  width: 60%;
+}
+.right-button-under-box{
+  margin-top: 22vh;
+  width: 60%;
+}
+.right-right-button-box{
+  width: 60%;
+  margin-left: 5vh;
+}
 .right-left-box {
   width: 60%;
 }
-
+.right-right-box {
+  width: 100%;
+}
 .no-group {
   display: flex;
   flex-direction: column;
