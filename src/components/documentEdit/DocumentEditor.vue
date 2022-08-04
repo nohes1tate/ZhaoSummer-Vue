@@ -81,7 +81,7 @@
               :class="{ 'is-active': isActive.blockquote() }"
               @click="commands.blockquote"
           >
-            <span class="iconfont icon-zu" style="font-size: 30px;"></span>
+            <span class="iconfont icon-quote" style="font-size: 30px;"></span>
           </button>
 
           <button
