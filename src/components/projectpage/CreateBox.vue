@@ -147,14 +147,14 @@ export default {
 .top-card{
   width: 100%;
   height: 40vh;
-  background-color: #f4f0e1;
+  background-color: #f3f5f6;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 .bottom-card{
   width: 100%;
   height: 10vh;
-  background-color: #f1ecda;
+  background-color: #f1f1f1;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -181,7 +181,7 @@ export default {
   border-radius: 5px;
   z-index: 2;
   top:16vh;
-  left: 30vh;
+  left: 53vh;
   box-shadow: 0 5px 15px 2px grey;
 }
 .tip1::before,.tip1::after{
@@ -211,7 +211,7 @@ export default {
   border-radius: 5px;
   z-index: 2;
   top:16vh;
-  left: 75vh;
+  left: 104vh;
   box-shadow: 0 5px 15px 2px grey;
 }
 .tip2::before,.tip2::after{

@@ -75,7 +75,10 @@ export default {
       contextMenuTop: 0, //右键菜单显示位置
       contextMenuTargetPageRoute: null, //右键所指向的菜单路由
       openedPageRouters: [], //已打开的路由页面
+      formData:new FormData,
       title:'',
+      axureID:0,
+      axureName:'',
     };
   },
   watch: {
@@ -90,12 +93,32 @@ export default {
   mounted() {
     //添加点击关闭右键菜单
     window.addEventListener("click", this.closeContextMenu);
+
   },
   destroyed() {
     window.removeEventListener("click", this.closeContextMenu);
   },
   methods: {
-
+      getOpenedPageRouters() {
+        for (let i = 0; i < this.openedPageRouters.length; i++) {
+          let r = this.openedPageRouters[i];
+          this.axureID = r.params.axureID;
+          const dataForm=new FormData;
+          dataForm.append("axureID",this.axureID);
+          dataForm.append("authorization", localStorage.getItem('authorization'));
+          dataForm.append("username",localStorage.getItem('username'));
+          this.$axios({
+            method: 'post',
+            url: 'ProjectManager/viewAxure/',
+            data: dataForm,
+          })
+              .then(res => {
+                this.axureName=res.data.axureName;
+              })
+          this.formData.append("route",r);
+          this.formData.append("title",this.axureName);
+          }
+        },
     //打开页面
     openPage(route) {
       if (route.name === this.blankRouteName) {
@@ -265,7 +288,7 @@ export default {
     }
   }
 
-  $c-tab-border-color: grey;
+  $c-tab-border-color: white;
   position: relative;
   &::before {
     content: "";
@@ -282,7 +305,7 @@ export default {
       white-space: nowrap;
       padding: 8px 6px 8px 18px;
       font-size: 12px;
-      color: white;
+      color: grey;
       border: 1px solid $c-tab-border-color;
       border-left: none;
       border-bottom: 0px;
@@ -300,16 +323,16 @@ export default {
         margin-right: 10px;
       }
       &:not(.__is-active):hover {
-        color: #112F4B;
+        color: black;
         .el-icon-close {
           width: 12px;
           margin-right: 0px;
         }
       }
       &.__is-active {
-        background-color: #f9f4e7;
+        background-color: white;
         padding-right: 12px;
-        border-bottom: 1px solid #f9f4e7;
+        border-bottom: 1px solid white;
         color: dimgrey;
         .el-icon-close {
           width: 12px;

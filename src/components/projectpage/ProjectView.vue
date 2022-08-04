@@ -14,7 +14,7 @@
         <div class="info-box-under">UML图</div>
       </div>
       <div class="info-box">
-        <div class="info-box-top">{{ this.docNum }}</div>
+        <div class="info-box-top">1</div>
         <div class="info-box-under">文档数</div>
       </div>
     </div>
@@ -38,27 +38,23 @@ export default {
     this.projectID=this.$route.params.projectID;
     const requestForm1 = new FormData();
     requestForm1.append("projectID",this.projectID);
-    this.$axios({
-      method: 'post',
-      url: 'DocsEdit/viewDocList/',
-      data: requestForm1
-    })
-        .then(res=>{
-          this.doc_list=res.data.docID;
-
-        })
-    this.docNum=this.doc_list.length;
-
+    requestForm1.append('authorization', localStorage.getItem('authorization'));
+    requestForm1.append('username',localStorage.getItem('username'));
     this.$axios({
       method: 'post',
       url: 'ProjectManager/viewAxureList/',
       data: requestForm1
     })
         .then(res=>{
-          if(res.data.error === 0)
+          console.log('fuck2')
+          console.log(res.data)
           this.page_list=res.data.axure_list;
+          console.log(res.data.axure_list.length)
+          console.log('fuck3')
+          this.pageNum=this.page_list.length;
+          console.log(this.pageNum)
+          console.log('fuck4')
         })
-    this.pageNum=this.page_list.length;
   }
 }
 </script>
