@@ -128,28 +128,26 @@ export default {
   z-index: 1;
 }
 .box-card:hover{
-  border: solid 2px deepskyblue;
+  border: solid 2px #00c3ee;
 }
 .top-card{
   width: 100%;
-  height: 300px;
-//border: solid 1px lightpink;
-  background-color: #f4f0e1;
+  height: 40vh;
+  background-color: #fbfbfb;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 .bottom-card{
   width: 100%;
-  height: 60px;
-//border: solid 1px lightpink;
-  background-color: #f1ecda;
+  height: 10vh;
+  background-color: #f3f5f6;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 .text-line{
-//border: solid 2px lightpink;
   margin-top: 20px;
-  color: grey;
+  color: dimgrey;
+  font-size: 20px;
 }
 .top-card i{
   margin-top: 80px;
@@ -165,7 +163,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background-color: #f4f0e1;
+  background-color: #f1f1f1;
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
@@ -183,7 +181,7 @@ export default {
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
+  border-top: 16px solid #f1f1f1;
 }
 .tip-line{
   color: grey;
@@ -196,7 +194,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background-color: #f4f0e1;
+  background-color: #f1f1f1;
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
@@ -214,7 +212,7 @@ export default {
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
+  border-top: 16px solid #f1f1f1;
 }
 .tip3{
   position: absolute;
@@ -223,7 +221,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background-color: #f4f0e1;
+  background-color: #f1f1f1;
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
@@ -241,6 +239,6 @@ export default {
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 16px solid #f4f0e1;
+  border-top: 16px solid #f1f1f1;
 }
 </style>

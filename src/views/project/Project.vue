@@ -8,10 +8,7 @@
     <el-menu
         class="select-box"
         @open="handleOpen"
-        @close="handleClose"
-        background-color="#f3f0e1"
-        text-color="#000"
-        active-text-color="#6667ab">
+        @close="handleClose">
       <el-menu-item index="1" @click="getOverview">
         <i class="el-icon-menu"></i>
         <span slot="title">项目概览</span>
@@ -158,18 +155,19 @@ export default {
 .project{
   width: 100%;
   height: 100vh;
-  background-color: #faf4e8;
+  background-color: white;
   display: flex;
   position: absolute;
 }
 .left-side-box{
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
   width: 35vh;
   height: 100vh;
-  //border: solid 5px lightcoral;
-  background-color: #f3f0e1;
+  background-color: #fcfcfc;
   text-align: left;
-  border-right: solid 1px lightgrey;
+  border-right: solid 1px #fcfcfc;
 }
 .title-line{
   //border: solid 1px lightskyblue;
@@ -219,7 +217,7 @@ export default {
   display: flex;
   //top: 10px;
   margin-bottom: 5px;
-  background-color: #f3f0e1;
+  background-color: #fcfcfc;
 }
 .top-card i{
   margin-top: 80px;
@@ -232,7 +230,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background-color: #faf4e8;
+  background-color: #fbfbfb;
 //border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
@@ -250,7 +248,7 @@ export default {
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 10px solid #faf4e8;
+  border-bottom: 10px solid #fbfbfb;
 }
 .tip-line{
   color: grey;

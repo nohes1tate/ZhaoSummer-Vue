@@ -263,7 +263,7 @@ export default {
     }
   }
 
-  $c-tab-border-color: #dcdfe6;
+  $c-tab-border-color: #f9f9f9;
   position: relative;
   &::before {
     content: "";
@@ -304,9 +304,9 @@ export default {
         }
       }
       &.__is-active {
-        background-color: #faf4e8;
+        background-color: white;
         padding-right: 12px;
-        border-bottom: 1px solid #faf4e8;
+        border-bottom: 1px solid white;
         color: #409eff;
         .el-icon-close {
           width: 12px;

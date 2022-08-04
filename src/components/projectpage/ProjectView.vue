@@ -35,11 +35,11 @@ export default {
   height: 90vh;
 }
 .top-box{
-  border: solid 1px #d4d1bf;
+  border: solid 1px grey;
   width: 90vh;
   height: 20vh;
   margin-top:20px;
-  margin-left: 20px;
+  margin-left: 45vh;
   border-radius: 10px;
 }
 .top-box-line{
