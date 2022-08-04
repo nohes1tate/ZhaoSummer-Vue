@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3560580 */
-  src: url('iconfont.woff2?t=1659344916247') format('woff2'),
-       url('iconfont.woff?t=1659344916247') format('woff'),
-       url('iconfont.ttf?t=1659344916247') format('truetype');
+  font-family: "iconfont"; /* Project id 3567336 */
+  src: url('iconfont.woff2?t=1659598606821') format('woff2'),
+       url('iconfont.woff?t=1659598606821') format('woff'),
+       url('iconfont.ttf?t=1659598606821') format('truetype');
 }
 
 .iconfont {
@@ -13,7 +13,123 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ambitus02:before {
-  content: "\e600";
+.icon-hr:before {
+  content: "\e616";
+}
+
+.icon-shanchu:before {
+  content: "\e8b6";
+}
+
+.icon-yuandaimaxiayoudaima:before {
+  content: "\e7ae";
+}
+
+.icon-zu:before {
+  content: "\e612";
+}
+
+.icon-01jiacu:before {
+  content: "\e681";
+}
+
+.icon-02xieti:before {
+  content: "\e682";
+}
+
+.icon-03xiahuaxian:before {
+  content: "\e683";
+}
+
+.icon-04shanchuxian:before {
+  content: "\e684";
+}
+
+.icon-05xiabiao:before {
+  content: "\e685";
+}
+
+.icon-06shangbiao:before {
+  content: "\e686";
+}
+
+.icon-07lianjie:before {
+  content: "\e687";
+}
+
+.icon-08jiechulianjie:before {
+  content: "\e688";
+}
+
+.icon-09zuoduiqi:before {
+  content: "\e689";
+}
+
+.icon-10youduiqi:before {
+  content: "\e68a";
+}
+
+.icon-11juzhongduiqi:before {
+  content: "\e68b";
+}
+
+.icon-12liangduanduiqi:before {
+  content: "\e68c";
+}
+
+.icon-13biaoti1:before {
+  content: "\e68d";
+}
+
+.icon-14biaoti2:before {
+  content: "\e68e";
+}
+
+.icon-15biaoti3:before {
+  content: "\e68f";
+}
+
+.icon-16biaoti4:before {
+  content: "\e690";
+}
+
+.icon-17biaoti5:before {
+  content: "\e691";
+}
+
+.icon-18biaoti6:before {
+  content: "\e692";
+}
+
+.icon-19beijingyanse:before {
+  content: "\e693";
+}
+
+.icon-20xiangmufuhao:before {
+  content: "\e694";
+}
+
+.icon-21bianhaogeshi:before {
+  content: "\e695";
+}
+
+.icon-22jianshaosuojin:before {
+  content: "\e696";
+}
+
+.icon-23suojin:before {
+  content: "\e697";
+}
+
+.icon-24zitiyanse:before {
+  content: "\e69a";
+}
+
+.icon-25chehui:before {
+  content: "\e69b";
+}
+
+.icon-26quxiaochehui:before {
+  content: "\e69c";
 }
 

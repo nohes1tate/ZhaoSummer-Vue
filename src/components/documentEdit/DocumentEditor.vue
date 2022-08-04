@@ -1,15 +1,15 @@
 <template>
-  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh;width: 170vh">
+  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh;width: 150vh;align-content: center">
     <div class="editor">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-        <div class="menubar">
+        <div class="menubar" >
 
           <button
               class="menubar__button"
               :class="{ 'is-active': isActive.bold() }"
               @click="commands.bold"
           >
-            bold
+            <span class="iconfont icon-01jiacu" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -17,7 +17,7 @@
               :class="{ 'is-active': isActive.italic() }"
               @click="commands.italic"
           >
-            italic
+            <span class="iconfont icon-02xieti" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -25,7 +25,7 @@
               :class="{ 'is-active': isActive.strike() }"
               @click="commands.strike"
           >
-            strike
+            <span class="iconfont icon-04shanchuxian" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -33,15 +33,7 @@
               :class="{ 'is-active': isActive.underline() }"
               @click="commands.underline"
           >
-            underline
-          </button>
-
-          <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.paragraph() }"
-              @click="commands.paragraph"
-          >
-            paragraph
+            <span class="iconfont icon-03xiahuaxian" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -49,7 +41,7 @@
               :class="{ 'is-active': isActive.heading({ level: 1 }) }"
               @click="commands.heading({ level: 1 })"
           >
-            H1
+            <span class="iconfont icon-13biaoti1" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -57,7 +49,7 @@
               :class="{ 'is-active': isActive.heading({ level: 2 }) }"
               @click="commands.heading({ level: 2 })"
           >
-            H2
+            <span class="iconfont icon-14biaoti2" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -65,7 +57,7 @@
               :class="{ 'is-active': isActive.heading({ level: 3 }) }"
               @click="commands.heading({ level: 3 })"
           >
-            H3
+            <span class="iconfont icon-15biaoti3" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -73,7 +65,7 @@
               :class="{ 'is-active': isActive.bullet_list() }"
               @click="commands.bullet_list"
           >
-            ul
+            <span class="iconfont icon-20xiangmufuhao" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -81,7 +73,7 @@
               :class="{ 'is-active': isActive.ordered_list() }"
               @click="commands.ordered_list"
           >
-            ol
+            <span class="iconfont icon-21bianhaogeshi" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -89,7 +81,7 @@
               :class="{ 'is-active': isActive.blockquote() }"
               @click="commands.blockquote"
           >
-            quote
+            <span class="iconfont icon-zu" style="font-size: 30px;"></span>
           </button>
 
           <button
@@ -97,40 +89,40 @@
               :class="{ 'is-active': isActive.code_block() }"
               @click="commands.code_block"
           >
-            code
+            <span class="iconfont icon-yuandaimaxiayoudaima" style="font-size: 30px;"></span>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.horizontal_rule"
           >
-            hr
+            <span class="iconfont icon-hr" style="font-size: 30px;"></span>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.undo"
           >
-            undo
+            <span class="iconfont icon-25chehui" style="font-size: 30px;"></span>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.redo"
           >
-            redo
+            <span class="iconfont icon-26quxiaochehui" style="font-size: 30px;"></span>
           </button>
           <button
               class="menubar__button"
               @click="test()"
           >
-            test
+            <span class="iconfont icon-shanchu" style="font-size: 30px;"></span>
           </button>
           <hr style="height: 4px;color: black;background: black"/>
         </div>
       </editor-menu-bar>
 
-      <editor-content class="editor__content" :editor="editor" style="margin-left: 10vh"/>
+      <editor-content class="editor__content" :editor="editor" style="text-align: left;width: 140vh;border: solid 2px black;min-height: 60vh"/>
     </div>
   </div>
 </template>
@@ -267,3 +259,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.iconfont:hover {
+  background: #8c8c8c;
+  font-size: 30px;
+}
+.menubar {
+  width: 140vh;
+}
+</style>
