@@ -1,5 +1,5 @@
 <template>
-  <div id="project-cover" @mouseover="dotdotdot = true" @mouseout="dotdotdot = false">
+  <div id="project-cover">
     <div style="margin-left: 195px; margin-top: 8px; position: absolute" >
       <el-popover
           placement="right"
