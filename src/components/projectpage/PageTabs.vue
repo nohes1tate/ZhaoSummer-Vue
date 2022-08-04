@@ -124,12 +124,6 @@ export default {
       if (route.fullPath !== this.$route.fullPath) {
         this.$router.push(route.fullPath);
       }
-      this.delRouteCache(this.contextMenuTargetPageRoute.fullPath);
-      if (this.contextMenuTargetPageRoute.fullPath === this.$route.fullPath) {
-        this.$router.replace({ name: this.blankRouteName }).then(() => {
-          this.$router.replace(this.contextMenuTargetPageRoute);
-        });
-      }
     },
     //关闭页面标签时
     onClose(route) {

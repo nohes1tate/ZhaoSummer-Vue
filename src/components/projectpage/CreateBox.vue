@@ -1,6 +1,6 @@
 <template>
   <div class="create-box">
-    <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="go('/project/testPage')">
+    <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="toNewPage">
       <div class="top-card">
         <i class="el-icon-edit"></i>
       </div>
@@ -14,7 +14,7 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
+    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="toNewDocument">
       <div class="top-card">
         <i class="el-icon-document-add"></i>
       </div>
@@ -29,6 +29,7 @@ export default {
   name: "CreateBox",
   data() {
     return{
+      projectID:0,
       showTip1: false,
       showTip2: false,
       showTip3: false,
@@ -46,6 +47,24 @@ export default {
       this.showTip2=false;
       this.showTip3=false;
     },
+    backToNew(){
+      let path ='/project/'+this.projectID;
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    toNewPage(){
+      let path ='/project/'+this.projectID+'/testPage';
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    toNewDocument(){
+      let path='/project/'+this.projectID+'/testDocument/0';
+      if(path !== this.$route.fullPath){
+        this.$router.push(path);
+      }
+    }
   },
 }
 </script>
