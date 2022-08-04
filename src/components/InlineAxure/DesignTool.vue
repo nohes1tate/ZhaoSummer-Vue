@@ -85,9 +85,6 @@ export default {
       data: {}
     };
   },
-  created() {
-    window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
-  },
   beforeRouteLeave (to, from, next) {
     // 这里需要elementui的支持，如果使用其他界面组件自行替换即可
     console.log('leaveDesignTool!')
@@ -132,11 +129,6 @@ export default {
     }
   },
   methods: {
-    beforeunloadFn() {
-      console.log('刷新或关闭')
-      //window.open('https://www.baidu.com')
-      // ...
-    },
     nani() {
       console.log('click!')
     },
