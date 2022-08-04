@@ -61,7 +61,7 @@ export const defalutMaterials = [
   },
   {
     name: '基本形状',
-    expand: true,
+    expand: false,
     show: true,
     list: [
       {
@@ -439,7 +439,7 @@ export const defalutMaterials = [
   },
   {
     name: '流程图',
-    expand: true,
+    expand: false,
     show: true,
     list: [
       {
@@ -642,7 +642,7 @@ export const defalutMaterials = [
   },
   {
     name: '活动图',
-    expand: true,
+    expand: false,
     show: true,
     list: [
       {
@@ -760,7 +760,7 @@ export const defalutMaterials = [
   },
   {
     name: '时序图和类图',
-    expand: true,
+    expand: false,
     show: true,
     list: [
       {
@@ -902,7 +902,7 @@ export const defalutMaterials = [
   },
   {
     name: '图表控件（echarts）',
-    expand: true,
+    expand: false,
     show: true,
     list: [
       {
@@ -1099,19 +1099,19 @@ export const defalutMaterials = [
   },
   {
     iconUrl: '//at.alicdn.com/t/c/font_3562998_u3eld7cz7g.css',
-    expand: true,
+    expand: false,
     show: true,
     list: [],
   },
   {
     iconUrl: '//at.alicdn.com/t/c/font_3562987_7wtvdvxywl7.css',
-    expand: true,
+    expand: false,
     show: true,
     list: []
   },
   {
     iconUrl: '//at.alicdn.com/t/c/font_3560668_y2e6askrww.css',
-    expand: true,
+    expand: false,
     show: true,
     list: []
   }
