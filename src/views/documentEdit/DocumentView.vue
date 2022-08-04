@@ -19,7 +19,8 @@ export default {
   },
   mounted() {
     this.roomName=this.$route.params.documentID
-  }
+    console.log('roomName:',this.roomName)
+  },
 }
 </script>
 

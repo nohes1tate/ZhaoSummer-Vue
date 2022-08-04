@@ -102,9 +102,6 @@ export default {
       window.topology.open(this.content)
     }
   },
-  beforeDestroy() {
-    //window.open('https://www.baidu.com')
-  },
   mounted() {
 
     if(this.content) {
@@ -131,6 +128,7 @@ export default {
   methods: {
     nani() {
       console.log('click!')
+      this.$emit('fuck')
     },
     onEvent(e) {
       switch (e.name) {

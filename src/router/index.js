@@ -52,7 +52,7 @@ const routes = [
           title:"新建"
         }},
       {
-        path: "document/:documentID",
+        path: "document",
         component: documentEditor,
         meta: {
           title: "文档页", //页面标题

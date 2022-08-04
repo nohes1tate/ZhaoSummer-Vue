@@ -181,6 +181,9 @@ class RealtimeExtension extends Extension {
   }
 
   get plugins () {
+    console.log('plugins')
+
+    console.log(provider.awareness)
     return [
       ySyncPlugin(type),
       yCursorPlugin(provider.awareness),
@@ -237,12 +240,25 @@ export default {
       this.editor.clearContent()
     },
   },
-  beforeDestroy() {
-    this.editor.destroy()
+  activated() {
+    console.log('activated!')
+    this.curRoomName = this.$route.params.projectID
+    console.log('roomName',this.curRoomName)
+    roomName ='ZhaoSummer' + this.curRoomName
+    provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
+    awareness = provider.awareness
+    awareness.setLocalStateField('user', {
+      // Define a print name that should be displayed
+      name: localStorage.getItem('username'),
+      // Define a color that should be associated to the user:
+      color: getColor() // should be a hex color
+    })
   },
   beforeCreate() {
-    this.curRoomName = this.$route.params.documentID
-    roomName ='Zhao-Summer' + this.curRoomName
+    console.log('beforeCreate!')
+    this.curRoomName = this.$route.params.projectID
+    console.log('roomName',this.curRoomName)
+    roomName ='ZhaoSummer' + this.curRoomName
     provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
     awareness = provider.awareness
     awareness.setLocalStateField('user', {

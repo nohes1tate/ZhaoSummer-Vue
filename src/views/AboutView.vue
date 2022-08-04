@@ -1,6 +1,6 @@
 <template>
-  <div style="width: auto">
-      <design-tool></design-tool>
+  <div style="width: auto" >
+      <design-tool @fuck="fuck"></design-tool>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   components: {DesignTool},
   mounted() {
     drawioEmbed()
+  },
+  methods:{
+    fuck() {
+      console.log('getFucked')
+    }
   }
 }
 </script>
