@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="nav-left">
-      <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;" src="@/assets/logo/墨书.png" alt="">
+      <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;"  src="@/assets/logo/logo-yellow.png" alt="">
       <el-menu
           class="select-box"
           background-color="#112F4B"

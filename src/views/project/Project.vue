@@ -8,6 +8,7 @@
         <div class="tip-line">切换项目、设置团队/成员/权限</div>
       </div>
       <el-menu
+          v-if="dateKey"
           class="select-box"
           @open="handleOpen"
           @close="handleClose"
