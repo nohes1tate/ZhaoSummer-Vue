@@ -1,6 +1,6 @@
 <template>
   <div class="create-box">
-    <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="go('/project/testPage')">
+    <div class="box-card" @mouseenter="showTip1 = true" @mouseleave="showTip1 = false" @click="toNewPage">
       <div class="top-card">
         <i class="el-icon-edit"></i>
       </div>
@@ -14,7 +14,7 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="go('/project/testDocument')">
+    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="toNewDocument">
       <div class="top-card">
         <i class="el-icon-document-add"></i>
       </div>
@@ -40,9 +40,14 @@ export default {
       //console.log(this.$route.params.projectID)
     },
     toDrawio(){
-      window.open('https://app.diagrams.net/')
+      window.open('https://app.diagrams.net/');
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
     },
-    go(path) {
+    backToNew(){
+      this.projectID=this.$route.params.projectID;
+      let path ='/project/'+this.projectID;
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
@@ -50,6 +55,26 @@ export default {
       this.showTip2=false;
       this.showTip3=false;
     },
+    toNewPage(){
+      this.projectID=this.$route.params.projectID;
+      let path ='/project/'+this.projectID+'/axure/0';
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
+    },
+    toNewDocument(){
+      this.projectID=this.$route.params.projectID;
+      let path='/project/'+this.projectID+'/document/0';
+      if(path !== this.$route.fullPath){
+        this.$router.push(path);
+      }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
+    }
   },
 }
 </script>

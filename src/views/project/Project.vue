@@ -2,7 +2,7 @@
 <div class="project">
   <div class="left-side-box">
     <div class="title-line" @mouseenter="showTip = true" @mouseleave="showTip = false" @click="go('/home')">
-      <span>小学期项目</span>
+      <span>{{this.projectName}}</span>
     </div>
     <div v-show="showTip" class="tip"><div class="tip-line">切换项目、设置团队/成员/权限</div></div>
     <el-menu
@@ -12,7 +12,7 @@
         background-color="#f3f0e1"
         text-color="#000"
         active-text-color="#6667ab">
-      <el-menu-item index="1" @click="go('/project/overview')">
+      <el-menu-item index="1" @click="getOverview">
         <i class="el-icon-menu"></i>
         <span slot="title">项目概览</span>
       </el-menu-item>
@@ -40,7 +40,7 @@
           <el-menu-item index="4-2">选项2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="5" @click="go('/project/' + curProjectID )">
+      <el-menu-item index="5" @click="backToNew">
         <i class="el-icon-folder-add"></i>
         <span slot="title">新建</span>
       </el-menu-item>
@@ -79,11 +79,26 @@ export default {
       keepAliveComponentInstance: null,
       showTip: false,
       projectName:'小学期项目',
-      curProjectID: ''
+      projectID:0,
     }
   },
   methods: {
     go(path) {
+      //console.log(path);
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    getOverview(){
+      this.projectID=this.$route.params.projectID;
+      let path ='/project/'+this.projectID+'/overview';
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    backToNew(){
+      this.projectID=this.$route.params.projectID;
+      let path ='/project/'+this.projectID;
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
@@ -120,11 +135,6 @@ export default {
           })
     },
   },
-  created() {
-    console.log(this.$route.params.projectID)
-    console.log(this.$route.params.documentID)
-    this.curProjectID=this.$route.params.projectID
-  }
 }
 </script>
 
