@@ -19,22 +19,35 @@ const routes = [
   {
     path: '/documentEdit/:documentID',
     name: 'documentEdit',
-    component: () => import('../views/documentEdit/DocumentView')
+    component: () => import('../views/documentEdit/DocumentView'),
+    meta:{
+      title:"墨书-文档编辑"
+    },
   },
   {
     path: '/preview',
     name: 'preview',
-    component: () => import('../views/design/PreviewView')
+    component: () => import('../views/design/PreviewView'),
+    meta:{
+      title:"墨书-预览"
+    },
+
   },
   {
     path: '/home',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{
+      title:"墨书"
+    },
   },
   {
     path: '/login',
     name: 'login',
-    component:()=>import('../views/login/LoginView')
+    component:()=>import('../views/login/LoginView'),
+    meta:{
+      title:"墨书-登录"
+    },
   },
   {
     path: '/project/:projectID',

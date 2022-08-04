@@ -10,7 +10,7 @@
         <i class="el-icon-edit" slot="reference" ></i>
       </el-popover>
     </div>
-    <div @click="toProjectPage">
+    <div @click="toProjectPage" style="height: 240px">
       <div class="project-name" >
         <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
       </div>
