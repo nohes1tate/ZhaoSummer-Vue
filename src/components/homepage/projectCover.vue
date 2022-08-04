@@ -169,6 +169,11 @@ export default {
     userID:{default: 0},
     username:{default: ''},
     projectID:{default: 0},
+    projectIntro:{default: '项目简介'},
+    projectCreator:{default: '项目创建者'},
+    projectCreateTime:{default: '2022-10-10'},
+    docNum:{default: 0},
+    pageNum:{default: 0},
   },
 }
 </script>

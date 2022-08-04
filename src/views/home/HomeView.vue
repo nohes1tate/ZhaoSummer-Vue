@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="nav-left">
-      <div style="height: 60px; font-size: 40px; margin-top: 20px">墨书</div>
+      <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;" src="@/assets/logo/墨书.png" alt="">
       <el-menu
           class="select-box"
           background-color="#f3f0e1"
@@ -185,6 +185,7 @@
           <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
           <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
           <span class="member-tag normal-member" v-else>普通成员</span>
+          <span style="margin-left: 2vh;">{{curGroupIntro}}</span>
         </div>
         <div class="nav-team">
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
