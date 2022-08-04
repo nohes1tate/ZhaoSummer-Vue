@@ -22,7 +22,11 @@
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item v-for="(item,index) in axureList" :index="index" v-bind:key="index" @click="goAxure(item.axureID)">{{item.axureName}}</el-menu-item>
+          <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList" :index="index+''" v-bind:key="index" @click="goAxure(item.axureID)"><span style="  display:block;
+  width:90%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;">{{item.axureName}}</span></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="3" @click="toDrawio()">
@@ -35,8 +39,11 @@
           <span>项目文档</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item v-for="(item,index) in documentList" :index="index" v-bind:key="index" @click="goDocument(item.documentID)">{{item.documentName}}</el-menu-item>
-
+          <el-menu-item v-for="(item,index) in documentList" :index="index+''" v-bind:key="index" @click="goDocument(item.documentID)"><span  style="  display:block;
+  width:90%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;">{{item.documentName}}</span></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="5" @click="backToNew">
@@ -79,7 +86,7 @@ export default {
       showTip: false,
       projectName:'小学期项目',
       projectID:0,
-      axureList: [{axureID: 1,axureName: '临时原型'}],
+      axureList: [{axureID: 1,axureName: '临时原型11111111111111111111111111111111111111111111111'}],
       documentList: [{documentID: 1,documentName: '临时文档'}],
     }
   },
@@ -163,16 +170,16 @@ export default {
   position: absolute;
 }
 .left-side-box{
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
   width: 35vh;
   height: 100vh;
-  //border: solid 5px lightcoral;
   background-color: #f3f0e1;
   text-align: left;
   border-right: solid 1px lightgrey;
 }
 .title-line{
-  //border: solid 1px lightskyblue;
   width: 300px;
   height: 50px;
   display: flex;
@@ -197,7 +204,6 @@ export default {
 .project-view-line span{
   margin-top: 3px;
   margin-left: 3px;
-  //font-weight: 550;
 }
 .project-view-line img{
   width: 22px;
@@ -206,18 +212,15 @@ export default {
   margin-top: 2px;
 }
 .right-side-box{
-  //border:solid 5px blueviolet;
   height: 100vh;
   width: 100%;
   text-align: center;
 }
 .top-line{
   position: relative;
-  //border:solid 5px blue;
   width: 100%;
   height: 5%;
   display: flex;
-  //top: 10px;
   margin-bottom: 5px;
   background-color: #f3f0e1;
 }
@@ -233,7 +236,6 @@ export default {
   justify-content: center;
   font-size: 15px;
   background-color: #faf4e8;
-//border: solid 2px lightpink;
   border-radius: 5px;
   z-index: 2;
   top:70px;
@@ -255,5 +257,12 @@ export default {
 .tip-line{
   color: grey;
   margin-top: 5px;
+}
+el-menu-item .span {
+  display:block;
+  width:90%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 </style>

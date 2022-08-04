@@ -68,7 +68,7 @@ const routes = [
         }
       },
       {
-        path: "axure/:pageID",
+        path: "axure/:axureID",
         component: designTool,
         meta: {
           title: "页面设计页", //页面标题

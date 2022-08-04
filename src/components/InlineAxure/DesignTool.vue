@@ -32,7 +32,7 @@ export default {
   data: function () {
     return {
       refleshKey: false,
-      content: '',
+      content: '{"pens":[],"lineName":"curve","fromArrow":"","toArrow":"triangleSolid","scale":1,"locked":0,"x":0,"y":0,"websocket":"","mqttUrl":"","mqttOptions":{"clientId":"7989c"},"bkColor":"#66ccff","grid":true,"name":""}',
       topologyConfigs: {
         license: {
           key: 'le5le',
@@ -98,6 +98,9 @@ export default {
   },
   activated() {
     //window.open('https://www.bing.com')
+    if(this.content) {
+      window.topology.open(this.content)
+    }
   },
   beforeDestroy() {
     //window.open('https://www.baidu.com')
@@ -106,9 +109,10 @@ export default {
     window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
   },
   mounted() {
-    console.log('tool created!11')
-    //window.open('https://www.baidu.com')
-    console.log(this.$route.fullPath)
+
+    if(this.content) {
+      window.topology.open(this.content)
+    }
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     this.user.username=localStorage.getItem('username')
     if (window.registerTools) {
