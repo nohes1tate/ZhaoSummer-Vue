@@ -272,6 +272,8 @@ export default {
   components: {ProjectCover},
   data() {
     return {
+      kickDialogVisible: false,
+      quitDialogVisible: false,
       is_login: false,
       input1: '',
       input2: '',
@@ -334,6 +336,32 @@ export default {
       this.is_login = true
   },
   methods: {
+    kickOut(operatedUsername) {
+      const dataForm = new FormData();
+      dataForm.append("hostID", this.curUserID);
+      dataForm.append("operatedUsername", operatedUsername);
+      dataForm.append("groupID", this.curGroupID);
+      dataForm.append("username", this.curUsername);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/deleteMember/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '操作成功',
+                  type: 'success'
+                });
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     setManager(operatedUsername) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
