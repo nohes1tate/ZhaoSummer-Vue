@@ -6,15 +6,15 @@
     </div>
     <div class="top-box-under">
       <div class="info-box-first">
-        <div class="info-box-top">2</div>
+        <div class="info-box-top">{{ this.pageNum }}</div>
         <div class="info-box-under">页面数</div>
       </div>
       <div class="info-box">
-        <div class="info-box-top">2</div>
+        <div class="info-box-top">暂无数据</div>
         <div class="info-box-under">UML图</div>
       </div>
       <div class="info-box">
-        <div class="info-box-top">2</div>
+        <div class="info-box-top">{{ this.docNum }}</div>
         <div class="info-box-under">文档数</div>
       </div>
     </div>
@@ -24,7 +24,41 @@
 
 <script>
 export default {
-  name: "ProjectView"
+  name: "ProjectView",
+  data(){
+    return{
+      projectID:0,
+      doc_list:[],
+      page_list:[],
+      docNum:0,
+      pageNum:0,
+    }
+  },
+  mounted() {
+    this.projectID=this.$route.params.projectID;
+    const requestForm1 = new FormData();
+    requestForm1.append("projectID",this.projectID);
+    this.$axios({
+      method: 'post',
+      url: 'DocsEdit/viewDocList/',
+      data: requestForm1
+    })
+        .then(res=>{
+          this.doc_list=JSON.parse(res.data.docID);
+        })
+    this.docNum=this.doc_list.length;
+
+    this.$axios({
+      method: 'post',
+      url: 'ProjectManager/viewAxureList/',
+      data: requestForm1
+    })
+        .then(res=>{
+          this.page_list=JSON.parse(res.data.axure_list);
+        })
+    this.pageNum=this.page_list.length;
+
+  }
 }
 </script>
 

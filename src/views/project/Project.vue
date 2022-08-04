@@ -166,7 +166,7 @@ export default {
 .project{
   width: 100%;
   height: 100vh;
-  background-color: #FBC2A6;
+  background-color: #f9f4e7;
   display: flex;
   position: absolute;
 }
