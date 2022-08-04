@@ -55,8 +55,7 @@
     <el-dialog
         title="账号设置"
         :visible.sync="personalInfoDialogVisible"
-        width="60%"
-        v-model="newCodeForm,newEmailForm">
+        width="60%">
       <div class="container-style">
         <div class="left-box">
           <el-menu

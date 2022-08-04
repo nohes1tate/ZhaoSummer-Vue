@@ -14,13 +14,6 @@
       <div class="bottom-card"><div class="text-line">绘制UML图</div></div>
     </div>
     <div v-show="showTip2" class="tip2"><div class="tip-line">创建新的UML图</div></div>
-    <div class="box-card" @mouseenter="showTip3 = true" @mouseleave="showTip3 = false" @click="toNewDocument">
-      <div class="top-card">
-        <i class="el-icon-document-add"></i>
-      </div>
-      <div class="bottom-card"><div class="text-line">新建文档</div></div>
-    </div>
-    <div v-show="showTip3" class="tip3"><div class="tip-line">为项目新建文档</div></div>
   </div>
 </template>
 
