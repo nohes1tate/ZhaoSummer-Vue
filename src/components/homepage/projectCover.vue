@@ -1,9 +1,9 @@
 <template>
-  <div id="project-cover" @click="toProjectPage">
-    <div style="margin-left: 10px; margin-top: 15px; width: 450px">
+  <div id="project-cover">
+    <div style="margin-left: 10px; margin-top: 15px; width: 450px" @click="toProjectPage">
       {{projectName}}
     </div>
-    <div style="float: right; margin-top: 16px">
+    <div style="float: right; margin-top: 16px" >
       <el-popover
           placement="right"
           width="200"
