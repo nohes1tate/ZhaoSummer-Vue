@@ -35,6 +35,7 @@ export default {
     }
   },
   mounted() {
+    //con
     this.projectID=this.$route.params.projectID;
     const requestForm1 = new FormData();
     requestForm1.append("projectID",this.projectID);
