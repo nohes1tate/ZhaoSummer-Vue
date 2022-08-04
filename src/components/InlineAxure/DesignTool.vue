@@ -1,5 +1,5 @@
 <template>
-  <div class="design-tool" style="background: white">
+  <div class="design-tool" style="background: white;" @click="nani">
     <!-- 使用topology组件 -->
     <topology
         :configs="topologyConfigs"
@@ -87,8 +87,14 @@ export default {
   },
   created: function () {
   },
+  beforeRouteLeave (to, from, next) {
+    // 这里需要elementui的支持，如果使用其他界面组件自行替换即可
+    console.log('leaveDesignTool!')
+    next()
+  },
   mounted() {
-    console.log('tool created!')
+    console.log('tool created!11')
+    console.log(this.$route.fullPath)
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     this.user.username=localStorage.getItem('username')
     if (window.registerTools) {
@@ -108,6 +114,12 @@ export default {
     }
   },
   methods: {
+    nani() {
+      console.log('click!')
+    },
+    beforeDestroy(){
+      console.log('destroy')
+    },
     onEvent(e) {
       switch (e.name) {
         case 'logout':

@@ -197,7 +197,8 @@
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
           <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
-                        v-for="project in curProjectList" v-bind:key="project.projectID"></projectCover>
+                        v-for="project in curProjectList" v-bind:key="project.projectID"
+                        @click="toProject(project.projectID)"></projectCover>
         </div>
         <div class="content-team" v-if="activeIndex==='2'">
           <el-table
@@ -220,7 +221,7 @@
                 width="180">
             </el-table-column>
             <el-table-column
-                prop="isManager"
+                prop="level"
                 label="权限"
                 width="80">
             </el-table-column>
@@ -368,7 +369,7 @@ export default {
             data: formData,
           })
               .then(res => {
-                console.log(res);
+                //console.log(res);
                 switch (res.data.error) {
                   case 0:
                     this.$message({
@@ -448,7 +449,7 @@ export default {
         data: formData,
       })
           .then(res => {
-            console.log(res.data)
+            //console.log(res.data)
             switch (res.data.error) {
               case 0:
                 //console.log(res.data.group_list);
@@ -487,8 +488,8 @@ export default {
               switch (res.data.error) {
                 case 0:
                   this.curProjectList = res.data.project_list;
-                  console.log('项目列表：');
-                  console.log(res.data.project_list);
+                  //console.log('项目列表：');
+                  //console.log(res.data.project_list);
                   break;
               }
             })
@@ -580,6 +581,10 @@ export default {
     },
     login() {
       this.$router.push('/login');
+    },
+    toProject(pID) {
+      let path = this.$router.resolve('/project/'+pID);
+      window.open(path.href)
     },
     inviteMember() {
       let data = new FormData

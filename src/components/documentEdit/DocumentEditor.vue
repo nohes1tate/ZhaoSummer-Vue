@@ -249,11 +249,9 @@ export default {
     this.editor.destroy()
   },
   beforeCreate() {
-    console.log('fuck')
     this.curRoomName = this.$route.params.documentID
     roomName = this.curRoomName
     provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
-    console.log(roomName)
     awareness = provider.awareness
     awareness.setLocalStateField('user', {
       // Define a print name that should be displayed

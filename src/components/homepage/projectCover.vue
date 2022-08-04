@@ -1,5 +1,5 @@
 <template>
-  <div id="project-cover" @click="toProject">
+  <div id="project-cover">
     <div style="margin-left: 10px; margin-top: 15px; width: 450px">
       {{projectName}}
     </div>
@@ -156,10 +156,6 @@ export default {
             console.log(err);
           })
     },
-    toProject() {
-      let path = this.$router.resolve('/project/'+this.projectID);
-      window.open(path.href)
-    }
   },
   props:{
     projectName:{default:'项目名称'},
