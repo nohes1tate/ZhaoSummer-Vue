@@ -118,6 +118,13 @@
           >
             <span class="iconfont icon-shanchu" style="font-size: 30px;"></span>
           </button>
+
+          <button
+              class="menubar__button"
+              @click="save()"
+          >
+            <span class="iconfont icon-save" style="font-size: 30px;"></span>
+          </button>
           <hr style="height: 4px;color: black;background: black"/>
         </div>
       </editor-menu-bar>
@@ -238,6 +245,20 @@ export default {
     },
     test() {
       this.editor.clearContent()
+    },
+    save() {
+
+      const content = this.editor.getHTML()
+      const blob = new Blob([ content ], { type: 'text/html' })
+      const objectURL = URL.createObjectURL(blob)
+
+      const anchor = document.createElement('a')
+      anchor.href = objectURL
+      anchor.download = "document.html"
+
+      anchor.click()
+
+      URL.revokeObjectURL(objectURL)
     },
   },
   activated() {

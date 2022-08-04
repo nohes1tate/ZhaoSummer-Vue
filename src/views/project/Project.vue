@@ -93,8 +93,10 @@ export default {
       data: data
     })
         .then(res=>{
-          console.log(res.data)
+          if(res.data.error === 0){
+            console.log(res.data.axure_list)
           this.axureList=res.data.axure_list;
+          }
         })
   },
   data() {
@@ -104,8 +106,8 @@ export default {
       showTip: false,
       projectName: '小学期项目',
       projectID: 0,
-      axureList: [{axureID: 1, axureName: '临时原型11111111111111111111111111111111111111111111111'}],
-      documentList: [{documentID: 1, documentName: '临时文档'}],
+      axureList: [],
+      documentList: [],
     }
   },
   methods: {

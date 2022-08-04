@@ -39,8 +39,7 @@ export default {
           value: 'le5le'
         },
         logo: {
-          img: 'https://thumbnail8.baidupcs.com/thumbnail/8922933bamce4e3de85bf3c20436af34?fid=2595694748-250528-496437148589000&time=1659430800&rt=yt&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-xJ7vd2%2BCIl0lkkH0XSS1%2Bsewt7k%3D&expires=24h&chkv=0&chkbd=0&chkpc=&dp-logid=2891203934&dp-callid=0&size=c1536_u864&quality=90&vuk=-&ft=video&autopolicy=1',
-          url: 'http://www.baidu.com',
+          img: require('./墨书.png'),
           target: '_blank'
         },
         menus: defalutMenus,
@@ -103,7 +102,6 @@ export default {
     }
   },
   mounted() {
-
     let data = new FormData()
     data.append('username',localStorage.getItem('username'))
     data.append('authorization',localStorage.getItem('authorization'))
@@ -114,12 +112,13 @@ export default {
       url: 'ProjectManager/viewAxure/',
       data: data
     }).then(res => {
-      console.log('getAxure:',res.data)
       if(res.data.error===0) {
         self.content = res.data.axureContent
+        //console.log(res.data.axureContent)
         //console.log('content:',res.data.data.axureContent)
         //console.log(JSON.parse(res.data.axureContent))
-        window.topology.open(res.data.data.axureContent)
+        if(self.content)
+        window.topology.open(res.data.axureContent)
       }
       else {
         self.$message.error(res.data.msg)
@@ -163,6 +162,7 @@ export default {
         url: 'ProjectManager/axureSave/',
         data: data
       }).then(res => {
+        console.log(res)
         if(res.data.error === 0) {
           self.$message.success(res.data.msg)
         }

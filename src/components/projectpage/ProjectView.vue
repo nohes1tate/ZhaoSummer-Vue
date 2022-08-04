@@ -55,6 +55,7 @@ export default {
       data: requestForm1
     })
         .then(res=>{
+          if(res.data.error === 0)
           this.page_list=res.data.axure_list;
         })
     this.pageNum=this.page_list.length;
