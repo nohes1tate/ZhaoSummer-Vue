@@ -761,7 +761,6 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.curMemberList = res.data.member_list;
-                //console.log(this.curMemberList);
                 break;
             }
           })

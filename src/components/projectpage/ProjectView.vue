@@ -54,10 +54,9 @@ export default {
       data: requestForm1
     })
         .then(res=>{
-          this.page_list=JSON.parse(res.data.axure_list);
+          this.page_list=res.data.axure_list;
         })
     this.pageNum=this.page_list.length;
-
   }
 }
 </script>
