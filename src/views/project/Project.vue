@@ -141,7 +141,7 @@ export default {
 <style scoped>
 .project{
   width: 100%;
-  height: 105vh;
+  height: 100vh;
   background-color: #faf4e8;
   display: flex;
   position: absolute;
@@ -149,7 +149,7 @@ export default {
 .left-side-box{
   position: relative;
   width: 35vh;
-  height: 105vh;
+  height: 100vh;
   //border: solid 5px lightcoral;
   background-color: #f3f0e1;
   text-align: left;
@@ -191,7 +191,7 @@ export default {
 }
 .right-side-box{
   //border:solid 5px blueviolet;
-  height: 105vh;
+  height: 100vh;
   width: 100%;
   text-align: center;
 }

@@ -2,9 +2,13 @@
   position: relative;
   margin: 0 5vh 5vh 5vh;
 
+
   &__content::v-deep {
 
-    overflow-wrap: break-word;
+    height: 70vh;
+
+    background: white;
+    overflow: auto;
     word-wrap: break-word;
     word-break: break-word;
 
