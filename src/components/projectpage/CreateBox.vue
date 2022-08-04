@@ -33,7 +33,7 @@ export default {
       //console.log(this.$route.params.projectID)
     },
     toDrawio(){
-      //window.open('https://app.diagrams.net/');
+      window.open('https://app.diagrams.net/');
       this.showTip1=false;
       this.showTip2=false;
       this.showTip3=false;
