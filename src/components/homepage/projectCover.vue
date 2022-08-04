@@ -10,60 +10,61 @@
         <i class="el-icon-edit" slot="reference" ></i>
       </el-popover>
     </div>
-    <div class="project-name" @click="toProjectPage">
-      <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
+    <div @click="toProjectPage">
+      <div class="project-name" >
+        <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
+      </div>
+      <div class="info-row">
+        <div class="info-tag">创建者：</div>
+        <div>{{projectCreator}}</div>
+      </div>
+      <div class="info-row">
+        <div class="info-tag">创建时间：</div>
+        <div>{{projectCreateTime}}</div>
+      </div>
+      <div class="info-row">
+        <div class="info-tag">原型数：</div>
+        <div>{{pageNum}}</div>
+      </div>
+      <div class="info-row">
+        <div class="info-tag">文档数：</div>
+        <div>{{docNum}}</div>
+      </div>
+      <div class="info-row">
+        <div class="info-tag">项目简介：</div>
+        <div class="intro-text">{{projectIntro}}</div>
+      </div>
     </div>
-    <div class="info-row">
-      <div class="info-tag">创建者：</div>
-      <div>{{projectCreator}}</div>
-    </div>
-    <div class="info-row">
-      <div class="info-tag">创建时间：</div>
-      <div>{{projectCreateTime}}</div>
-    </div>
-    <div class="info-row">
-      <div class="info-tag">原型数：</div>
-      <div>{{pageNum}}</div>
-    </div>
-    <div class="info-row">
-      <div class="info-tag">文档数：</div>
-      <div>{{docNum}}</div>
-    </div>
-    <div class="info-row">
-      <div class="info-tag">项目简介：</div>
-      <div class="intro-text">{{projectIntro}}</div>
-    </div>
-
-    <el-dialog
-        title="修改项目名称"
-        :visible.sync="newProjectNameDialogVisible"
-        width="30%"
-        :before-close="handleClose">
-      <el-form :model="newProjectNameForm" :rules="newProjectNameRules" ref="newProjectNameForm" label-width="100px">
-        <el-form-item label="项目名称" prop="newProjectName">
-          <el-input
-              maxlength="10"
-              show-word-limit
-              :rows="1"
-              v-model="newProjectNameForm.newProjectName"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="newProjectNameDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="renameProject">确 定</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog
-        title="删除项目"
-        :visible.sync="deleteProjectDialogVisible"
-        width="30%"
-        :before-close="handleClose">
-      <span>确认删除项目 {{projectName}} ?</span>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="deleteProject">确 定</el-button>
-  </span>
-    </el-dialog>
+      <el-dialog
+          title="修改项目名称"
+          :visible.sync="newProjectNameDialogVisible"
+          width="30%"
+          :before-close="handleClose">
+        <el-form :model="newProjectNameForm" :rules="newProjectNameRules" ref="newProjectNameForm" label-width="100px">
+          <el-form-item label="项目名称" prop="newProjectName">
+            <el-input
+                maxlength="10"
+                show-word-limit
+                :rows="1"
+                v-model="newProjectNameForm.newProjectName"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="newProjectNameDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="renameProject">确 定</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog
+          title="删除项目"
+          :visible.sync="deleteProjectDialogVisible"
+          width="30%"
+          :before-close="handleClose">
+        <span>确认删除项目 {{projectName}} ?</span>
+        <span slot="footer" class="dialog-footer">
+      <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="deleteProject">确 定</el-button>
+    </span>
+      </el-dialog>
   </div>
 </template>
 
