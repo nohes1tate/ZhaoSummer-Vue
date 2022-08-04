@@ -4,13 +4,13 @@
       <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;" src="@/assets/logo/墨书.png" alt="">
       <el-menu
           class="select-box"
-          background-color="#f3f0e1"
-          text-color="#000"
-          active-text-color="#6667ab"
+          background-color="#112F4B"
+          active-text-color="#999999"
+          text-color="#FFFFFF"
           :default-active="groupIndex">
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-user"></i>
+            <i class="el-icon-user" style="color: white"></i>
             <span>我的团队</span>
           </template>
           <el-menu-item-group>
@@ -19,7 +19,7 @@
                           @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
               {{group.groupName}}</el-menu-item>
             <el-menu-item :index="this.groupList.length+ ''" class="left-bar"
-                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
+                          @click="newTeamDialogVisible = true"><i class="el-icon-plus" style="color: white"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -237,7 +237,7 @@
                         @click="toProject(project.projectID)"
                         style="margin-left: 7vh; margin-top: 4vh"></projectCover>
         </div>
-        <div class="content-team" v-if="activeIndex==='2'">
+        <div style="margin-top: 3vh" v-if="activeIndex==='2'">
           <el-table
               :data="curMemberList"
               stripe
@@ -250,17 +250,17 @@
             <el-table-column
                 prop="realName"
                 label="真实姓名"
-                width="100">
+                width="140">
             </el-table-column>
             <el-table-column
                 prop="useremail"
                 label="邮箱"
-                width="180">
+                width="240">
             </el-table-column>
             <el-table-column
                 prop="level"
                 label="权限"
-                width="80">
+                width="160">
             </el-table-column>
             <el-table-column
                 fixed="right"
@@ -366,7 +366,6 @@ export default {
     };
   },
   created() {
-    //console.log(localStorage);
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
     this.getGroup();
@@ -379,7 +378,8 @@ export default {
       const formData = new FormData();
       formData.append("userID", self.curUserID);
       formData.append("email",self.newUserEmail);
-      console.log(self.newUserEmail);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
       self.$axios({
         method: 'post',
         url: 'Login/editUserInfo/',
@@ -407,13 +407,15 @@ export default {
       formData.append("useremail", self.currentUserEmail);
       formData.append("password",self.newPassword);
       formData.append("code",self.checkCode);
-      //console.log(self.code)
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
       self.$axios({
         method: 'post',
         url: 'Login/update/',
         data: formData,
       })
           .then(res => {
+            console.log(res.data);
             switch (res.data.error) {
               case 0:
                 // 前端保存用户信息
@@ -439,6 +441,8 @@ export default {
       const self = this;
       const formData = new FormData();
       formData.append("email", self.currentUserEmail);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
       console.log(self.currentUserEmail);
       self.$axios({
         method: 'post',
@@ -869,18 +873,19 @@ export default {
 
 <style>
 .home {
-  position: absolute;
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: row;
   height: 100%;
+  min-height: 100vh;
 }
 
 .nav-left {
   position: relative;
   width: 300px;
-  height: 100%;
-  background-color: #f3f0e1;
-  border-right: 1px solid #e8e8e8;
+  height: auto;
+  background-color: #112F4B;
   margin-right: 20px;
 }
 
@@ -899,7 +904,8 @@ export default {
 .content-project {
   display: flex;
   flex-wrap: wrap;
-  width: 150vh;
+  width: 160vh;
+  margin-left: -20px;
 }
 
 .member-tag {
@@ -985,7 +991,7 @@ export default {
 
 .select-box {
   position: relative;
-  width: 100%;
+  width: 100.3%;
   text-align: left;
   align-items: center;
   justify-content: center;
@@ -1030,9 +1036,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
   width: 100%;
-  margin-top: 30vh;
-  margin-left: 60vh;
+  margin-top: 33vh;
+  margin-left: 42vh;
 }
 </style>

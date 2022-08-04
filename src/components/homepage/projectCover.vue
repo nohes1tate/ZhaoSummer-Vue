@@ -203,16 +203,17 @@ export default {
 #project-cover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   border-radius: 20px;
-  width: 220px;
+  width: 240px;
+  padding-left: 10px;
+  padding-right: 10px;
   height: 250px;
   display: flex;
   flex-direction: column;
   text-align: left;
   cursor: pointer;
-  background: #FBF1E3;
+  border: solid 2px grey;
 }
 #project-cover:hover {
-  border: solid 2px deepskyblue;
   background: #d9d9d9;
 }
 .info-row {
