@@ -38,7 +38,7 @@
         :visible.sync="deleteProjectDialogVisible"
         width="30%"
         :before-close="handleClose">
-      <span>确认删除项目xxx?</span>
+      <span>确认删除项目?</span>
       <span slot="footer" class="dialog-footer">
     <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="deleteProject">确 定</el-button>
@@ -72,10 +72,10 @@ export default {
     renameProject() {
       const formData = new FormData();
       formData.append("projectName", this.projectName);
-      formData.append("projectTeamID", this.curGroupID);
-      formData.append("projectUserID", this.curUserID);
+      formData.append("projectTeamID", this.groupID);
+      formData.append("projectUserID", this.userID);
       formData.append("projectNewName", this.newProjectNameForm.newProjectName);
-      formData.append("username", this.curUsername);
+      formData.append("username", this.username);
       formData.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
@@ -116,9 +116,9 @@ export default {
     deleteProject() {
       const formData = new FormData();
       formData.append("projectName", this.projectName);
-      formData.append("projectTeamID", this.curGroupID);
-      formData.append("projectUserID", this.curUserID);
-      formData.append("username", this.curUsername);
+      formData.append("projectTeamID", this.groupID);
+      formData.append("projectUserID", this.userID);
+      formData.append("username", this.username);
       formData.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
@@ -158,7 +158,10 @@ export default {
     },
   },
   props:{
-    projectName:{default:'项目名称'}
+    projectName:{default:'项目名称'},
+    groupID:{default: 0},
+    userID:{default: 0},
+    username:{default: ''},
   },
 }
 </script>
