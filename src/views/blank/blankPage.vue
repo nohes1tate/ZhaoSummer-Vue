@@ -7,7 +7,7 @@ export default {
   name: "blankPage",
   methods: {
     mounted() {
-      this.$router.push('/home')
+      this.$router.push('/login')
     }
   }
 }
