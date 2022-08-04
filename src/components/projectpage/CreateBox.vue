@@ -41,12 +41,7 @@ export default {
       //console.log(this.$route.params.projectID)
     },
     toDrawio(){
-      window.open('https://app.diagrams.net/')
-    },
-    go(path) {
-      if (path !== this.$route.fullPath) {
-        this.$router.push(path);
-      }
+      window.open('https://app.diagrams.net/');
       this.showTip1=false;
       this.showTip2=false;
       this.showTip3=false;
@@ -56,18 +51,27 @@ export default {
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
     },
     toNewPage(){
-      let path ='/project/'+this.projectID+'/testPage';
+      let path ='/project/'+this.projectID+'/axure/0';
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
     },
     toNewDocument(){
-      let path='/project/'+this.projectID+'/testDocument/0';
+      let path='/project/'+this.projectID+'/document/0';
       if(path !== this.$route.fullPath){
         this.$router.push(path);
       }
+      this.showTip1=false;
+      this.showTip2=false;
+      this.showTip3=false;
     }
   },
 }

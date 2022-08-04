@@ -12,7 +12,7 @@
         background-color="#f3f0e1"
         text-color="#000"
         active-text-color="#6667ab">
-      <el-menu-item index="1" @click="go('/project/overview')">
+      <el-menu-item index="1" @click="getOverview">
         <i class="el-icon-menu"></i>
         <span slot="title">项目概览</span>
       </el-menu-item>
@@ -84,7 +84,13 @@ export default {
   },
   methods: {
     go(path) {
-      console.log(path);
+      //console.log(path);
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    getOverview(){
+      let path ='/project/'+this.projectID+'/overview';
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
