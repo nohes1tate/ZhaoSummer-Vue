@@ -66,15 +66,42 @@ export default {
       this.showTip3=false;
     },
     toNewDocument(){
-      this.projectID=this.$route.params.projectID;
-      let path='/project/'+this.projectID+'/document/0';
-      if(path !== this.$route.fullPath){
-        this.$router.push(path);
+      const self = this
+      const data = new FormData
+      data.append('userID',localStorage.getItem('userID'))
+      console.log(localStorage.getItem('userID'))
+      data.append('projectID',this.$route.params.projectID)
+      console.log(this.$route.params.projectID)
+      data.append('username',localStorage.getItem('username'))
+      console.log(localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      console.log(localStorage.getItem('authorization'))
+      this.$prompt('文档名称','创建文档',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{3,20}$/,
+        inputErrorMessage: '文档名在3~20字之间'
+      }).then(({ value }) => {
+        data.append('title',value)
+        self.$axios({
+          method: 'post',
+          url: 'DocsEdit/createDocument/',
+          data: data
+        })
+        .then(res => {
+          console.log(res)
+          if(res.data.error !==0) {
+            this.$message.error(res.data.msg)
+          }
+          else {
+            console.log('111')
+          }
+        })
+      }).catch(() => {
+      });
+
+
       }
-      this.showTip1=false;
-      this.showTip2=false;
-      this.showTip3=false;
-    }
   },
 }
 </script>
