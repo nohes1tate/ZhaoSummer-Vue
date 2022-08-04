@@ -37,7 +37,7 @@ const routes = [
     component:()=>import('../views/login/LoginView')
   },
   {
-    path: '/project',
+    path: '/project/:projectID',
     name: 'project',
     component: () => import(/* webpackChunkName: "about" */ '../views/project/Project'),
     children:[
@@ -52,7 +52,7 @@ const routes = [
           title:"新建"
         }},
       {
-        path: "testDocument/:documentID",
+        path: "document/:documentID",
         component: documentEditor,
         meta: {
           title: "文档页", //页面标题
@@ -68,7 +68,7 @@ const routes = [
         }
       },
       {
-        path: "testPage",
+        path: "axure/:pageID",
         component: designTool,
         meta: {
           title: "页面设计页", //页面标题

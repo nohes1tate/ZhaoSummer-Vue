@@ -121,9 +121,8 @@ export default {
     },
   },
   created() {
-    if (this.$vnode) {
-      this.$vnode.parent.componentInstance.cache = {}
-    }
+    console.log(this.$route.params.projectID)
+    console.log(this.$route.params.documentID)
   }
 }
 </script>

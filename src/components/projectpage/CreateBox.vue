@@ -35,6 +35,10 @@ export default {
     }
   },
   methods: {
+    mounted()
+    {
+      //console.log(this.$route.params.projectID)
+    },
     toDrawio(){
       window.open('https://app.diagrams.net/')
     },
@@ -115,7 +119,7 @@ export default {
   z-index: 2;
   top:16vh;
   left: 30vh;
-  box-shadow: 0px 5px 15px 2px grey;
+  box-shadow: 0 5px 15px 2px grey;
 }
 .tip1::before,.tip1::after{
   content: '';
@@ -146,7 +150,7 @@ export default {
   z-index: 2;
   top:16vh;
   left: 75vh;
-  box-shadow: 0px 5px 15px 2px grey;
+  box-shadow: 0 5px 15px 2px grey;
 }
 .tip2::before,.tip2::after{
   content: '';
@@ -173,7 +177,7 @@ export default {
   z-index: 2;
   top:16vh;
   left: 121vh;
-  box-shadow: 0px 5px 15px 2px grey;
+  box-shadow: 0 5px 15px 2px grey;
 }
 .tip3::before,.tip3::after{
   content: '';
