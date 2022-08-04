@@ -4,13 +4,13 @@
       <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;" src="@/assets/logo/墨书.png" alt="">
       <el-menu
           class="select-box"
-          background-color="#f3f0e1"
-          text-color="#000"
-          active-text-color="#6667ab"
+          background-color="#112F4B"
+          active-text-color="#999999"
+          text-color="#FFFFFF"
           :default-active="groupIndex">
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-user"></i>
+            <i class="el-icon-user" style="color: white"></i>
             <span>我的团队</span>
           </template>
           <el-menu-item-group>
@@ -19,7 +19,7 @@
                           @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
               {{group.groupName}}</el-menu-item>
             <el-menu-item :index="this.groupList.length+ ''" class="left-bar"
-                          @click="newTeamDialogVisible = true"><i class="el-icon-plus"></i>新建团队</el-menu-item>
+                          @click="newTeamDialogVisible = true"><i class="el-icon-plus" style="color: #FBF1E3"></i>新建团队</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -55,8 +55,7 @@
     <el-dialog
         title="账号设置"
         :visible.sync="personalInfoDialogVisible"
-        width="60%"
-        v-model="newCodeForm,newEmailForm">
+        width="60%">
       <div class="container-style">
         <div class="left-box">
           <el-menu
@@ -870,18 +869,18 @@ export default {
 
 <style>
 .home {
-  position: absolute;
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: 100vh;
 }
 
 .nav-left {
   position: relative;
   width: 300px;
-  height: 100%;
-  background-color: #f3f0e1;
-  border-right: 1px solid #e8e8e8;
+  height: auto;
+  background-color: #112F4B;
   margin-right: 20px;
 }
 
