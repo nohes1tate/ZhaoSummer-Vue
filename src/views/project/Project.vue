@@ -90,12 +90,14 @@ export default {
       }
     },
     getOverview(){
+      this.projectID=this.$route.params.projectID;
       let path ='/project/'+this.projectID+'/overview';
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
     },
     backToNew(){
+      this.projectID=this.$route.params.projectID;
       let path ='/project/'+this.projectID;
       if (path !== this.$route.fullPath) {
         this.$router.push(path);

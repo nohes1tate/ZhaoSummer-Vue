@@ -47,6 +47,7 @@ export default {
       this.showTip3=false;
     },
     backToNew(){
+      this.projectID=this.$route.params.projectID;
       let path ='/project/'+this.projectID;
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
@@ -56,6 +57,7 @@ export default {
       this.showTip3=false;
     },
     toNewPage(){
+      this.projectID=this.$route.params.projectID;
       let path ='/project/'+this.projectID+'/axure/0';
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
@@ -65,6 +67,7 @@ export default {
       this.showTip3=false;
     },
     toNewDocument(){
+      this.projectID=this.$route.params.projectID;
       let path='/project/'+this.projectID+'/document/0';
       if(path !== this.$route.fullPath){
         this.$router.push(path);
