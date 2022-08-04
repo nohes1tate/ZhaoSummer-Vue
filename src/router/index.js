@@ -82,7 +82,28 @@ const routes = [
           title: "项目概览",
         }
       }
+
     ]
+  },
+  {
+    path: '/*',
+    name: 'PageNotFound',
+    component: () => import('../views/error/PageNotFound'),
+  },
+  {
+    path: '/',
+    name: 'blank',
+    component: () => import('../views/blank/blankPage')
+  },
+  {
+    path: '',
+    name: 'blank',
+    component: () => import('../views/blank/blankPage')
+  },
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: () => import('../views/register/ConfirmView'),
   },
 ]
 
