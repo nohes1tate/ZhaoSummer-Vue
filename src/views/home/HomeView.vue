@@ -366,7 +366,6 @@ export default {
     };
   },
   created() {
-    //console.log(localStorage);
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
     this.getGroup();
@@ -381,7 +380,6 @@ export default {
       formData.append("email",self.newUserEmail);
       formData.append("authorization", localStorage.getItem('authorization'));
       formData.append("username", this.curUsername);
-      //console.log(self.newUserEmail);
       self.$axios({
         method: 'post',
         url: 'Login/editUserInfo/',
@@ -411,7 +409,6 @@ export default {
       formData.append("code",self.checkCode);
       formData.append("authorization", localStorage.getItem('authorization'));
       formData.append("username", this.curUsername);
-      //console.log(self.code)
       self.$axios({
         method: 'post',
         url: 'Login/update/',
