@@ -379,7 +379,9 @@ export default {
       const formData = new FormData();
       formData.append("userID", self.curUserID);
       formData.append("email",self.newUserEmail);
-      console.log(self.newUserEmail);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
+      //console.log(self.newUserEmail);
       self.$axios({
         method: 'post',
         url: 'Login/editUserInfo/',
@@ -407,6 +409,8 @@ export default {
       formData.append("useremail", self.currentUserEmail);
       formData.append("password",self.newPassword);
       formData.append("code",self.checkCode);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
       //console.log(self.code)
       self.$axios({
         method: 'post',
@@ -414,6 +418,7 @@ export default {
         data: formData,
       })
           .then(res => {
+            console.log(res.data);
             switch (res.data.error) {
               case 0:
                 // 前端保存用户信息
@@ -439,6 +444,8 @@ export default {
       const self = this;
       const formData = new FormData();
       formData.append("email", self.currentUserEmail);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      formData.append("username", this.curUsername);
       console.log(self.currentUserEmail);
       self.$axios({
         method: 'post',

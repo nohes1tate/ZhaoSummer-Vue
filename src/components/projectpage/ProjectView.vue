@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted() {
-    //con
+
     this.projectID=this.$route.params.projectID;
     const requestForm1 = new FormData();
     requestForm1.append("projectID",this.projectID);
@@ -45,7 +45,8 @@ export default {
       data: requestForm1
     })
         .then(res=>{
-          this.doc_list=JSON.parse(res.data.docID);
+          this.doc_list=res.data.docID;
+
         })
     this.docNum=this.doc_list.length;
 
@@ -55,6 +56,7 @@ export default {
       data: requestForm1
     })
         .then(res=>{
+          console.log(res.data);
           this.page_list=res.data.axure_list;
         })
     this.pageNum=this.page_list.length;
