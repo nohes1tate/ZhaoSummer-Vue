@@ -75,7 +75,7 @@ export default {
     PageTabs
   },
   mounted() {
-    console.log(this.$route.path)
+    //console.log(this.$route.path)
     this.dateKey = !this.dateKey
     this.projectID = this.$route.params.projectID
     if (this.$refs.keepAliveContainer) {
@@ -95,7 +95,7 @@ export default {
     })
         .then(res=>{
           if(res.data.error === 0){
-            console.log(res.data.axure_list)
+            //console.log(res.data.axure_list)
           this.axureList=res.data.axure_list;
           }
         })
@@ -116,10 +116,10 @@ export default {
       this.$message.success(params)
     },
     fuck() {
-      console.log('getEmit')
+      //console.log('getEmit')
     },
     go(path) {
-      //console.log(path);
+      ////console.log(path);
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
@@ -131,7 +131,7 @@ export default {
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
-      //console.log(this.$children)
+      ////console.log(this.$children)
     },
     goAxure(axureID) {
       this.projectID = this.$route.params.projectID;
@@ -160,10 +160,10 @@ export default {
       window.open('https://app.diagrams.net/')
     },
     handleClose() {
-      console.log('close')
+      //console.log('close')
     },
     handleOpen() {
-      console.log('open')
+      //console.log('open')
     },
     getProjectInfo() {
       const formData = new FormData();
@@ -188,13 +188,13 @@ export default {
           })
     },
     appendNewDoc(data) {
-      console.log('getNewDoc')
-      console.log(data)
+      //console.log('getNewDoc')
+      //console.log(data)
       this.documentList.push(data)
       this.goDocument(data.documentID)
     },
     appendNewAxure(data) {
-      console.log(data)
+      //console.log(data)
       this.axureList.push(data)
       this.goAxure(data.axureID)
     }
