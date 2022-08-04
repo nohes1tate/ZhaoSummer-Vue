@@ -50,7 +50,7 @@ export default {
 }
 .top-box-line span{
   font-size: 20px;
-  color: dimgrey;
+  color: black;
 }
 .top-box-under{
   //border: solid 1px blue;

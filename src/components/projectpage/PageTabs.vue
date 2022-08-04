@@ -263,7 +263,7 @@ export default {
     }
   }
 
-  $c-tab-border-color: #f9f9f9;
+  $c-tab-border-color: grey;
   position: relative;
   &::before {
     content: "";
@@ -280,6 +280,7 @@ export default {
       white-space: nowrap;
       padding: 8px 6px 8px 18px;
       font-size: 12px;
+      color: white;
       border: 1px solid $c-tab-border-color;
       border-left: none;
       border-bottom: 0px;
@@ -297,17 +298,17 @@ export default {
         margin-right: 10px;
       }
       &:not(.__is-active):hover {
-        color: #409eff;
+        color: #112F4B;
         .el-icon-close {
           width: 12px;
           margin-right: 0px;
         }
       }
       &.__is-active {
-        background-color: white;
+        background-color: #FBC2A6;
         padding-right: 12px;
-        border-bottom: 1px solid white;
-        color: #409eff;
+        border-bottom: 1px solid #FBC2A6;
+        color: dimgrey;
         .el-icon-close {
           width: 12px;
           margin-right: 0px;

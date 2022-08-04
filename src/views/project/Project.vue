@@ -8,14 +8,18 @@
     <el-menu
         class="select-box"
         @open="handleOpen"
-        @close="handleClose">
+        @close="handleClose"
+        background-color="#8AB6C9"
+        active-text-color="#112F4B"
+        text-color="#FBF1E3"
+        >
       <el-menu-item index="1" @click="getOverview">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-menu" style="color: #FBF1E3"></i>
         <span slot="title">项目概览</span>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
-          <i class="el-icon-brush"></i>
+          <i class="el-icon-brush" style="color: #FBF1E3"></i>
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
@@ -27,12 +31,12 @@
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="3" @click="toDrawio()">
-        <i class="el-icon-s-marketing"></i>
+        <i class="el-icon-s-marketing" style="color: #FBF1E3"></i>
         <span slot="title">UML图</span>
       </el-menu-item>
       <el-submenu index="4">
         <template slot="title">
-          <i class="el-icon-document"></i>
+          <i class="el-icon-document" style="color: #FBF1E3"></i>
           <span>项目文档</span>
         </template>
         <el-menu-item-group>
@@ -44,7 +48,7 @@
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="5" @click="backToNew">
-        <i class="el-icon-folder-add"></i>
+        <i class="el-icon-folder-add" style="color: #FBF1E3"></i>
         <span slot="title">新建</span>
       </el-menu-item>
     </el-menu>
@@ -162,7 +166,7 @@ export default {
 .project{
   width: 100%;
   height: 100vh;
-  background-color: white;
+  background-color: #FBC2A6;
   display: flex;
   position: absolute;
 }
@@ -172,10 +176,11 @@ export default {
   position: relative;
   width: 35vh;
   height: 100vh;
-  background-color: #fcfcfc;
+  background-color: #8AB6C9;
+
   text-align: left;
-  border-right: solid 1px #fcfcfc;
 }
+
 .title-line{
   width: 300px;
   height: 50px;
@@ -188,15 +193,17 @@ export default {
   margin-left: 20px;
   font-weight: 800;
   font-size: 25px;
+  color: #FBF1E3;
   transition: background-color .2s,color .2s;
 }
 .title-line span:hover{
-  color: deepskyblue;
+  color: #112F4B;
   cursor: pointer;
 }
 .select-box{
   position: relative;
-  top:20px;
+  top:5vh;
+  width: 101%;
 }
 .project-view-line span{
   margin-top: 3px;
@@ -219,7 +226,7 @@ export default {
   height: 5%;
   display: flex;
   margin-bottom: 5px;
-  background-color: #fcfcfc;
+  background-color: #8AB6C9;
 }
 .top-card i{
   margin-top: 80px;
@@ -256,7 +263,7 @@ export default {
   color: grey;
   margin-top: 5px;
 }
-el-menu-item .span {
+.el-menu-item .span {
   display:block;
   width:90%;
   overflow:hidden;
