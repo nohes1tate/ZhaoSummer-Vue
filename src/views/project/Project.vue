@@ -23,7 +23,7 @@
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList" :index="index+''" v-bind:key="index" @click="goAxure(item.axureID)"><span style="  display:block;
+          <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList" :index="index+''" v-bind:key="index" @click="goAxure(item.axureID,item.axureName)"><span style="  display:block;
   width:90%;
   overflow:hidden;
   white-space:nowrap;
@@ -106,11 +106,12 @@ export default {
         this.$router.push(path);
       }
     },
-    goAxure(axureID) {
+    goAxure(axureID,axureName) {
       this.projectID=this.$route.params.projectID;
       let path = '/project/' + this.projectID + '/axure/' + axureID
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
+        this.$route.meta.title=axureName;
       }
     },
     goDocument(documentID) {

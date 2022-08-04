@@ -75,6 +75,7 @@ export default {
       contextMenuTop: 0, //右键菜单显示位置
       contextMenuTargetPageRoute: null, //右键所指向的菜单路由
       openedPageRouters: [], //已打开的路由页面
+      title:'',
     };
   },
   watch: {
@@ -94,6 +95,7 @@ export default {
     window.removeEventListener("click", this.closeContextMenu);
   },
   methods: {
+
     //打开页面
     openPage(route) {
       if (route.name === this.blankRouteName) {

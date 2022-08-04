@@ -107,7 +107,7 @@ export default {
   margin-top: 17vh;
   display: flex;
   text-align: center;
-  margin-left: 17vh;
+  margin-left: 37vh;
 }
 .box-card{
   width: 43vh;
