@@ -1,5 +1,5 @@
 <template>
-  <div id="project-cover">
+  <div id="project-cover" @click="toProject">
     <div style="margin-left: 10px; margin-top: 15px; width: 450px">
       {{projectName}}
     </div>
@@ -38,7 +38,7 @@
         :visible.sync="deleteProjectDialogVisible"
         width="30%"
         :before-close="handleClose">
-      <span>确认删除项目?</span>
+      <span>确认删除项目 {{projectName}} ?</span>
       <span slot="footer" class="dialog-footer">
     <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="deleteProject">确 定</el-button>
@@ -156,12 +156,17 @@ export default {
             console.log(err);
           })
     },
+    toProject() {
+      let path = this.$router.resolve('/project/'+this.projectID);
+      window.open(path.href)
+    }
   },
   props:{
     projectName:{default:'项目名称'},
     groupID:{default: 0},
     userID:{default: 0},
     username:{default: ''},
+    projectID:{default: 0},
   },
 }
 </script>

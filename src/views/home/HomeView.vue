@@ -196,7 +196,7 @@
           </el-button>
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
-          <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername
+          <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
                         v-for="project in curProjectList" v-bind:key="project.projectID"></projectCover>
         </div>
         <div class="content-team" v-if="activeIndex==='2'">
