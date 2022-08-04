@@ -12,6 +12,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'blankPage',
+    component: () => import('../views/login/LoginView')
+  },
+  {
     path: '/test',
     name: 'test',
     component: () => import('../views/AboutView')
@@ -86,24 +91,14 @@ const routes = [
     ]
   },
   {
-    path: '/*',
-    name: 'PageNotFound',
-    component: () => import('../views/error/PageNotFound'),
-  },
-  {
-    path: '/',
-    name: 'blank',
-    component: () => import('../views/blank/blankPage')
-  },
-  {
-    path: '',
-    name: 'blank',
-    component: () => import('../views/blank/blankPage')
-  },
-  {
     path: '/confirm',
     name: 'Confirm',
     component: () => import('../views/register/ConfirmView'),
+  },
+  {
+    path: '/*',
+    name: 'PageNotFound',
+    component: () => import('../views/error/PageNotFound'),
   },
 ]
 
