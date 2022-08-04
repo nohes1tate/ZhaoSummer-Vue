@@ -305,9 +305,9 @@ export default {
         }
       }
       &.__is-active {
-        background-color: #FBC2A6;
+        background-color: #f9f4e7;
         padding-right: 12px;
-        border-bottom: 1px solid #FBC2A6;
+        border-bottom: 1px solid #f9f4e7;
         color: dimgrey;
         .el-icon-close {
           width: 12px;

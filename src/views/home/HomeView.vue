@@ -440,6 +440,7 @@ export default {
       const self = this;
       const formData = new FormData();
       formData.append("email", self.newCodeForm.email);
+      console.log(self.newCodeForm.email);
       self.$axios({
         method: 'post',
         url: 'Login/forget/',
