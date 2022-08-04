@@ -221,7 +221,7 @@
                 width="180">
             </el-table-column>
             <el-table-column
-                prop="isManager"
+                prop="level"
                 label="权限"
                 width="80">
             </el-table-column>
@@ -369,7 +369,7 @@ export default {
             data: formData,
           })
               .then(res => {
-                console.log(res);
+                //console.log(res);
                 switch (res.data.error) {
                   case 0:
                     this.$message({
@@ -449,7 +449,7 @@ export default {
         data: formData,
       })
           .then(res => {
-            console.log(res.data)
+            //console.log(res.data)
             switch (res.data.error) {
               case 0:
                 //console.log(res.data.group_list);
@@ -488,8 +488,8 @@ export default {
               switch (res.data.error) {
                 case 0:
                   this.curProjectList = res.data.project_list;
-                  console.log('项目列表：');
-                  console.log(res.data.project_list);
+                  //console.log('项目列表：');
+                  //console.log(res.data.project_list);
                   break;
               }
             })
