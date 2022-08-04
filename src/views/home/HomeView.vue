@@ -231,8 +231,11 @@
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
           <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
+                        :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
+                        :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
                         v-for="project in curProjectList" v-bind:key="project.projectID"
-                        @click="toProject(project.projectID)"></projectCover>
+                        @click="toProject(project.projectID)"
+                        style="margin-left: 7vh; margin-top: 4vh"></projectCover>
         </div>
         <div class="content-team" v-if="activeIndex==='2'">
           <el-table
@@ -899,9 +902,8 @@ export default {
 
 .content-project {
   display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  margin-left: 10px;
+  flex-wrap: wrap;
+  width: 150vh;
 }
 
 .member-tag {
