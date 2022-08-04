@@ -810,10 +810,6 @@ export default {
             console.log(err);
           })
     },
-    updateCode() {
-      //const formData = new FormData();
-
-    },
     logout() {
       //console.log(this.curUserID)
       this.deleteProjectDialogVisible = true;

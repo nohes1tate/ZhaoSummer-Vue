@@ -22,8 +22,7 @@
           <span>原型设计</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">选项1</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
+          <el-menu-item v-for="(item,index) in axureList" :index="index" v-bind:key="index" @click="goAxure(item.axureID)">{{item.axureName}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="3" @click="toDrawio()">
@@ -36,8 +35,8 @@
           <span>项目文档</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">选项1</el-menu-item>
-          <el-menu-item index="4-2">选项2</el-menu-item>
+          <el-menu-item v-for="(item,index) in documentList" :index="index" v-bind:key="index" @click="goDocument(item.documentID)">{{item.documentName}}</el-menu-item>
+
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="5" @click="backToNew">
@@ -80,6 +79,8 @@ export default {
       showTip: false,
       projectName:'小学期项目',
       projectID:0,
+      axureList: [{axureID: 1,axureName: '临时原型'}],
+      documentList: [{documentID: 1,documentName: '临时文档'}],
     }
   },
   methods: {
@@ -90,8 +91,23 @@ export default {
       }
     },
     getOverview(){
+      this.axureList.push({axureID: 2,axureName: '新的axure'})
       this.projectID=this.$route.params.projectID;
       let path ='/project/'+this.projectID+'/overview';
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    goAxure(axureID) {
+      this.projectID=this.$route.params.projectID;
+      let path = '/project/' + this.projectID + '/axure/' + axureID
+      if (path !== this.$route.fullPath) {
+        this.$router.push(path);
+      }
+    },
+    goDocument(documentID) {
+      this.projectID=this.$route.params.projectID;
+      let path = '/project/' + this.projectID + '/document/' + documentID
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
       }
@@ -222,7 +238,7 @@ export default {
   z-index: 2;
   top:70px;
   left: 5px;
-  box-shadow: 0px 5px 15px 2px grey;
+  box-shadow: 0 5px 15px 2px grey;
 }
 .tip::before,.tip::after{
   content: '';
