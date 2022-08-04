@@ -173,8 +173,7 @@
           <el-button type="primary" v-if="activeIndex==='2'"><i class="el-icon-plus"></i> 邀请成员</el-button>
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
-          <projectCover projectName='项目1'></projectCover>
-          <projectCover projectName='项目2'></projectCover>
+          <projectCover :projectName=project.projectName v-for="project in curProjectList" v-bind:key="project.projectID"></projectCover>
         </div>
         <div class="content-team" v-if="activeIndex==='2'">
           <el-table
@@ -254,7 +253,7 @@ export default {
         curGroupID: 0,
         curIsManager: false,
         curIsCreator: false,
-        curProjectList: [],
+        curProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
         curMemberList: [],
         curGroupIntro: '',
         curGroupName: '示例团队',
@@ -329,6 +328,7 @@ export default {
             data: formData,
           })
               .then(res => {
+                console.log(res);
                 switch (res.data.error) {
                   case 0:
                     this.$message({
@@ -440,14 +440,15 @@ export default {
         projectForm.append("authorization", localStorage.getItem('authorization'));
         this.$axios({
           method: 'post',
-          url: 'ProjectManager/groupProjectView/',
+          url: 'TeamManager/groupViewProject/',
           data: projectForm,
         })
             .then(res => {
               switch (res.data.error) {
                 case 0:
-                  this.curProjectList = res.data.projectlist;
-                  console.log(this.curProjectList);
+                  this.curProjectList = res.data.project_list;
+                  console.log('项目列表：');
+                  console.log(res.data.project_list);
                   break;
               }
             })

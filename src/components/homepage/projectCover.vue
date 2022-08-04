@@ -30,7 +30,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="newProjectNameDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="newProjectNameDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="renameProject">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -41,7 +41,7 @@
       <span>确认删除项目xxx?</span>
       <span slot="footer" class="dialog-footer">
     <el-button @click="deleteProjectDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="deleteProjectDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="deleteProject">确 定</el-button>
   </span>
     </el-dialog>
   </div>
@@ -66,8 +66,96 @@ export default {
   },
   methods: {
     handleClose() {
-      console.log('projectClose')
-    }
+      this.newProjectNameDialogVisible = false;
+      this.deleteProjectDialogVisible = false;
+    },
+    renameProject() {
+      const formData = new FormData();
+      formData.append("projectName", this.projectName);
+      formData.append("projectTeamID", this.curGroupID);
+      formData.append("projectUserID", this.curUserID);
+      formData.append("projectNewName", this.newProjectNameForm.newProjectName);
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectRename/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '重命名成功',
+                  type: 'success'
+                });
+                this.newProjectNameDialogVisible = false;
+                location.reload();
+                break;
+              case 4001:
+                this.$message.warning('用户不存在！');
+                break;
+              case 4002:
+                this.$message.warning('团队不存在！');
+                break;
+              case 4004:
+                this.$message.warning('非团队成员无权限操作！');
+                break;
+              case 4003:
+                this.$message.warning('项目不存在！');
+                break;
+              case 4005:
+                this.$message.warning('非本团队项目无权限操作！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    deleteProject() {
+      const formData = new FormData();
+      formData.append("projectName", this.projectName);
+      formData.append("projectTeamID", this.curGroupID);
+      formData.append("projectUserID", this.curUserID);
+      formData.append("username", this.curUsername);
+      formData.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectDelete/',
+        data: formData,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.$message({
+                  message: '删除成功',
+                  type: 'success'
+                });
+                this.deleteProjectDialogVisible = false;
+                location.reload();
+                break;
+              case 4001:
+                this.$message.warning('用户不存在！');
+                break;
+              case 4002:
+                this.$message.warning('团队不存在！');
+                break;
+              case 4004:
+                this.$message.warning('非团队成员无权限操作！');
+                break;
+              case 4003:
+                this.$message.warning('项目不存在！');
+                break;
+              case 4005:
+                this.$message.warning('非本团队项目无权限操作！');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
   },
   props:{
     projectName:{default:'项目名称'}
