@@ -1,6 +1,6 @@
 <template>
   <!-- 最外层的大盒子 -->
-  <div class="bigBox">
+  <div class="bigBox" v-title data-title='登录'>
     <div class="box">
       <!-- 滑动盒子 -->
       <div class="pre-box">

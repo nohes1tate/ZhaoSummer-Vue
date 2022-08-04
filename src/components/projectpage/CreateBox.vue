@@ -4,9 +4,9 @@
       <div class="top-card">
         <i class="el-icon-edit"></i>
       </div>
-      <div class="bottom-card"><div class="text-line">新建页面</div></div>
+      <div class="bottom-card"><div class="text-line">新建原型</div></div>
     </div>
-    <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
+    <div v-show="showTip1" class="tip1"><div class="tip-line">创建原型并进行设计</div></div>
     <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="toDrawio()">
       <div class="top-card">
         <i class="el-icon-set-up"></i>
@@ -75,6 +75,7 @@ export default {
               }
               else {
                 this.$message.success('创建成功')
+                console.log(res.data)
                 this.$emit('createAxure',{axureID: res.data.pageID,axureName: value})
               }
             })

@@ -12,6 +12,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'blankPage',
+    component: () => import('../views/login/LoginView')
+  },
+  {
     path: '/test',
     name: 'test',
     component: () => import('../views/AboutView')
@@ -82,7 +87,18 @@ const routes = [
           title: "项目概览",
         }
       }
+
     ]
+  },
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: () => import('../views/register/ConfirmView'),
+  },
+  {
+    path: '/*',
+    name: 'PageNotFound',
+    component: () => import('../views/error/PageNotFound'),
   },
 ]
 
