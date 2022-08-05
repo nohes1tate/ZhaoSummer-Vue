@@ -191,6 +191,7 @@
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
             <el-menu-item index="1" @click="showProject">团队项目</el-menu-item>
             <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
+            <el-menu-item index="3" @click="showRecycle">项目回收站</el-menu-item>
           </el-menu>
         </div>
         <div class="button--">
@@ -228,6 +229,14 @@
           <el-button type="primary" v-if="activeIndex==='2'" @click="showInviteDialog = true"><i
               class="el-icon-plus"></i> 邀请成员
           </el-button>
+        </div>
+        <div class="content-project" v-if="activeIndex==='3'">
+          <recycleProjectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
+                        :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
+                        :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
+                        v-for="project in recycleProjectList" v-bind:key="project.projectID"
+                        @click="toProject(project.projectID)"
+                        style="margin-left: 7vh; margin-top: 4vh"></recycleProjectCover>
         </div>
         <div class="content-project" v-if="activeIndex==='1'">
           <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
@@ -300,10 +309,11 @@
 
 <script>
 import ProjectCover from "@/components/homepage/projectCover.vue";
+import recycleProjectCover from "@/components/homepage/recycleProjectCover";
 
 export default {
   name: 'HomeView',
-  components: {ProjectCover},
+  components: {ProjectCover,recycleProjectCover},
   data() {
     return {
       currentUserEmail:'',
@@ -330,6 +340,7 @@ export default {
       curIsManager: false,
       curIsCreator: false,
       curProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
+      recycleProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
       curMemberList: [],
       curGroupIntro: '',
       curGroupName: '示例团队',
@@ -592,6 +603,9 @@ export default {
     showTeam() {
       this.activeIndex = '2';
     },
+    showRecycle() {
+      this.activeIndex = '3';
+    },
     handleOpen() {
       console.log('open')
     },
@@ -761,6 +775,28 @@ export default {
               console.log(err);
             })
 
+      const recycleProjectForm = new FormData();
+      recycleProjectForm.append("groupID", this.curGroupID);
+      recycleProjectForm.append("username", this.curUsername);
+      recycleProjectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewRecycle/',
+        data: recycleProjectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.recycleProjectList = res.data.project_list;
+                console.log('返回回收站信息');
+                console.log(res.data.project_list);
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
       const formData = new FormData();
       formData.append("groupID", this.curGroupID);
       formData.append("username", this.curUsername);
@@ -794,8 +830,8 @@ export default {
           .then(res => {
             switch (res.data.error) {
               case 0:
-                this.curProjectList = res.data.projectlist;
-                console.log(this.curProjectList);
+                this.curProjectList = res.data.project_list;
+                //console.log(this.curProjectList);
                 break;
             }
           })
@@ -817,6 +853,28 @@ export default {
               case 0:
                 this.curMemberList = res.data.member_list;
                 //console.log(this.curMemberList);
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+      const recycleProjectForm = new FormData();
+      recycleProjectForm.append("groupID", this.curGroupID);
+      recycleProjectForm.append("username", this.curUsername);
+      recycleProjectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewRecycle/',
+        data: recycleProjectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.recycleProjectList = res.data.project_list;
+                console.log('返回回收站信息');
+                console.log(res.data.project_list);
                 break;
             }
           })
