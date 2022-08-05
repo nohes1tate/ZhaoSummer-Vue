@@ -73,7 +73,7 @@ const routes = [
         path: "document",
         component: documentEditor,
         meta: {
-          title: "文档页", //页面标题
+          title: "项目文档", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },

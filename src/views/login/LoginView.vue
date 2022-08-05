@@ -7,7 +7,7 @@
         <div class="img-box">
           <img src="@/assets/logo/墨书.png" alt="" id="avatar" />
         </div>
-        <p>高效的软工团队协作与管理平台</p>
+        <p style="font-size: 35px;font-family: 'JetBrains Mono';color: #2ca37f">高效的软工团队协作与管理平台</p>
       </div>
       <!-- 注册盒子 -->
       <div class="register-form">
@@ -310,7 +310,9 @@ input {
 .img-box {
   width: 200px;
   height: 200px;
-  margin: 20px auto;
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
   /* 设置用户禁止选中 */
   user-select: none;
   overflow: hidden;

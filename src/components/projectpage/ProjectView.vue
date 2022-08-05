@@ -46,14 +46,14 @@ export default {
       data: requestForm1
     })
         .then(res=>{
-          console.log('fuck2')
-          console.log(res.data)
+          //console.log('fuck2')
+          //console.log(res.data)
           this.page_list=res.data.axure_list;
           //console.log(res.data.axure_list.length)
-          console.log('fuck3')
+          //console.log('fuck3')
           this.pageNum=this.page_list.length;
-          console.log(this.pageNum)
-          console.log('fuck4')
+          //console.log(this.pageNum)
+          //console.log('fuck4')
         })
   }
 }
@@ -61,7 +61,6 @@ export default {
 
 <style scoped>
 .project-overview{
-  //border: solid 2px lightgrey;
   width: 170vh;
   height: 90vh;
 }
@@ -84,7 +83,6 @@ export default {
   color: black;
 }
 .top-box-under{
-  //border: solid 1px blue;
   margin-top: 20px;
   margin-left: 15px;
   display: flex;
@@ -94,14 +92,12 @@ export default {
 .info-box{
   display: flex;
   flex-direction: column;
-//border: solid 1px rosybrown;
   text-align: left;
   margin-left: 30vh;
 }
 .info-box-first{
   display: flex;
   flex-direction: column;
-  //border: solid 1px rosybrown;
   text-align: left;
 }
 .info-box-top{

@@ -12,7 +12,9 @@
             @click="onClick(item)"
             @contextmenu.prevent="showContextMenu($event, item)"
         >
-          {{ item.meta.title }}
+          <i v-once>
+            {{ item.meta.title }}
+          </i>
           <span
               class="el-icon-close"
               @click.stop="onClose(item)"
