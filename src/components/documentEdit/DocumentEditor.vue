@@ -9,7 +9,9 @@
               :class="{ 'is-active': isActive.bold() }"
               @click="commands.bold"
           >
-            <span class="iconfont icon-01jiacu" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-01jiacu"></use>
+            </svg>
           </button>
 
           <button
@@ -17,7 +19,9 @@
               :class="{ 'is-active': isActive.italic() }"
               @click="commands.italic"
           >
-            <span class="iconfont icon-02xieti" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-02xieti"></use>
+            </svg>
           </button>
 
           <button
@@ -25,7 +29,9 @@
               :class="{ 'is-active': isActive.strike() }"
               @click="commands.strike"
           >
-            <span class="iconfont icon-04shanchuxian" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-04shanchuxian"></use>
+            </svg>
           </button>
 
           <button
@@ -33,7 +39,9 @@
               :class="{ 'is-active': isActive.underline() }"
               @click="commands.underline"
           >
-            <span class="iconfont icon-03xiahuaxian" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-03xiahuaxian"></use>
+            </svg>
           </button>
 
           <button
@@ -41,7 +49,9 @@
               :class="{ 'is-active': isActive.heading({ level: 1 }) }"
               @click="commands.heading({ level: 1 })"
           >
-            <span class="iconfont icon-13biaoti1" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-13biaoti1"></use>
+            </svg>
           </button>
 
           <button
@@ -49,7 +59,9 @@
               :class="{ 'is-active': isActive.heading({ level: 2 }) }"
               @click="commands.heading({ level: 2 })"
           >
-            <span class="iconfont icon-14biaoti2" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-14biaoti2"></use>
+            </svg>
           </button>
 
           <button
@@ -57,7 +69,9 @@
               :class="{ 'is-active': isActive.heading({ level: 3 }) }"
               @click="commands.heading({ level: 3 })"
           >
-            <span class="iconfont icon-15biaoti3" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-15biaoti3"></use>
+            </svg>
           </button>
 
           <button
@@ -65,7 +79,9 @@
               :class="{ 'is-active': isActive.bullet_list() }"
               @click="commands.bullet_list"
           >
-            <span class="iconfont icon-20xiangmufuhao" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-20xiangmufuhao"></use>
+            </svg>
           </button>
 
           <button
@@ -73,7 +89,9 @@
               :class="{ 'is-active': isActive.ordered_list() }"
               @click="commands.ordered_list"
           >
-            <span class="iconfont icon-21bianhaogeshi" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-21bianhaogeshi"></use>
+            </svg>
           </button>
 
           <button
@@ -81,7 +99,9 @@
               :class="{ 'is-active': isActive.blockquote() }"
               @click="commands.blockquote"
           >
-            <span class="iconfont icon-quote" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-quote"></use>
+            </svg>
           </button>
 
           <button
@@ -89,41 +109,53 @@
               :class="{ 'is-active': isActive.code_block() }"
               @click="commands.code_block"
           >
-            <span class="iconfont icon-yuandaimaxiayoudaima" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-yuandaimaxiayoudaima"></use>
+            </svg>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.horizontal_rule"
           >
-            <span class="iconfont icon-hr" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-hr"></use>
+            </svg>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.undo"
           >
-            <span class="iconfont icon-25chehui" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-25chehui"></use>
+            </svg>
           </button>
 
           <button
               class="menubar__button"
               @click="commands.redo"
           >
-            <span class="iconfont icon-26quxiaochehui" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-26quxiaochehui"></use>
+            </svg>
           </button>
           <button
               class="menubar__button"
               @click="test()"
           >
-            <span class="iconfont icon-shanchu" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-shanchu"></use>
+            </svg>
           </button>
 
           <button
               class="menubar__button"
               @click="save()"
           >
-            <span class="iconfont icon-save" style="font-size: 30px;"></span>
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-save"></use>
+            </svg>
           </button>
           <hr style="height: 4px;color: black;background: black"/>
         </div>
@@ -139,6 +171,7 @@
 </style>
 
 <script>
+import '@/assets/fonts/iconfont.js'
 import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
 import {
   Blockquote,
@@ -305,4 +338,15 @@ export default {
 .menubar {
   width: 140vh;
 }
+.icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.icon:hover {
+  background: #8c8c8c;
+}
+
 </style>

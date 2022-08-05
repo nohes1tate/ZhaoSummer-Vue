@@ -7,6 +7,7 @@
 <script>
 import documentEditor from "@/components/documentEdit/DocumentEditor";
 
+
 export default {
   name: "DocumentView",
   components: {
