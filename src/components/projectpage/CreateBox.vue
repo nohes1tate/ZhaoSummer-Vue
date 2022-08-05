@@ -4,9 +4,9 @@
       <div class="top-card">
         <i class="el-icon-edit"></i>
       </div>
-      <div class="bottom-card"><div class="text-line">新建原型</div></div>
+      <div class="bottom-card"><div class="text-line">新建页面</div></div>
     </div>
-    <div v-show="showTip1" class="tip1"><div class="tip-line">创建原型并进行设计</div></div>
+    <div v-show="showTip1" class="tip1"><div class="tip-line">创建页面并进行设计</div></div>
     <div class="box-card" @mouseenter="showTip2 = true" @mouseleave="showTip2 = false" @click="toDrawio()">
       <div class="top-card">
         <i class="el-icon-set-up"></i>
@@ -56,11 +56,11 @@ export default {
       data.append('projectID',this.$route.params.projectID)
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
-      this.$prompt('原型名称','创建原型',{
+      this.$prompt('页面名称','创建页面',{
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^.{3,20}$/,
-        inputErrorMessage: '原型名在3~20字之间'
+        inputErrorMessage: '页面名在3~20字之间'
       }).then(({ value }) => {
         data.append('axureName',value)
         self.$axios({

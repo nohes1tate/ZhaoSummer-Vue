@@ -25,7 +25,7 @@
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-brush" style="color: #FBF1E3"></i>
-            <span>原型设计</span>
+            <span>页面设计</span>
           </template>
           <el-menu-item-group>
             <el-menu-item style="text-overflow: ellipsis" v-for="(item,index) in axureList"
