@@ -44,13 +44,7 @@ export const defalutMenus = {
   // middle: []
 };
 
-export const defalutUserMenus = [
-  {
-    name: '账号设置',
-  },
-  {},
-  { name: '退出', action: 'logout' }
-];
+export const defalutUserMenus = null;
 
 export const defalutMaterials = [
   {

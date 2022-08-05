@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" v-title :data-title='title' :key="reloadKey" >
     <div class="left-side-box">
       <div class="title-line" @mouseenter="showTip = true" @mouseleave="showTip = false" @click="go('/home')">
         <span>{{ this.projectName }}</span>
@@ -104,6 +104,8 @@ export default {
   },
   data() {
     return {
+      reloadKey: false,
+      title: '',
       dateKey: false,
       keepAliveComponentInstance: null,
       showTip: false,
@@ -182,7 +184,9 @@ export default {
           .then(res => {
             //console.log(res.data);
             this.projectName=res.data.projectName;
-            //console.log(res.data.projectName);
+            this.title=this.projectName+'-墨书'
+            this.reloadKey=!this.reloadKey
+            console.log(this.title);
           })
           .catch(err => {
             console.log(err);

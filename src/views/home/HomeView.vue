@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-title data-title="墨书-软工管理平台">
     <div class="nav-left">
       <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;"  src="@/assets/logo/logo-yellow.png" alt="">
       <el-menu
