@@ -94,12 +94,28 @@ export default {
   },
   activated() {
     //window.open('https://www.bing.com')
-    console.log('114514')
-    console.log(this.$route.path)
-    console.log('5674')
-    if(this.content) {
-      window.topology.open(this.content)
-    }
+    let data = new FormData()
+    data.append('username',localStorage.getItem('username'))
+    data.append('authorization',localStorage.getItem('authorization'))
+    data.append('axureID',this.$route.params.axureID)
+    let self = this
+    this.$axios({
+      method: 'post',
+      url: 'ProjectManager/viewAxure/',
+      data: data
+    }).then(res => {
+      if(res.data.error===0) {
+        self.content = res.data.axureContent
+        //console.log(res.data.axureContent)
+        //console.log('content:',res.data.data.axureContent)
+        //console.log(JSON.parse(res.data.axureContent))
+        if(self.content)
+          window.topology.open(res.data.axureContent)
+      }
+      else {
+        self.$message.error(res.data.msg)
+      }
+    })
   },
   mounted() {
     let data = new FormData()
