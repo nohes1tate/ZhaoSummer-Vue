@@ -892,7 +892,7 @@ export default {
         this.curUsername = '';
         this.curUserID = 0;
         this.is_login = false;
-        location.reload()
+        this.$router.push('/login');
       } else
         this.$message.error("您还未登录")
     },

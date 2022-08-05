@@ -47,8 +47,8 @@ export default {
           switch (res.data.error) {
             case 0:
               this.success = true;
-              this.$message.success('注册成功！3秒后回到主页')
-              setTimeout(()=>{this.$router.push({path: '/home'})},3000)
+              this.$message.success('注册成功！3秒后跳转到登录界面')
+              setTimeout(()=>{this.$router.push({path: '/login'})},3000)
               break;
             default:
               this.success = false;
