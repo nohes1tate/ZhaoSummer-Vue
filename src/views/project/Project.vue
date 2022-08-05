@@ -12,8 +12,8 @@
           class="select-box"
           @open="handleOpen"
           @close="handleClose"
-          background-color="#4ab2cf"
-          active-text-color="#112F4B"
+          background-color="#112F4B"
+          active-text-color="#87CEFA"
           text-color="#FBF1E3"
           :default-active="this.$route.path"
           :key="dateKey"
@@ -75,6 +75,8 @@ export default {
     PageTabs
   },
   mounted() {
+    this.getProjectInfo();
+    //console.log(this.$route.path)
     //console.log(this.$route.path)
     this.dateKey = !this.dateKey
     this.projectID = this.$route.params.projectID
@@ -166,25 +168,23 @@ export default {
       //console.log('open')
     },
     getProjectInfo() {
+      this.projectID = this.$route.params.projectID;
       const formData = new FormData();
-      formData.append('projectName', this.projectName);
+      formData.append('projectID', this.projectID);
+      formData.append('authorization', localStorage.getItem('authorization'));
+      formData.append('username',localStorage.getItem('username'));
       this.$axios({
         method: 'post',
         url: 'ProjectManager/projectView/',
         data: formData,
       })
           .then(res => {
-            switch (res.data.error) {
-              case 0:
-                this.$message({
-                  message: '项目信息收集成功!',
-                  type: 'success'
-                });
-                break;
-            }
+            //console.log(res.data);
+            this.projectName=res.data.projectName;
+            //console.log(res.data.projectName);
           })
           .catch(err => {
-            console.log(err);
+            //console.log(err);
           })
     },
     appendNewDoc(data) {
@@ -206,7 +206,7 @@ export default {
 .project {
   width: 100%;
   height: 100vh;
-  background-color: #FBF1E3;
+  background-color: white;
   display: flex;
   position: absolute;
 }
@@ -217,7 +217,7 @@ export default {
   position: relative;
   width: 35vh;
   height: 100vh;
-  background-color: #4ab2cf;
+  background-color: #112F4B;
 
   text-align: left;
 }
@@ -240,7 +240,7 @@ export default {
 }
 
 .title-line span:hover {
-  color: #112F4B;
+  color: lightskyblue;
   cursor: pointer;
 }
 
@@ -274,7 +274,7 @@ export default {
   height: 5%;
   display: flex;
   margin-bottom: 5px;
-  background-color: #4ab2cf;
+  background-color: #f1f1f1;
 }
 
 .top-card i {

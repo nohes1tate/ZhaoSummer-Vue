@@ -89,7 +89,7 @@ const routes = [
         path: "axure/:axureID",
         component: designTool,
         meta: {
-          title: "页面设计页", //页面标题
+          title: "页面设计", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
