@@ -28,7 +28,7 @@
       </div>
       <div class="info-row">
         <div class="info-tag">文档数：</div>
-        <div>{{docNum}}</div>
+        <div>1</div>
       </div>
       <div class="info-row">
         <div class="info-tag">项目简介：</div>

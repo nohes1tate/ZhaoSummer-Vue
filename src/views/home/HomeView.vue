@@ -5,7 +5,7 @@
       <el-menu
           class="select-box"
           background-color="#112F4B"
-          active-text-color="#999999"
+          active-text-color="#87CEFA"
           text-color="#FFFFFF"
           :default-active="groupIndex">
         <el-submenu index="2">
@@ -272,9 +272,9 @@
                     width="220"
                     trigger="hover">
                   <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
-                              v-if="!scope.row.isManager" @click="setManager(scope.row.username)">设为管理员</el-button>
+                              v-if="!scope.row.isManager" @click="setManager(scope.row.username, scope.row)">设为管理员</el-button>
                   <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
-                             v-else @click="deleteManager(scope.row.username)">取消管理员</el-button>
+                             v-else @click="deleteManager(scope.row.username, scope.row)">取消管理员</el-button>
                   <el-button size="small" v-if="scope.row.username !== curUsername"
                              :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain
                               @click="kickOut(scope.row.username)">
@@ -526,7 +526,7 @@ export default {
             console.log(err);
           })
     },
-    setManager(operatedUsername) {
+    setManager(operatedUsername, row) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
       dataForm.append("name", operatedUsername);
@@ -546,7 +546,8 @@ export default {
                   message: '设置成功',
                   type: 'success'
                 });
-                location.reload();
+                  row.level = '管理员';
+                  row.isManager = true;
                 break;
             }
           })
@@ -554,7 +555,7 @@ export default {
             console.log(err);
           })
     },
-    deleteManager(operatedUsername) {
+    deleteManager(operatedUsername, row) {
       const dataForm = new FormData();
       dataForm.append("hostID", this.curUserID);
       dataForm.append("name", operatedUsername);
@@ -573,7 +574,8 @@ export default {
                   message: '设置成功',
                   type: 'success'
                 });
-                location.reload();
+                row.level = '普通成员';
+                row.isManager = false;
                 break;
             }
           })

@@ -49,7 +49,7 @@ export default {
           console.log('fuck2')
           console.log(res.data)
           this.page_list=res.data.axure_list;
-          console.log(res.data.axure_list.length)
+          //console.log(res.data.axure_list.length)
           console.log('fuck3')
           this.pageNum=this.page_list.length;
           console.log(this.pageNum)

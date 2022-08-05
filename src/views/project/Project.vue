@@ -184,7 +184,7 @@ export default {
             //console.log(res.data.projectName);
           })
           .catch(err => {
-            //console.log(err);
+            console.log(err);
           })
     },
     appendNewDoc(data) {
@@ -223,11 +223,13 @@ export default {
 }
 
 .title-line {
-  width: 300px;
+  width: 200px;
   height: 50px;
   display: flex;
   position: relative;
   top: 15px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title-line span {
@@ -303,7 +305,7 @@ export default {
   border-width: 6px;
   position: absolute;
   top: -10px;
-  left: 70px;
+  left: 97px;
   height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
