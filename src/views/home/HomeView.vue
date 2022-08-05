@@ -490,7 +490,7 @@ export default {
                   type: 'success'
                 });
                 this.kickDialogVisible = false;
-                location.reload();
+                this.updateMemberInfo();
                 break;
             }
           })
@@ -679,6 +679,8 @@ export default {
                       message: '团队创建成功',
                       type: 'success'
                     });
+                    this.teamForm.teamName = '';
+                    this.teamForm.teamIntro = '';
                     break;
                 }
               })
@@ -687,7 +689,13 @@ export default {
               })
               .finally(() => {
                 this.newTeamDialogVisible = false;
-                location.reload();
+                this.getGroup();
+                setTimeout(() => {
+                  const index = this.groupList.length - 1;
+                  this.clickGroup(this.groupList[index].groupID, this.groupList[index].groupName, this.groupList[index].isCreator, this.groupList[index].isManager, this.groupList[index].groupDescription);
+                  this.groupIndex = index + '';
+                }, 1000);
+
               })
         } else {
           return
@@ -725,7 +733,7 @@ export default {
     },
     clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
       this.curGroupID = groupID;
-      //console.log('团队ID:' + this.curGroupID);
+      console.log('click')
       this.curGroupName = groupName;
       this.curIsCreator = isCreator;
       this.curIsManager = isManager;
