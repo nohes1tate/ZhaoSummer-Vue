@@ -13,8 +13,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'blankPage',
-    component: () => import('../views/login/LoginView')
+    name: 'welcomePage',
+    component: () => import('../views/welcome/WelcomeView')
   },
   {
     path: '/test',
