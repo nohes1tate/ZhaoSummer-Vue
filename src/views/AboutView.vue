@@ -1,23 +1,16 @@
 <template>
   <div style="width: auto" >
-      <design-tool @fuck="fuck"></design-tool>
+    <DocumentEdit></DocumentEdit>
   </div>
 </template>
 
 <script>
-import drawioEmbed from "drawio-embed";
-import DesignTool from "@/components/InlineAxure/DesignTool";
-
+import DocumentEdit from "@/components/documentEdit/DocumentEdit";
 
 export default {
-  components: {DesignTool},
-  mounted() {
-    drawioEmbed()
-  },
-  methods:{
-    fuck() {
-      console.log('getFucked')
-    }
+  components: {
+    DocumentEdit
   }
 }
+
 </script>

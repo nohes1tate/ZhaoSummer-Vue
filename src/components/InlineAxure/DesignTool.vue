@@ -27,10 +27,16 @@ import {
   images
 } from './data';
 
+var socket = null
+
 export default {
   name: 'DesignTool',
   data: function () {
     return {
+      data: {},
+      oldContent: '',
+      newContent: '',
+      timer: null,
       refleshKey: false,
       content: null,
       topologyConfigs: {
@@ -81,12 +87,11 @@ export default {
           mydata: 1
         }
       },
-      data: {}
     };
   },
   beforeRouteLeave (to, from, next) {
     // 这里需要elementui的支持，如果使用其他界面组件自行替换即可
-    console.log('leaveDesignTool!')
+   // console.log('leaveDesignTool!')
     next()
   },
   deactivated() {
@@ -133,8 +138,10 @@ export default {
         //console.log(res.data.axureContent)
         //console.log('content:',res.data.data.axureContent)
         //console.log(JSON.parse(res.data.axureContent))
-        if(self.content)
+        if(self.content){
         window.topology.open(res.data.axureContent)
+          this.oldContent=JSON.stringify(window.topology.pureData().pens)
+        }
       }
       else {
         self.$message.error(res.data.msg)
@@ -157,10 +164,106 @@ export default {
         }, 200);
       }
     }
+    //this.settimer()
+    this.init()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    //socket.close()
+    this.timer=null;
   },
   methods: {
+    openSocket() {
+      if(typeof(WebSocket) == 'undefined') {
+        console.log('不支持Websocket')
+      }
+      else {
+        console.log('支持Websocket')
+        var socketUrl = "http://localhost:8000/imserver/" + this.$route.params.axureID
+        socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
+        console.log(socketUrl)
+        if(socket!==null){
+          console.log(socket)
+          socket=null
+        }
+        try{
+          socket = new WebSocket(socketUrl)
+        } catch (e) {
+          console.log('error:',e)
+        }
+        var that = this
+        // 打开事件
+        socket.onopen = function() {
+          const msg = JSON.stringify({
+            type: 'login',
+            message: ''
+          })
+          socket.send(msg)
+          console.log("websocket打开")
+           that.settimer()
+          // socket.send("客户端消息: 用户" + this.userId + location.href + new Date())
+          // socket.send('用户登录')
+        }
+        console.log('set onopen',socket)
+      }
+      socket.onmessage = function(msg){
+        const msg2 = JSON.parse(msg.data)
+          console.log('接收数据')
+          console.log(msg2)
+        console.log(msg2.type==='message')
+        //console.log(JSON.parse(msg2.message))
+        if(msg2.type==='message')
+        {
+          let rec = JSON.parse(msg2.message)
+          console.log('nani',rec.fromUser === localStorage.getItem('userID'))
+          if (rec.fromUser !== localStorage.getItem('userID')) {
+            console.log('update')
+            console.log(msg2.message)
+            window.topology.open(msg2.message)
+          }
+        }
+      }
+      // 关闭
+      socket.close = function () {
+        const msg = JSON.stringify({
+          type: 'logout',
+          message: ''
+        })
+        socket.send(msg)
+        console.log("websocket断开")
+      }
+    },
+    init() {
+      this.openSocket()
+    },
+    settimer() {
+      console.log('timer set')
+      if(this.timer==null){
+        this.timer = setInterval(this.settime, 1000);
+      }
+    },
+    settime(){
+      //console.log(this.oldContent)
+      //console.log(window.topology.pureData().pens)
+      this.newContent=JSON.stringify(window.topology.pureData().pens)
+      //console.log(this.oldContent === this.newContent)
+      if(this.oldContent !== this.newContent && window.topology.pureData().pens.length > 0){
+        //console.log('send')
+        this.oldContent=JSON.stringify(window.topology.pureData().pens)
+        let sendData = window.topology.pureData()
+        sendData.fromUser = localStorage.getItem('userID')
+        console.log('sendUser:',sendData.fromUser)
+        //console.log('send:',sendData)
+        const msg = JSON.stringify({
+          type: 'message',
+          message: JSON.stringify(sendData)
+        })
+        //console.log(msg)
+        socket.send(msg)
+      }
+    },
     nani() {
-      console.log('click!')
+    //  console.log('click!')
       this.$emit('fuck')
     },
     saveAxure() {
@@ -170,7 +273,7 @@ export default {
       data.append('authorization',localStorage.getItem('authorization'))
       data.append('axureID',this.$route.params.axureID)
       data.append('axureData',JSON.stringify(window.topology.data))
-      console.log(JSON.stringify(window.topology.data))
+     // console.log(JSON.stringify(window.topology.data))
 
       let self = this
       this.$axios({
@@ -178,7 +281,7 @@ export default {
         url: 'ProjectManager/axureSave/',
         data: data
       }).then(res => {
-        console.log(res)
+       // console.log(res)
         if(res.data.error === 0) {
           self.$message.success(res.data.msg)
         }
@@ -228,7 +331,7 @@ export default {
               break;
         case 'save':
           // 导航菜单configs.menus里面定义的action
-          console.log(window.topology.data)
+        //  console.log(window.topology.data)
             this.saveAxure()
           // window.topology.open(this.content)
           // 比如这里表示保存文件
@@ -270,6 +373,6 @@ export default {
 <style lang="scss" scoped>
 .design-tool {
   height: 95vh;
-  width: 170vh;
+  width: 180vh;
 }
 </style>

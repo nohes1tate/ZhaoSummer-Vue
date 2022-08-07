@@ -1,6 +1,6 @@
 <template>
-  <div style="border: solid 2px black;border-radius: 8px;min-height: 70vh;width: 150vh;align-content: center;margin-left: 5vh;margin-top: 2vh">
-    <div class="editor">
+  <div style="border: solid 2px black;min-height: 70vh;width: 150vh;margin-left: auto;margin-right: auto;margin-top: 2vh">
+    <div class="editor" style="margin-left: 5vh;margin-right: 5vh;">
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         <div class="menubar" >
 
@@ -157,6 +157,14 @@
               <use  xlink:href="#icon-save"></use>
             </svg>
           </button>
+          <button
+              class="menubar__button"
+              @click="ban()"
+          >
+            <svg class="icon" aria-hidden="true" >
+              <use  xlink:href="#icon-save"></use>
+            </svg>
+          </button>
           <hr style="height: 4px;color: black;background: black"/>
         </div>
       </editor-menu-bar>
@@ -166,7 +174,7 @@
   </div>
 </template>
 
-<style lang="scss" src="./main.scss" scoped>
+<style lang="scss" src="./main.scss">
 
 </style>
 
@@ -245,6 +253,12 @@ export default {
     EditorContent,
     EditorMenuBar,
   },
+  props: {
+    content: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       curRoomName: '',
@@ -273,6 +287,9 @@ export default {
     }
   },
   methods: {
+    ban() {
+      console.log(this.editor)
+    },
     exportText() {
       console.log(this.editor.getHTML())
     },
@@ -294,20 +311,6 @@ export default {
       URL.revokeObjectURL(objectURL)
     },
   },
-  activated() {
-    console.log('activated!')
-    this.curRoomName = this.$route.params.projectID
-    console.log('roomName',this.curRoomName)
-    roomName ='ZhaoSummer' + this.curRoomName
-    provider = new WebsocketProvider('wss://demos.yjs.dev', roomName, ydoc)
-    awareness = provider.awareness
-    awareness.setLocalStateField('user', {
-      // Define a print name that should be displayed
-      name: localStorage.getItem('username'),
-      // Define a color that should be associated to the user:
-      color: getColor() // should be a hex color
-    })
-  },
   beforeCreate() {
     console.log('beforeCreate!')
     this.curRoomName = this.$route.params.projectID
@@ -326,7 +329,11 @@ export default {
       console.log('reload')
       //location.reload()
     }*/
+
   },
+  mounted() {
+    //this.editor.content='567415'
+  }
 }
 </script>
 

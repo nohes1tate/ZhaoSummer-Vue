@@ -5,7 +5,8 @@ import HomeView from '../views/home/HomeView.vue'
 //import TestPage from "@/components/projectpage/TestPage";
 import TestUML from "@/components/projectpage/TestUML";
 import designTool from "@/components/InlineAxure/DesignTool";
-import documentEditor from "@/components/documentEdit/DocumentEditor";
+//import documentEditor from "@/components/documentEditOld/DocumentEditor";
+//import documentEditor from "@/components/documentEdit/DocumentEdit"
 import ProjectView from "@/components/projectpage/ProjectView";
 
 Vue.use(VueRouter)
@@ -70,14 +71,6 @@ const routes = [
           title:"新建"
         }},
       {
-        path: "document",
-        component: documentEditor,
-        meta: {
-          title: "项目文档", //页面标题
-          canMultipleOpen: true //支持根据参数不同多开不同页签
-        }
-      },
-      {
         path: "testUML",
         component: TestUML,
         meta: {
@@ -107,11 +100,6 @@ const routes = [
     path: '/confirm',
     name: 'Confirm',
     component: () => import('../views/register/ConfirmView'),
-  },
-  {
-    path: '/*',
-    name: 'PageNotFound',
-    component: () => import('../views/error/PageNotFound'),
   },
 ]
 

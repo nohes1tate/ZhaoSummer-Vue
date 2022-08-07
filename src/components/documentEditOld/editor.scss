@@ -1,16 +1,11 @@
 .editor {
   position: relative;
-  margin: 0 5vh 5vh 5vh;
+  max-width: 30rem;
+  margin: 0 auto 3vh auto;
 
+  &__content {
 
-  &__content::v-deep {
-
-    height: 70vh;
-
-    font-size: 18px;
-
-    background: white;
-    overflow: auto;
+    overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
 
