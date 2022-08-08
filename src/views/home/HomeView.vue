@@ -8,14 +8,14 @@
             v-show="is_login">
           <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
           <el-button size="small" type="danger" plain @click="logout">退出登录</el-button>
-          <el-avatar :size="30" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
+          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
         </el-popover>
         <el-popover
             placement="right"
             trigger="hover"
             v-show="!is_login">
           <el-button type="primary" plain @click="login" v-show="!is_login" width="150px">去 登 录</el-button>
-          <el-avatar :size="30" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
+          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
         </el-popover>
       </div>
       <el-menu

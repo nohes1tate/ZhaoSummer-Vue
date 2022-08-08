@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    <section class="first-img">
+    <div class="first-img">
       <div class="top-line">
         <a href="/" class="logo">
           <img src="../../assets/logo/logo-yellow.png">
@@ -14,7 +14,7 @@
         <div class="banner-inner">
           <h1 class="banner-title1">墨书，高效的团队协作和管理平台</h1>
           <h2 class="banner-title2">设计师的利器，产品经理的帮手，工程师的伙伴</h2>
-          <a class="banner-btn">开始使用</a>
+          <a class="banner-btn" href="/home">开始使用</a>
           <div class="spec">加入墨书，开启高效团队协作</div>
         </div>
         <div class="scroll">
@@ -23,8 +23,8 @@
           </svg>
         </div>
       </div>
-    </section>
-    <section class="feature">
+    </div>
+    <div class="feature">
       <h2 class="home-title">我的设计利器，团队的协作平台</h2>
       <div class="feature-content">
         <div class="feature-item">
@@ -72,18 +72,55 @@
           </p>
         </div>
       </div>
-    </section>
-    <section class="team-work">
-      <div class="left-area">
-        <h1>团队协作：</h1>
-        <h2>构建高效工作流</h2>
+    </div>
+    <section class="team-work" id="team-work">
+      <div class="text-box">
+        <div class="inner-box"></div>
+        <h2>高效团队管理</h2>
+        <p>
+          通过搭建团队空间，结构化沉淀和管理工作流程，多人多端实时协同互动，构建一站式工作中心
+        </p>
+        <a href="/home" class="banner-btn">了解更多</a>
       </div>
     </section>
-    <section class="content-red">
+    <section class="team-work" id="co-edit">
+      <div class="text-box">
+        <h2>共享文档编辑</h2>
+        <p>
+          云端编辑、实时协作、分享交付，一站完成工作与沟通，让人、事、物流畅运作
+        </p>
+        <p>
+          <a href="/home" class="banner-btn">了解更多</a>
+        </p>
+      </div>
+    </section>
+    <section class="team-work" id="UI-design">
+      <div class="text-box">
+      <h2>产品原型设计</h2>
+      <p>
+        快速原型、矢量绘图、在线预览，轻松搞定原型设计
+      </p>
+      <p>
+        <a href="/home" class="banner-btn">了解更多</a>
+      </p>
+      </div>
+    </section>
+    <section class="team-work" id="UML-design">
+      <div class="text-box">
+        <h2>快速UML绘制</h2>
+        <p>
+          利用简单方便而功能强大的绘图功能绘制团队的UML图
+        </p>
+        <p>
+          <a href="/home" class="banner-btn">了解更多</a>
+        </p>
+      </div>
+    </section>
+    <div class="content-red">
       <h5>使用墨书获得全新的设计体验</h5>
       <h6>和团队一起开启高效协作之旅</h6>
-      <a class="footer-btna" href="/home">开始使用</a>
-    </section>
+      <a class="footer-btna" href="/home">点击开始</a>
+    </div>
   </div>
 </template>
 
@@ -185,7 +222,7 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   color: #ffffff;
-  background-color: #fe4066;
+  background-color: #a259ff;
   text-align: center;
   vertical-align: middle;
   border-radius: 6px;
@@ -257,7 +294,7 @@ export default {
   100%{bottom:5px}
 }
 .content-red{
-  background-color: #fe4066;
+  background-color: #a259ff;
   padding: 100px 0;
   text-align: center;
   box-sizing: border-box;
@@ -283,28 +320,56 @@ export default {
   line-height: 56px;
   margin: 72px auto 0;
   font-size: 16px;
-  color: #fe4066;
+  color: #a259ff;
   background-color: #ffffff;
   border-radius: 6px;
   transition: 0.3s;
 }
-.team-work{
-  width: 100%;
+section{
   height: 100vh;
-  min-height: 620px;
   position: relative;
-  border: solid 1px red;
+  color: rgba(255,255,255,0.8);
+  font-size: 10vh;
+  //text-shadow: 4px 4px rgb(46,43,43);
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
-.left-area{
-  border: solid 1px black;
-  text-align: left;
-  width: 40vh;
-  margin-left: 10vh;
-  margin-top: 120px;
+.team-work{
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  user-select: none;
+  background-size: cover;
 }
-.left-area h1,h2{
-  line-height: 70px;
-  font-weight: 700;
-  font-size:40px;
+#team-work{
+  background-image: url("../../assets/images/teamwork.png");
+}
+#UI-design{
+  background-image: url("../../assets/images/UIdesign.png");
+}
+#UML-design{
+  background-image: url("../../assets/images/UML.png");
+}
+#co-edit{
+  background-image: url("../../assets/images/co-edit.png");
+}
+
+.text-box{
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 25%;
+  text-align: center;
+}
+.text-box h2{
+  font-size: 60px;
+  font-weight: 1000;
+  color: white;
+}
+.text-box p{
+  font-size: 20px;
+  color: white;
 }
 </style>
