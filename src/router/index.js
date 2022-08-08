@@ -18,6 +18,12 @@ const routes = [
     component: () => import('../views/welcome/WelcomeView')
   },
   {
+    path:'/me/:userID',
+    name:'mePage',
+    component:()=>import('../views/me/meView')
+
+  },
+  {
     path: '/test',
     name: 'test',
     component: () => import('../views/AboutView')

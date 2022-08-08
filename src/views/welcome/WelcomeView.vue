@@ -139,7 +139,7 @@
         </svg>
       </div>
       <div class="item" id="go-top" @click="backTop" v-show="showTopbtn">
-        <svg class="icon go-top" aria-hidden="true" style="">
+        <svg class="icon go-top" aria-hidden="true">
           <use xlink:href="#icon-huidaodingbu"></use>
         </svg>
       </div>
@@ -295,6 +295,8 @@ export default {
 .feature{
   text-align: center;
   padding-bottom: 50px;
+  height: 80vh;
+  min-height: 620px;
 }
 .home-title{
   font-size: 40px;
@@ -305,7 +307,7 @@ export default {
   font-weight: 600;
 }
 .feature-content{
-  margin: 80px auto 0;
+  margin: 100px auto 0;
   overflow: hidden;
   max-width: 1300px;
   width: 92%;
@@ -393,6 +395,7 @@ section{
   display: flex;
   justify-content: center;
   align-content: center;
+  min-height: 620px;
 }
 .team-work{
   overflow: hidden;
@@ -499,5 +502,9 @@ ul,li{
   height: 30px;
   line-height: 30px;
   text-align: left;
+}
+.user-menu a:hover{
+  transition: 0.3s;
+  background-color: #d1d1d1;
 }
 </style>
