@@ -237,7 +237,7 @@
               <el-button type="primary"
                          @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目
               </el-button>
-              <el-input placeholder="搜索项目" prefix-icon="el-icon-search"
+              <el-input placeholder="搜索项目" prefix-icon="el-icon-search" @keyup.enter.native="searchProject"
                         v-model="searchProjectInput" style="width: 30vh; margin-left: 10vh;">
               </el-input>
 
@@ -302,6 +302,7 @@
               <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
                             :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
                             :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
+                            :hasFavored="project.hasFavored"
                             v-for="project in curProjectList" v-bind:key="project.projectID"
                             @click="toProject(project.projectID)"
                             style="margin-right: 7vh; margin-top: 4vh"></projectCover>
@@ -419,6 +420,7 @@ export default {
       curIsCreator: false,
       curProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
       favorProjectList: [],
+      myCreateProjectList: [],
       recycleProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
       curMemberList: [],
       curGroupIntro: '',
@@ -463,6 +465,40 @@ export default {
       this.is_login = true
   },
   methods: {
+    searchProject() {
+      const dataForm = new FormData();
+      dataForm.append("key", this.searchProjectInput);
+      dataForm.append("username", this.username);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      console.log(this.searchProjectInput);
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/searchProject/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.curProjectList = res.data.projectList;
+                break;
+              case 4001:
+                this.$message({
+                  message: '无相关项目！',
+                  type: 'warning'
+                });
+                break;
+              case 4002:
+                this.$message({
+                  message: '搜索内容不能为空！',
+                  type: 'warning'
+                });
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     handleAvatarCommand(index) {
       if(index === '1') {
         this.personalInfoDialogVisible = true;
@@ -754,6 +790,31 @@ export default {
     },
     toMyCreateProject() {
       this.projectIndex = '4';
+      const projectForm = new FormData();
+      projectForm.append("groupID", this.curGroupID);
+      projectForm.append("username", this.curUsername);
+      projectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/groupViewProject/',
+        data: projectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.myCreateProjectList = [];
+                for (let i = 0; i < res.data.project_list.length; i++) {
+                  if (res.data.project_list[i].creator === this.curUsername) {
+                    this.myCreateProjectList.push(res.data.project_list[i]);
+                  }
+                }
+                this.curProjectList = this.myCreateProjectList;
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     toDeletedProject() {
       this.projectIndex = '5';
@@ -937,8 +998,6 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.recycleProjectList = res.data.project_list;
-                console.log('返回回收站信息');
-                console.log(res.data.project_list);
                 break;
             }
           })
@@ -1062,6 +1121,21 @@ export default {
       } else if (index === '4') {
         this.byAsc = false;
       }
+      this.curProjectList.sort((a, b) => {
+        if (this.sortRule === '创建时间') {
+          if (this.byAsc) {
+            return a.projectCreateTime.localeCompare(b.projectCreateTime);
+          } else {
+            return b.projectCreateTime.localeCompare(a.projectCreateTime);
+          }
+        } else if (this.sortRule === '项目名称') {
+          if (this.byAsc) {
+            return a.projectName.localeCompare(b.projectName);
+          } else {
+            return b.projectName.localeCompare(a.projectName);
+          }
+        }
+      });
     },
     inviteMember() {
       let data = new FormData

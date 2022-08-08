@@ -182,6 +182,25 @@ export default {
           })
     },
     toProjectPage() {
+      const dataForm = new FormData();
+      dataForm.append("projectID", this.projectID);
+      dataForm.append("userID", this.userID);
+      dataForm.append("username", this.username);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectClick',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
       let path ='/project/' + this.projectID
       if (path !== this.$route.fullPath) {
         this.$router.push(path);
