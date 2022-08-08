@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    <div class="first-img">
+    <section class="first-img">
       <div class="top-line">
         <a href="/" class="logo">
           <img src="../../assets/logo/logo-yellow.png">
@@ -12,10 +12,10 @@
           </svg>
         </div>
         <div class="banner-inner">
-          <h1 class="banner-title1">产品协作设计，更快更简单</h1>
-          <h2 class="banner-title2">更好的产品设计平台，设计师的利器，产品经理的帮手，工程师的伙伴</h2>
+          <h1 class="banner-title1">墨书，高效的团队协作和管理平台</h1>
+          <h2 class="banner-title2">设计师的利器，产品经理的帮手，工程师的伙伴</h2>
           <a class="banner-btn">开始使用</a>
-          <div class="spec">加入墨书，开启高效协作设计</div>
+          <div class="spec">加入墨书，开启高效团队协作</div>
         </div>
         <div class="scroll">
           <svg class="icon" aria-hidden="true" style="color: white;vertical-align: middle;font-size: 20px;font-weight: 1000;margin-left: 5px;background-color:rgba(57, 49, 49, 0);">
@@ -23,12 +23,12 @@
           </svg>
         </div>
       </div>
-    </div>
-    <div class="feature">
+    </section>
+    <section class="feature">
       <h2 class="home-title">我的设计利器，团队的协作平台</h2>
       <div class="feature-content">
         <div class="feature-item">
-          <svg class="icon" aria-hidden="true" style="color: #00BFFF;vertical-align: middle;font-size: 35px;font-weight: 1000;background-color:rgba(57, 49, 49, 0);">
+          <svg class="icon" aria-hidden="true" style="color:#00BFFF;vertical-align: middle;font-size: 35px;font-weight: 1000;background-color:rgba(57, 49, 49, 0);">
             <use xlink:href="#icon-webyemiansheji"></use>
           </svg>
           <h3>快速原型设计</h3>
@@ -72,7 +72,18 @@
           </p>
         </div>
       </div>
-    </div>
+    </section>
+    <section class="team-work">
+      <div class="left-area">
+        <h1>团队协作：</h1>
+        <h2>构建高效工作流</h2>
+      </div>
+    </section>
+    <section class="content-red">
+      <h5>使用墨书获得全新的设计体验</h5>
+      <h6>和团队一起开启高效协作之旅</h6>
+      <a class="footer-btna" href="/home">开始使用</a>
+    </section>
   </div>
 </template>
 
@@ -244,5 +255,56 @@ export default {
 @-webkit-keyframes moving{
   0%{bottom:20px}
   100%{bottom:5px}
+}
+.content-red{
+  background-color: #fe4066;
+  padding: 100px 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.content-red h5{
+  font-size: 48px;
+  line-height: 1.5;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+.content-red h6{
+  font-size: 20px;
+  line-height: 100%;
+  color: #ffffff;
+  font-weight: 400;
+  margin: 0;
+}
+.footer-btna{
+  display: block;
+  width: 240px;
+  height: 56px;
+  line-height: 56px;
+  margin: 72px auto 0;
+  font-size: 16px;
+  color: #fe4066;
+  background-color: #ffffff;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+.team-work{
+  width: 100%;
+  height: 100vh;
+  min-height: 620px;
+  position: relative;
+  border: solid 1px red;
+}
+.left-area{
+  border: solid 1px black;
+  text-align: left;
+  width: 40vh;
+  margin-left: 10vh;
+  margin-top: 120px;
+}
+.left-area h1,h2{
+  line-height: 70px;
+  font-weight: 700;
+  font-size:40px;
 }
 </style>
