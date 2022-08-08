@@ -418,6 +418,7 @@ export default {
       curIsManager: false,
       curIsCreator: false,
       curProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
+      favorProjectList: [],
       recycleProjectList: [{projectID: 1, projectName: '项目1', projectIntro: '项目简介1'}, {projectID: 2, projectName: '项目2', projectIntro: '项目简介2'}],
       curMemberList: [],
       curGroupIntro: '',
@@ -700,9 +701,53 @@ export default {
     },
     toAllProject() {
       this.projectIndex = '1';
+      const projectForm = new FormData();
+      projectForm.append("groupID", this.curGroupID);
+      projectForm.append("username", this.curUsername);
+      projectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'TeamManager/groupViewProject/',
+        data: projectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.curProjectList = res.data.project_list;
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     toFavorProject() {
       this.projectIndex = '2';
+      this.refreshFavorProject();
+    },
+    refreshFavorProject() {
+      const projectForm = new FormData();
+      projectForm.append("groupID", this.curGroupID);
+      projectForm.append("username", this.curUsername);
+      projectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewCollect',
+        data: projectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.favorProjectList = res.data.project_list;
+                if(this.projectIndex === '2'){
+                  this.curProjectList = this.favorProjectList;
+                }
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     toRecentView() {
       this.projectIndex = '3';
@@ -854,7 +899,6 @@ export default {
     },
     clickGroup(groupID, groupName, isCreator, isManager, groupDescription) {
       this.curGroupID = groupID;
-      console.log('click')
       this.curGroupName = groupName;
       this.curIsCreator = isCreator;
       this.curIsManager = isManager;
@@ -873,8 +917,6 @@ export default {
               switch (res.data.error) {
                 case 0:
                   this.curProjectList = res.data.project_list;
-                  //console.log('项目列表：');
-                  //console.log(res.data.project_list);
                   break;
               }
             })

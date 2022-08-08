@@ -8,7 +8,8 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="1">重命名</el-dropdown-item>
           <el-dropdown-item command="3">复制</el-dropdown-item>
-          <el-dropdown-item command="4">收藏</el-dropdown-item>
+          <el-dropdown-item command="5" v-if="hasFavored">取消收藏</el-dropdown-item>
+          <el-dropdown-item command="4" v-else>收藏</el-dropdown-item>
           <el-dropdown-item command="2">删除</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -72,6 +73,8 @@
 </template>
 
 <script>
+import HomeView from "@/views/home/HomeView";
+
 export default {
   name: "projectCover",
   data(){
@@ -99,7 +102,84 @@ export default {
         this.newProjectNameDialogVisible = true;
       } else if (command ==='2') {
         this.deleteProjectDialogVisible = true;
+      } else if (command ==='3') {
+        this.copyProject();
+      } else if (command ==='4') {
+        this.favorProject();
+      } else if (command ==='5') {
+        this.unFavorProject();
       }
+    },
+    copyProject() {
+      const dataForm = new FormData();
+      dataForm.append("projectID", this.projectID);
+      dataForm.append("username", this.username);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectCopy/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                HomeView.methods.toAllProject();
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    favorProject() {
+      const dataForm = new FormData();
+      dataForm.append("projectID", this.projectID);
+      dataForm.append("projectTeamID", this.groupID);
+      dataForm.append("userID", this.userID);
+      dataForm.append("username", this.username);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectCollect/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                // eslint-disable-next-line vue/no-mutating-props
+                this.hasFavored = true;
+                HomeView.methods.refreshFavorProject();
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
+    unFavorProject() {
+      const dataForm = new FormData();
+      dataForm.append("projectID", this.projectID);
+      dataForm.append("projectTeamID", this.groupID);
+      dataForm.append("userID", this.userID);
+      dataForm.append("username", this.username);
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectUnCollect/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                // eslint-disable-next-line vue/no-mutating-props
+                this.hasFavored = false;
+                HomeView.methods.refreshFavorProject();
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     toProjectPage() {
       let path ='/project/' + this.projectID
@@ -206,6 +286,7 @@ export default {
     projectCreateTime:{default: '2022-10-10'},
     docNum:{default: 0},
     pageNum:{default: 0},
+    hasFavored:{default: false},
   },
 }
 </script>
