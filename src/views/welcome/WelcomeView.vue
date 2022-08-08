@@ -12,7 +12,7 @@
           </svg>
           <ul class="user-menu" v-show="showMenu">
             <li>
-              <a href= "/me">个人中心</a>
+              <a :href= "'/me/'+this.curUserID+''">个人中心</a>
             </li>
             <li>
               <a href="/home">我的项目</a>
@@ -155,7 +155,14 @@ export default {
       showMenu:false,
       showTopbtn:false,
       scrollTop:0,
+      curUsername:'',
+      curUserID:0,
     }
+  },
+  created() {
+    this.curUsername = localStorage.getItem('username');
+    this.curUserID = localStorage.getItem('userID');
+    cons
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll, true);
