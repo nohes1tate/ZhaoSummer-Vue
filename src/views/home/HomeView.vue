@@ -8,8 +8,17 @@
             v-show="is_login">
           <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
           <el-button size="small" type="danger" plain @click="logout">退出登录</el-button>
-          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
+
         </el-popover>
+        <el-dropdown placement="bottom-start" @command="handleAvatarCommand">
+        <span class="el-dropdown-link">
+          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
+        </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">个人信息</el-dropdown-item>
+            <el-dropdown-item command="2">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <el-popover
             placement="right"
             trigger="hover"
@@ -22,29 +31,46 @@
           class="select-box"
           background-color="#112F4B"
           active-text-color="#87CEFA"
-          text-color="#FFFFFF"
-          :default-active="leftIndex">
+          text-color="grey"
+          :default-active="leftIndex"
+          style="margin-bottom: 35vh;">
         <el-menu-item index="1" style="height: 80px; padding-top: 10px;" @click="showProject">
-          <el-tooltip class="item" effect="light" content="团队项目" placement="right">
+          <div class="left-nav-item">
             <i class="el-icon-document" style="font-size: 25px"></i>
-          </el-tooltip>
+            <span style="height: 10px; margin-left: -15px; margin-top: -10px">团队项目</span>
+          </div>
         </el-menu-item>
         <el-menu-item index="2" style="height: 80px; padding-top: 10px;" @click="showTeam">
-          <el-tooltip class="item" effect="light" content="团队管理" placement="right">
+          <div class="left-nav-item">
             <i class="el-icon-user" style="font-size: 25px"></i>
-          </el-tooltip>
+            <span style="height: 10px; margin-left: -15px; margin-top: -10px">团队管理</span>
+          </div>
         </el-menu-item>
         <el-menu-item index="3" style="height: 80px; padding-top: 10px;" @click="showFileCenter">
-          <el-tooltip class="item" effect="light" content="文档中心" placement="right">
+          <div class="left-nav-item">
             <i class="el-icon-files" style="font-size: 25px"></i>
-          </el-tooltip>
-        </el-menu-item>
-        <el-menu-item index="4" style="height: 80px; padding-top: 10px;" @click="switchGroup">
-          <el-tooltip class="item" effect="light" content="切换团队" placement="right">
-            <i class="el-icon-sort" style="font-size: 25px"></i>
-          </el-tooltip>
+            <span style="height: 10px; margin-left: -15px; margin-top: -10px">文档中心</span>
+          </div>
         </el-menu-item>
       </el-menu>
+      <el-dropdown placement="top-start" @command="handleChangeGroupCommand">
+        <span class="el-dropdown-link">
+          <div class="left-nav-item" style="color: #999999; cursor: pointer">
+            <i class="el-icon-sort" style="font-size: 25px"></i>
+            <span style="height: 10px; margin-top: 10px;">切换团队</span>
+          </div>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item :command=group v-for="group in this.groupList" v-bind:key="group.groupID">
+            <i class="el-icon-check" v-if="curGroupID===group.groupID" style="position: absolute; margin-top: 12px; margin-left: -12px; color: #1d93ff"></i>
+            <div style="margin-left: 10px">{{ group.groupName }}</div>
+          </el-dropdown-item>
+          <el-dropdown-item command="new">
+            <i class="el-icon-plus" style="position: absolute; margin-top: 12px; margin-left: -12px;"></i>
+            <div style="margin-left: 10px">新建团队</div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
 
     <el-dialog
@@ -183,7 +209,7 @@
       <div v-if="hasGroup">
         <div class="project-box" v-if="leftIndex==='1'">
           <div class="project-nav">
-            <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="width: 100.5%; margin-top: 40px">
+            <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="margin-top: 40px; border-right: none">
               <el-menu-item index="1" @click="toAllProject">
                 <i class="el-icon-discount"></i>
                 <span slot="title">全部项目</span>
@@ -252,17 +278,19 @@
             <div class="sort-select">
               <el-dropdown @command="handleSort">
                 <span class="el-dropdown-link">
-                  <i class="el-icon-s-operation"></i> {{ sortRule }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  <i class="el-icon-s-operation"></i> {{ sortRule }}
+                  <i class="el-icon-top" v-if="byAsc"></i><i class="el-icon-bottom" v-else></i>
+                  <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :index="1">创建时间</el-dropdown-item>
-                  <el-dropdown-item :index="2">项目名称</el-dropdown-item>
-                  <el-dropdown-item :ascending="true" divided>升序</el-dropdown-item>
-                  <el-dropdown-item :ascending="false">降序</el-dropdown-item>
+                  <el-dropdown-item command=1>创建时间</el-dropdown-item>
+                  <el-dropdown-item command=2>项目名称</el-dropdown-item>
+                  <el-dropdown-item command=3 divided>升序</el-dropdown-item>
+                  <el-dropdown-item command=4>降序</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
-            <div class="content-project" v-if="activeIndex==='2'">
+            <div class="content-project" v-if="projectIndex === '5'">
               <recycleProjectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
                                    :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
                                    :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
@@ -270,7 +298,7 @@
                                    @click="toProject(project.projectID)"
                                    style="margin-right: 7vh; margin-top: 4vh"></recycleProjectCover>
             </div>
-            <div class="content-project">
+            <div class="content-project" v-else>
               <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
                             :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
                             :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
@@ -281,57 +309,66 @@
           </div>
         </div>
 
-
-
-        <div style="margin-top: 3vh" v-if="activeIndex==='2'">
-          <el-table
-              :data="curMemberList"
-              stripe
-              style="width: 100%">
-            <el-table-column
-                prop="username"
-                label="成员"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="realName"
-                label="真实姓名"
-                width="140">
-            </el-table-column>
-            <el-table-column
-                prop="useremail"
-                label="邮箱"
-                width="240">
-            </el-table-column>
-            <el-table-column
-                prop="level"
-                label="权限"
-                width="160">
-            </el-table-column>
-            <el-table-column
-                fixed="right"
-                label="操作"
-                width="100">
-              <template slot-scope="scope">
-                <el-popover
-                    placement="right"
-                    width="220"
-                    trigger="hover">
-                  <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
-                              v-if="!scope.row.isManager" @click="setManager(scope.row.username, scope.row)">设为管理员</el-button>
-                  <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
-                             v-else @click="deleteManager(scope.row.username, scope.row)">取消管理员</el-button>
-                  <el-button size="small" v-if="scope.row.username !== curUsername"
-                             :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain
-                              @click="kickOut(scope.row.username)">
-                    移出团队
-                  </el-button>
-                  <el-button v-else size="small" type="danger" plain @click="quitTeam(scope.row.username)">退出团队</el-button>
-                  <i class="el-icon-more" slot="reference"></i>
-                </el-popover>
-              </template>
-            </el-table-column>
-          </el-table>
+        <div class="group-box" v-if="leftIndex==='2'">
+          <div style="text-align: left; margin-top: 10vh;">
+            <span style="font-size: 40px;">{{ curGroupName }}</span>
+            <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
+            <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
+            <span class="member-tag normal-member" v-else>普通成员</span>
+          </div>
+          <div style="text-align: left; margin-top: 3vh; width: 80vh; font-size: 15px;">团队简介：{{curGroupIntro}}</div>
+          <el-button type="primary" style="width: 20vh; margin-top: 4vh;" @click="showInviteDialog = true">
+            <i class="el-icon-plus"></i> 邀请成员
+          </el-button>
+          <div style="margin-top: 3vh; width: 110vh">
+            <el-table
+                :data="curMemberList"
+                stripe>
+              <el-table-column
+                  prop="username"
+                  label="成员"
+                  width="180">
+              </el-table-column>
+              <el-table-column
+                  prop="realName"
+                  label="真实姓名"
+                  width="140">
+              </el-table-column>
+              <el-table-column
+                  prop="useremail"
+                  label="邮箱"
+                  width="240">
+              </el-table-column>
+              <el-table-column
+                  prop="level"
+                  label="权限"
+                  width="160">
+              </el-table-column>
+              <el-table-column
+                  fixed="right"
+                  label="操作"
+                  width="100">
+                <template slot-scope="scope">
+                  <el-popover
+                      placement="right"
+                      width="220"
+                      trigger="hover">
+                    <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
+                                v-if="!scope.row.isManager" @click="setManager(scope.row.username, scope.row)">设为管理员</el-button>
+                    <el-button size="small" :disabled="(!curIsManager) || (scope.row.username === curUsername)" plain
+                               v-else @click="deleteManager(scope.row.username, scope.row)">取消管理员</el-button>
+                    <el-button size="small" v-if="scope.row.username !== curUsername"
+                               :disabled="!(curIsCreator || (curIsManager && scope.row.level === '普通成员'))" type="danger" plain
+                                @click="kickOut(scope.row.username)">
+                      移出团队
+                    </el-button>
+                    <el-button v-else size="small" type="danger" plain @click="quitTeam(scope.row.username)">退出团队</el-button>
+                    <i class="el-icon-more" slot="reference"></i>
+                  </el-popover>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </div>
       </div>
       <div class="no-group" v-else>
@@ -372,6 +409,7 @@ export default {
       leftIndex: '1',
       projectIndex: '1',
       sortRule: '创建时间',
+      byAsc : true,
       groupIndex: '0',
       curUsername: '',
       curUserID: 0,
@@ -424,6 +462,20 @@ export default {
       this.is_login = true
   },
   methods: {
+    handleAvatarCommand(index) {
+      if(index === '1') {
+        this.personalInfoDialogVisible = true;
+      } else if(index === '2') {
+        this.logout();
+      }
+    },
+    handleChangeGroupCommand(group) {
+      if(group === 'new') {
+        this.newTeamDialogVisible = true;
+      } else {
+        this.clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription);
+      }
+    },
     updateEmail(){
       const self = this;
       const formData = new FormData();
@@ -645,9 +697,6 @@ export default {
     },
     showFileCenter() {
       this.leftIndex = '3';
-    },
-    switchGroup() {
-
     },
     toAllProject() {
       this.projectIndex = '1';
@@ -961,14 +1010,16 @@ export default {
       let path = this.$router.resolve('/project/'+pID);
       window.open(path.href)
     },
-    handleSort(index, ascending) {
-      if(index === 1) {
+    handleSort(index) {
+      if(index === '1') {
         this.sortRule = '创建时间';
-      } else if (index === 2) {
+      } else if (index === '2') {
         this.sortRule = '项目名称';
+      } else if (index === '3') {
+        this.byAsc = true;
+      } else if (index === '4') {
+        this.byAsc = false;
       }
-      console.log(index);
-      console.log(ascending);
     },
     inviteMember() {
       let data = new FormData
@@ -988,7 +1039,7 @@ export default {
           }).then(res => {
             console.log(res)
             if(res.data.error === 0){
-              this.$message.success('邀请成功')
+              this.$message.success('邀请成功，请等待对方确认')
               this.showInviteDialog = false
               self.updateMemberInfo()
             }
@@ -1028,13 +1079,24 @@ export default {
   background-color: #112F4B;
 }
 
+.left-nav-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .project-box {
   display: flex;
   flex-direction: row;
 }
 
+.group-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20vh;
+}
+
 .project-nav {
-  width: 200px;
+  width: 190px;
   height: 100vh;
   border-right: solid 1px #e6e6e6;
 }
@@ -1084,7 +1146,7 @@ export default {
   font-size: 15px;
   padding: 2px 5px;
   border-radius: 5px;
-  margin-left: 15px;
+  margin-left: 4vh;
 }
 
 .normal-member {
@@ -1210,6 +1272,6 @@ export default {
   align-items: center;
   width: 100%;
   margin-top: 33vh;
-  margin-left: 42vh;
+  margin-left: 20vh;
 }
 </style>

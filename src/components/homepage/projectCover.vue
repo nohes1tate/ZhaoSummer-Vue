@@ -1,14 +1,17 @@
 <template>
   <div id="project-cover">
     <div style="margin-left: 195px; margin-top: 8px; position: absolute" >
-      <el-popover
-          placement="right"
-          width="200"
-          trigger="hover">
-        <el-button size="small" plain @click="newProjectNameDialogVisible = true">修改名称</el-button>
-        <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">删除项目</el-button>
-        <i class="el-icon-edit" slot="reference" ></i>
-      </el-popover>
+      <el-dropdown placement="bottom-start" @command="handleCommand">
+        <span class="el-dropdown-link">
+          <i class="el-icon-edit" slot="reference"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="1">重命名</el-dropdown-item>
+          <el-dropdown-item command="3">复制</el-dropdown-item>
+          <el-dropdown-item command="4">收藏</el-dropdown-item>
+          <el-dropdown-item command="2">删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <div @click="toProjectPage" style="height: 240px">
       <div class="project-name" >
@@ -90,6 +93,13 @@ export default {
     handleClose() {
       this.newProjectNameDialogVisible = false;
       this.deleteProjectDialogVisible = false;
+    },
+    handleCommand(command) {
+      if (command ==='1') {
+        this.newProjectNameDialogVisible = true;
+      } else if (command ==='2') {
+        this.deleteProjectDialogVisible = true;
+      }
     },
     toProjectPage() {
       let path ='/project/' + this.projectID
