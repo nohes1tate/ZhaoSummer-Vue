@@ -107,10 +107,10 @@
       <button @click="editor.chain().focus().setHardBreak().run()">
         hard break
       </button>
-      <button @click="editor.chain().focus().undo().run()">
+      <button @click="collaUndo">
         undo
       </button>
-      <button @click="editor.chain().focus().redo().run()">
+      <button @click="collaRedo">
         redo
       </button>
       <button @click="editor.chain().focus().setTextAlign('left').run()"
@@ -143,7 +143,7 @@
 <script>
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import CharacterCount from '@tiptap/extension-character-count'
-import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+//import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
 import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
 import StarterKit from '@tiptap/starter-kit'
@@ -171,6 +171,14 @@ export default {
   methods: {
     fuck() {
       this.editor.commands.setContent('5674159')
+    },
+    collaRedo(){
+      console.log('redo')
+      this.editor.commands.redo()
+    },
+    collaUndo() {
+      console.log('undo')
+      this.editor.commands.undo()
     }
   },
 

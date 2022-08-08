@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DocumentEdit from "@/components/documentEdit/DocumentEdit";
+import DocumentEdit from "@/components/WangEditor/DocumentEditor";
 
 
 export default {
