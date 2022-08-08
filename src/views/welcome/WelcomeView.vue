@@ -12,10 +12,10 @@
           </svg>
           <ul class="user-menu" v-show="showMenu">
             <li>
-              <a :href= "'/me/'+this.curUserID+''">个人中心</a>
+              <a :href= "this.meUrl">个人中心</a>
             </li>
             <li>
-              <a href="/home">我的项目</a>
+              <a :href="this.homeUrl">我的项目</a>
             </li>
             <li>
               <a href="/login">退出</a>
@@ -25,7 +25,7 @@
         <div class="banner-inner">
           <h1 class="banner-title1">墨书，高效的团队协作和管理平台</h1>
           <h2 class="banner-title2">设计师的利器，产品经理的帮手，工程师的伙伴</h2>
-          <a class="banner-btn" href="/home">开始使用</a>
+          <a class="banner-btn" :href="this.homeUrl">开始使用</a>
           <div class="spec">加入墨书，开启高效团队协作</div>
         </div>
         <div class="scroll" @click="go">
@@ -91,7 +91,7 @@
         <p>
           通过搭建团队空间，结构化沉淀和管理工作流程，多人多端实时协同互动，构建一站式工作中心
         </p>
-        <a href="/home" class="banner-btn">了解更多</a>
+        <a :href="this.homeUrl" class="banner-btn">了解更多</a>
       </div>
     </section>
     <section class="team-work" id="co-edit">
@@ -101,7 +101,7 @@
           云端编辑、实时协作、分享交付，一站完成工作与沟通，让人、事、物流畅运作
         </p>
         <p>
-          <a href="/home" class="banner-btn">了解更多</a>
+          <a :href="this.homeUrl" class="banner-btn">了解更多</a>
         </p>
       </div>
     </section>
@@ -112,7 +112,7 @@
         快速原型、矢量绘图、在线预览，轻松搞定原型设计
       </p>
       <p>
-        <a href="/home" class="banner-btn">了解更多</a>
+        <a :href="this.homeUrl" class="banner-btn">了解更多</a>
       </p>
       </div>
     </section>
@@ -123,14 +123,14 @@
           利用简单方便而功能强大的绘图功能绘制团队的UML图
         </p>
         <p>
-          <a href="/home" class="banner-btn">了解更多</a>
+          <a :href="this.homeUrl" class="banner-btn">了解更多</a>
         </p>
       </div>
     </section>
     <div class="content-red">
       <h5>使用墨书获得全新的设计体验</h5>
       <h6>和团队一起开启高效协作之旅</h6>
-      <a class="footer-btna" href="/home">点击开始</a>
+      <a class="footer-btna" :href="this.homeUrl">点击开始</a>
     </div>
     <div class="customer-service">
       <div class="item" id="customer-message">
@@ -157,11 +157,26 @@ export default {
       scrollTop:0,
       curUsername:'',
       curUserID:0,
+      meUrl:'',
+      homeUrl:'',
     }
   },
   created() {
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
+    console.log(this.curUserID)
+    if(this.curUserID===null)
+    {
+      //console.log('true')
+      this.meUrl='/login'
+      this.homeUrl='/login'
+    }
+    else
+    {
+      //console.log('false')
+      this.meUrl='/me/'+this.curUserID+''
+      this.homeUrl='/home'
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll, true);
@@ -175,7 +190,6 @@ export default {
     },
     handleScroll(){
       this.scrollTop = document.documentElement.scrollTop;//滚动高度
-      console.log(this.scrollTop)
       this.showTopbtn = this.scrollTop > 725;
     },
     backTop() {

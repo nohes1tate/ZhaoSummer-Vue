@@ -107,6 +107,11 @@
 <script>
 
 export default {
+  created() {
+    localStorage.removeItem('userID');
+    localStorage.removeItem('username');
+    localStorage.removeItem('authorization');
+  },
   data() {
     return {
       flag: true,
