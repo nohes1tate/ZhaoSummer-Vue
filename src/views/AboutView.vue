@@ -1,15 +1,15 @@
 <template>
   <div style="width: auto" >
-    <DocumentEdit></DocumentEdit>
+    <UMLTool></UMLTool>
   </div>
 </template>
 
 <script>
-import DocumentEdit from "@/components/documentEdit/DocumentEdit";
+import UMLTool from "@/components/UMLDrawer/UMLTool";
 
 export default {
   components: {
-    DocumentEdit
+    UMLTool
   }
 }
 

@@ -36,8 +36,10 @@ export default {
   components: { Editor, Toolbar },
   data() {
     return {
+      timer: null,
       curUser: '',
       editor: null,
+      preHtml: '',
       html: "<p>hello&nbsp;world</p>",
       toolbarConfig: {
         // toolbarKeys: [ /* 显示哪些菜单，如何排序、分组 */ ],
@@ -53,6 +55,28 @@ export default {
     };
   },
   methods: {
+    settimer() {
+      console.log('timer set')
+      if(this.timer==null){
+        this.timer = setInterval(this.settime, 200);
+      }
+    },
+    settime() {
+      if(this.preHtml !== this.html) {
+        let sendData = {content: this.editor.getHtml(),fromUser: this.curUser}
+        const msg = JSON.stringify({
+          type: 'message',
+          message: JSON.stringify(sendData)
+        })
+        //sendData.fromUser = this.curUser
+        if(socket.readyState===1)
+        {
+          console.log('send',this.html)
+          socket.send(msg)
+          this.preHtml = this.html
+        }
+      }
+    },
     openSocket() {
       if(typeof(WebSocket) == 'undefined') {
         console.log('不支持Websocket')
@@ -60,6 +84,7 @@ export default {
       else {
         var self = this
         console.log('支持Websocket')
+        //var socketUrl = "http://localhost:9000/document/" + this.$route.params.documentID
         var socketUrl = "http://localhost:9000/document/" + this.$route.params.documentID
         socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
         console.log(socketUrl)
@@ -94,10 +119,11 @@ export default {
         {
           console.log(JSON.parse(msg2.message))
           let rcv = JSON.parse(msg2.message)
-         // if(rcv.fromUser !== this.curUser)
+          if(rcv.fromUser !== self.curUser){
           //console.log(rcv.content)
           //console.log(self.html)
             self.html = rcv.content
+          self.preHtml=self.html}
         }
       }
       // 关闭
@@ -109,20 +135,24 @@ export default {
         socket.send(msg)
         console.log("websocket断开")
       }
+      this.settimer()
     },
     onCreated(editor) {
       this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
     },
     onChange(editor) {
-      console.log("onChange", editor.getHtml()); // onChange 时获取编辑器最新内容
-      let sendData = {content: editor.getHtml(),fromUser: this.curUser}
+      //console.log("onChange", editor.getHtml()); // onChange 时获取编辑器最新内容
+      /*let sendData = {content: editor.getHtml(),fromUser: this.curUser}
       const msg = JSON.stringify({
         type: 'message',
         message: JSON.stringify(sendData)
       })
       //sendData.fromUser = this.curUser
       if(socket.readyState===1)
-      socket.send(msg)
+      {
+        setTimeout(() =>{socket.send(msg)},200)
+        }
+*/
     },
     getEditorText() {
       const editor = this.editor;
@@ -139,16 +169,19 @@ export default {
   },
   mounted() {
     this.curUser=localStorage.getItem('userID')
-    // 模拟 ajax 请求，异步渲染编辑器
-    /*setTimeout(() => {
+     //模拟 ajax 请求，异步渲染编辑器
+    setTimeout(() => {
       this.html = "<p>默认的文档内容</p>";
-    }, 1500);*/
+      this.preHtml=this.html
+    }, 1500);
     this.openSocket()
   },
   beforeDestroy() {
+    socket.close()
     const editor = this.editor;
     if (editor == null) return;
     editor.destroy(); // 组件销毁时，及时销毁 editor ，重要！！！
+    clearInterval(this.timer)
   },
 };
 </script>

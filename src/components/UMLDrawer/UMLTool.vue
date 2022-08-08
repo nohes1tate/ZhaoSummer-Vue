@@ -30,7 +30,7 @@ import {
 var socket = null
 
 export default {
-  name: 'DesignTool',
+  name: 'UMLTool',
   data: function () {
     return {
       data: {},

@@ -41,6 +41,7 @@
     "i": "^0.3.7",
     "mavon-editor": "^2.10.4",
     "node-sass": "^7.0.1",
+    "nodejs-websocket": "^1.7.2",
     "prosemirror-keymap": "^1.1.4",
     "qs": "^6.11.0",
     "sass": "^1.54.0",
