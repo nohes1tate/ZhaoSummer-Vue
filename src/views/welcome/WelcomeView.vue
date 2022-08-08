@@ -162,7 +162,6 @@ export default {
   created() {
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
-    cons
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll, true);
