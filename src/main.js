@@ -8,9 +8,10 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
 import VueDraggableResizable from 'vue-draggable-resizable'
-import '@/assets/fonts/iconfont.css'
 import axios from 'axios'
 import qs from 'qs'
+import './assets/icon/iconfont.css'
+import './assets/icon/iconfont'
 Vue.prototype.$qs = qs;
 
 Vue.config.productionTip = false

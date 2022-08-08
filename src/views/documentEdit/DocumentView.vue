@@ -1,25 +1,24 @@
 <template>
-<div>
-  <document-editor></document-editor>
-</div>
+  <div>
+    <DocumentEdit></DocumentEdit>
+  </div>
 </template>
 
 <script>
-import documentEditor from "@/components/documentEdit/DocumentEditor";
+import DocumentEdit from "@/components/documentEdit/DocumentEdit";
+
 
 export default {
   name: "DocumentView",
   components: {
-    documentEditor
+    DocumentEdit
   },
   data() {
     return {
-      roomName: '',
     }
   },
   mounted() {
-    this.roomName=this.$route.params.documentID
-    console.log('roomName:',this.roomName)
+
   },
 }
 </script>
