@@ -1,15 +1,26 @@
 <template>
-  <div class="welcome">
+  <div class="welcome" @click="showMenu=false">
     <div class="first-img">
       <div class="top-line">
         <a href="/" class="logo">
           <img src="../../assets/logo/logo-yellow.png">
         </a>
         <div class="user-info">
-          <img src="../../assets/images/uerImg.jpg" class="avatar">
-          <svg class="icon" aria-hidden="true" style="color: white;vertical-align: middle;font-size: 6px;font-weight: 1000;margin-left: 5px;background-color:rgba(57, 49, 49, 0);">
+          <img src="../../assets/images/uerImg.jpg" class="avatar" @click.stop="handleMenu">
+          <svg class="icon" aria-hidden="true"  @click.stop="handleMenu" style="cursor:pointer;color: white;vertical-align: middle;font-size: 6px;font-weight: 1000;margin-left: 5px;background-color:rgba(57, 49, 49, 0);">
             <use xlink:href="#icon-xiangxia"></use>
           </svg>
+          <ul class="user-menu" v-show="showMenu">
+            <li>
+              <a href= "/me">个人中心</a>
+            </li>
+            <li>
+              <a href="/home">我的项目</a>
+            </li>
+            <li>
+              <a href="/login">退出</a>
+            </li>
+          </ul>
         </div>
         <div class="banner-inner">
           <h1 class="banner-title1">墨书，高效的团队协作和管理平台</h1>
@@ -17,14 +28,14 @@
           <a class="banner-btn" href="/home">开始使用</a>
           <div class="spec">加入墨书，开启高效团队协作</div>
         </div>
-        <div class="scroll">
+        <div class="scroll" @click="go">
           <svg class="icon" aria-hidden="true" style="color: white;vertical-align: middle;font-size: 20px;font-weight: 1000;margin-left: 5px;background-color:rgba(57, 49, 49, 0);">
             <use xlink:href="#icon-xiangxiazhanhang"></use>
           </svg>
         </div>
       </div>
     </div>
-    <div class="feature">
+    <div class="feature" id="first-element">
       <h2 class="home-title">我的设计利器，团队的协作平台</h2>
       <div class="feature-content">
         <div class="feature-item">
@@ -121,12 +132,60 @@
       <h6>和团队一起开启高效协作之旅</h6>
       <a class="footer-btna" href="/home">点击开始</a>
     </div>
+    <div class="customer-service">
+      <div class="item" id="customer-message">
+        <svg class="icon go-top" aria-hidden="true" style="">
+          <use xlink:href="#icon-xiaoxi"></use>
+        </svg>
+      </div>
+      <div class="item" id="go-top" @click="backTop" v-show="showTopbtn">
+        <svg class="icon go-top" aria-hidden="true" style="">
+          <use xlink:href="#icon-huidaodingbu"></use>
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "WelcomeView"
+  name: "WelcomeView",
+  data(){
+    return{
+      showMenu:false,
+      showTopbtn:false,
+      scrollTop:0,
+    }
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll, true);
+  },
+  methods:{
+    handleMenu(){
+      this.showMenu = this.showMenu !== true;
+    },
+    go(){
+      document.getElementById("first-element").scrollIntoView({ behavior: 'smooth' });
+    },
+    handleScroll(){
+      this.scrollTop = document.documentElement.scrollTop;//滚动高度
+      console.log(this.scrollTop)
+      this.showTopbtn = this.scrollTop > 725;
+    },
+    backTop() {
+      var timer = setInterval(function () {
+        let osTop =
+            document.documentElement.scrollTop || document.body.scrollTop;
+        let ispeed = Math.floor(-osTop / 5);
+        document.documentElement.scrollTop = document.body.scrollTop =
+            osTop + ispeed;
+        this.isTop = true;
+        if (osTop === 0) {
+          clearInterval(timer);
+        }
+      }, 10);
+    },
+  }
 }
 </script>
 
@@ -371,5 +430,74 @@ section{
 .text-box p{
   font-size: 20px;
   color: white;
+}
+.customer-service{
+  position: fixed;
+  z-index: 999;
+  bottom: 40px;
+  right:40px;
+}
+.item{
+  cursor: pointer;
+  margin-top: 8px;
+  width: 56px;
+  height: 56px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  border: 1px solid #e9e9e9;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0,0,0, 0.02);
+}
+.go-top{
+  display: block;
+  position: absolute;
+  top:50%;
+  width: 100%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #8c8889;
+  transition: 0.3s;
+}
+.go-top:hover{
+  color: white;
+}
+.item:hover{
+  background-color: #e76bec;
+  border: 1px solid #e76bec;
+}
+.user-menu{
+  display: block;
+  position: absolute;
+  top: 9vh;
+  right: 15vh;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 12px 0;
+  z-index: 9;
+  box-shadow: 0 4px 12px rgba(0,0,0 , 0.15);
+  width: 140px;
+  border-radius: 6px;
+}
+.user-menu li{
+  display: block;
+  transition: 0.15s;
+}
+ul,li{
+  list-style: none;
+  box-sizing: border-box;
+}
+.user-menu a{
+  display: inline-block;
+  width: 100%;
+  padding: 0 20px;
+  color: #000000;
+  box-sizing: border-box;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
 }
 </style>

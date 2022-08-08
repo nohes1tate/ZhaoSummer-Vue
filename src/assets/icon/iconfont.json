@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11463937",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "16365870",
+      "name": "回到顶部",
+      "font_class": "huidaodingbu",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
       "icon_id": "1297",
       "name": "向下",
       "font_class": "xiangxia",
