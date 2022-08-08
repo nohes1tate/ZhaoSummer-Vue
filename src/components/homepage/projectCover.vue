@@ -23,7 +23,7 @@
         <div>{{projectCreateTime}}</div>
       </div>
       <div class="info-row">
-        <div class="info-tag">原型数：</div>
+        <div class="info-tag">页面数：</div>
         <div>{{pageNum}}</div>
       </div>
       <div class="info-row">

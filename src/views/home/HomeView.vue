@@ -1,27 +1,49 @@
 <template>
   <div class="home" v-title data-title="墨书-软工管理平台">
     <div class="nav-left">
-      <img style="width: 200px; margin-top: 4vh; margin-bottom: 2vh;"  src="@/assets/logo/logo-yellow.png" alt="">
+      <div class="avatar-box">
+        <el-popover
+            placement="right"
+            trigger="hover"
+            v-show="is_login">
+          <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
+          <el-button size="small" type="danger" plain @click="logout">退出登录</el-button>
+          <el-avatar :size="30" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
+        </el-popover>
+        <el-popover
+            placement="right"
+            trigger="hover"
+            v-show="!is_login">
+          <el-button type="primary" plain @click="login" v-show="!is_login" width="150px">去 登 录</el-button>
+          <el-avatar :size="30" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
+        </el-popover>
+      </div>
       <el-menu
           class="select-box"
           background-color="#112F4B"
           active-text-color="#87CEFA"
           text-color="#FFFFFF"
-          :default-active="groupIndex">
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-user" style="color: white"></i>
-            <span>我的团队</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item class="left-bar" v-for="(group,index) in this.groupList"
-                          :index="index+''" v-bind:key="group.groupID"
-                          @click="clickGroup(group.groupID, group.groupName, group.isCreator, group.isManager, group.groupDescription)">
-              {{group.groupName}}</el-menu-item>
-            <el-menu-item :index="this.groupList.length+ ''" class="left-bar"
-                          @click="newTeamDialogVisible = true"><i class="el-icon-plus" style="color: white"></i>新建团队</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+          :default-active="leftIndex">
+        <el-menu-item index="1" style="height: 80px; padding-top: 10px;" @click="showProject">
+          <el-tooltip class="item" effect="light" content="团队项目" placement="right">
+            <i class="el-icon-document" style="font-size: 25px"></i>
+          </el-tooltip>
+        </el-menu-item>
+        <el-menu-item index="2" style="height: 80px; padding-top: 10px;" @click="showTeam">
+          <el-tooltip class="item" effect="light" content="团队管理" placement="right">
+            <i class="el-icon-user" style="font-size: 25px"></i>
+          </el-tooltip>
+        </el-menu-item>
+        <el-menu-item index="3" style="height: 80px; padding-top: 10px;" @click="showFileCenter">
+          <el-tooltip class="item" effect="light" content="文档中心" placement="right">
+            <i class="el-icon-files" style="font-size: 25px"></i>
+          </el-tooltip>
+        </el-menu-item>
+        <el-menu-item index="4" style="height: 80px; padding-top: 10px;" @click="switchGroup">
+          <el-tooltip class="item" effect="light" content="切换团队" placement="right">
+            <i class="el-icon-sort" style="font-size: 25px"></i>
+          </el-tooltip>
+        </el-menu-item>
       </el-menu>
     </div>
 
@@ -158,94 +180,109 @@
     </el-dialog>
 
     <div class="content-home">
-      <div class="top-bar">
-        <div style="font-size: 20px; margin-bottom: -15px; margin-top: 10px; margin-right: 10px">
-          <el-popover
-              placement="bottom"
-              trigger="hover"
-              v-show="is_login">
-            <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
-            <el-button size="small" type="danger" plain @click="logout">退出登录</el-button>
-            <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
-          </el-popover>
-          <el-popover
-              placement="bottom"
-              trigger="hover"
-              v-show="!is_login">
-            <el-button type="primary" plain @click="login" v-show="!is_login" width="150px">去 登 录</el-button>
-            <i class="el-icon-s-tools" style="cursor: pointer" slot="reference"></i>
-          </el-popover>
-          {{ curUsername }} {{ curUserEmail }}
-        </div>
-        <el-divider style="margin: 0"></el-divider>
-      </div>
       <div v-if="hasGroup">
-        <div style="text-align: left; margin-top: 60px; margin-bottom: 20px;">
-          <span style="font-size: 30px;">{{ curGroupName }}</span>
-          <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
-          <span class="member-tag manager-member" v-else-if="curIsManager">管理员</span>
-          <span class="member-tag normal-member" v-else>普通成员</span>
-          <span style="margin-left: 2vh;">{{curGroupIntro}}</span>
-        </div>
-        <div class="nav-team">
-          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
-            <el-menu-item index="1" @click="showProject">团队项目</el-menu-item>
-            <el-menu-item index="2" @click="showTeam">团队管理</el-menu-item>
-            <el-menu-item index="3" @click="showRecycle">项目回收站</el-menu-item>
-          </el-menu>
-        </div>
-        <div class="button--">
-          <el-button type="primary" v-if="activeIndex==='1'"
-                     @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目
-          </el-button>
+        <div class="project-box" v-if="leftIndex==='1'">
+          <div class="project-nav">
+            <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="width: 100.5%; margin-top: 40px">
+              <el-menu-item index="1" @click="toAllProject">
+                <i class="el-icon-discount"></i>
+                <span slot="title">全部项目</span>
+              </el-menu-item>
+              <el-menu-item index="2" @click="toFavorProject">
+                <i class="el-icon-star-on"></i>
+                <span slot="title">我的收藏</span>
+              </el-menu-item>
+              <el-menu-item index="3" @click="toRecentView">
+                <i class="el-icon-time"></i>
+                <span slot="title">最近查看</span>
+              </el-menu-item>
+              <el-menu-item index="4" @click="toMyCreateProject">
+                <i class="el-icon-user-solid"></i>
+                <span slot="title">我创建的</span>
+              </el-menu-item>
+              <el-menu-item index="5" @click="toDeletedProject">
+                <i class="el-icon-delete-solid"></i>
+                <span slot="title">回收站</span>
+              </el-menu-item>
+            </el-menu>
+          </div>
+          <div class="project-right">
+            <div class="button--">
+              <el-button type="primary"
+                         @click="newProjectDialogVisible = true"><i class="el-icon-plus"></i> 新建项目
+              </el-button>
+              <el-input placeholder="搜索项目" prefix-icon="el-icon-search"
+                        v-model="searchProjectInput" style="width: 30vh; margin-left: 10vh;">
+              </el-input>
 
-          <el-dialog
-              title="新建项目"
-              :visible.sync="newProjectDialogVisible"
-              width="30%">
-            <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
-              <el-form-item label="项目名称" prop="projectName">
-                <el-input
-                    maxlength="10"
-                    show-word-limit
-                    :rows="1"
-                    v-model="projectForm.projectName"></el-input>
-              </el-form-item>
-              <el-form-item label="项目简介" prop="projectIntro">
-                <el-input
-                    type="textarea"
-                    maxlength="100"
-                    show-word-limit
-                    :rows="4"
-                    v-model="projectForm.projectIntro"></el-input>
-              </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-      <el-button @click="newProjectDialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="createProject">确 定</el-button>
-    </span>
-          </el-dialog>
+              <el-dialog
+                  title="新建项目"
+                  :visible.sync="newProjectDialogVisible"
+                  width="30%">
+                <el-form :model="projectForm" :rules="projectRules" ref="projectForm" label-width="100px">
+                  <el-form-item label="项目名称" prop="projectName">
+                    <el-input
+                        maxlength="10"
+                        show-word-limit
+                        :rows="1"
+                        v-model="projectForm.projectName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="项目简介" prop="projectIntro">
+                    <el-input
+                        type="textarea"
+                        maxlength="100"
+                        show-word-limit
+                        :rows="4"
+                        v-model="projectForm.projectIntro"></el-input>
+                  </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="newProjectDialogVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="createProject">确 定</el-button>
+                </span>
+              </el-dialog>
+            </div>
+            <div class="project-list-title">
+              <span v-if="projectIndex==='1'">全部项目</span>
+              <span v-else-if="projectIndex==='2'">我的收藏</span>
+              <span v-else-if="projectIndex==='3'">最近查看</span>
+              <span v-else-if="projectIndex==='4'">我创建的</span>
+              <span v-else-if="projectIndex==='5'">回收站</span>
+            </div>
+            <div class="sort-select">
+              <el-dropdown @command="handleSort">
+                <span class="el-dropdown-link">
+                  <i class="el-icon-s-operation"></i> {{ sortRule }}<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item :index="1">创建时间</el-dropdown-item>
+                  <el-dropdown-item :index="2">项目名称</el-dropdown-item>
+                  <el-dropdown-item :ascending="true" divided>升序</el-dropdown-item>
+                  <el-dropdown-item :ascending="false">降序</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+            <div class="content-project" v-if="activeIndex==='2'">
+              <recycleProjectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
+                                   :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
+                                   :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
+                                   v-for="project in recycleProjectList" v-bind:key="project.projectID"
+                                   @click="toProject(project.projectID)"
+                                   style="margin-right: 7vh; margin-top: 4vh"></recycleProjectCover>
+            </div>
+            <div class="content-project">
+              <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
+                            :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
+                            :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
+                            v-for="project in curProjectList" v-bind:key="project.projectID"
+                            @click="toProject(project.projectID)"
+                            style="margin-right: 7vh; margin-top: 4vh"></projectCover>
+            </div>
+          </div>
+        </div>
 
-          <el-button type="primary" v-if="activeIndex==='2'" @click="showInviteDialog = true"><i
-              class="el-icon-plus"></i> 邀请成员
-          </el-button>
-        </div>
-        <div class="content-project" v-if="activeIndex==='3'">
-          <recycleProjectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
-                        :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
-                        :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
-                        v-for="project in recycleProjectList" v-bind:key="project.projectID"
-                        @click="toProject(project.projectID)"
-                        style="margin-left: 7vh; margin-top: 4vh"></recycleProjectCover>
-        </div>
-        <div class="content-project" v-if="activeIndex==='1'">
-          <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
-                        :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
-                        :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
-                        v-for="project in curProjectList" v-bind:key="project.projectID"
-                        @click="toProject(project.projectID)"
-                        style="margin-left: 7vh; margin-top: 4vh"></projectCover>
-        </div>
+
+
         <div style="margin-top: 3vh" v-if="activeIndex==='2'">
           <el-table
               :data="curMemberList"
@@ -326,12 +363,15 @@ export default {
       input1: '',
       input2: '',
       input3: '',
+      searchProjectInput: '',
       hasGroup: false,
       personalInfoDialogVisible: false,
       showInfoDialog: false,
       showInviteDialog: false,
       inviteMemberName: '',
-      activeIndex: '1',
+      leftIndex: '1',
+      projectIndex: '1',
+      sortRule: '创建时间',
       groupIndex: '0',
       curUsername: '',
       curUserID: 0,
@@ -598,13 +638,31 @@ export default {
       console.log(param)
     },
     showProject() {
-      this.activeIndex = '1';
+      this.leftIndex = '1';
     },
     showTeam() {
-      this.activeIndex = '2';
+      this.leftIndex = '2';
     },
-    showRecycle() {
-      this.activeIndex = '3';
+    showFileCenter() {
+      this.leftIndex = '3';
+    },
+    switchGroup() {
+
+    },
+    toAllProject() {
+      this.projectIndex = '1';
+    },
+    toFavorProject() {
+      this.projectIndex = '2';
+    },
+    toRecentView() {
+      this.projectIndex = '3';
+    },
+    toMyCreateProject() {
+      this.projectIndex = '4';
+    },
+    toDeletedProject() {
+      this.projectIndex = '5';
     },
     handleOpen() {
       console.log('open')
@@ -903,6 +961,15 @@ export default {
       let path = this.$router.resolve('/project/'+pID);
       window.open(path.href)
     },
+    handleSort(index, ascending) {
+      if(index === 1) {
+        this.sortRule = '创建时间';
+      } else if (index === 2) {
+        this.sortRule = '项目名称';
+      }
+      console.log(index);
+      console.log(ascending);
+    },
     inviteMember() {
       let data = new FormData
       let self = this
@@ -940,6 +1007,11 @@ export default {
 </script>
 
 <style>
+.avatar-box {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 .home {
   position: relative;
   width: 100%;
@@ -951,29 +1023,61 @@ export default {
 
 .nav-left {
   position: relative;
-  width: 300px;
+  width: 70px;
   height: auto;
   background-color: #112F4B;
-  margin-right: 20px;
+}
+
+.project-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.project-nav {
+  width: 200px;
+  height: 100vh;
+  border-right: solid 1px #e6e6e6;
+}
+
+.project-right {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10vh;
+  justify-content: left;
+}
+
+.project-list-title {
+  margin-top: 5vh;
+  text-align: left;
+  font-size: 20px;
+}
+
+.sort-select {
+  text-align: left;
+  margin-top: 5vh;
+  padding-bottom: 1vh;
+  border-bottom: solid 1px #e6e6e6;
+  width: 95%;
 }
 
 .content-home {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
+  width: 100%;
+  height: auto;
 }
+
 
 .button-- {
   text-align: left;
-  margin-top: 15px;
-  margin-left: 10px;
+  margin-top: 6vh;
 }
 
 .content-project {
   display: flex;
   flex-wrap: wrap;
   width: 160vh;
-  margin-left: -20px;
 }
 
 .member-tag {
@@ -1059,7 +1163,7 @@ export default {
 
 .select-box {
   position: relative;
-  width: 100.3%;
+  width: 102%;
   text-align: left;
   align-items: center;
   justify-content: center;
