@@ -224,7 +224,6 @@
             </div>
           </div>
         </div>
-
         <div class="group-box" v-else-if="leftIndex==='2'">
           <div style="text-align: left; margin-top: 10vh;">
             <span style="font-size: 40px;">{{ curGroupName }}</span>
@@ -330,6 +329,7 @@ export default {
       projectIndex: '1',
       sortRule: '创建时间',
       byAsc : true,
+      curDocid: '',
       groupIndex: '0',
       curUsername: '',
       curUserID: 0,
@@ -375,22 +375,25 @@ export default {
         ]
       },
       documentList: [{
+        docid: '1',
         isSub: false,
         title: '团队文档1',
         content: '<p>文档1的内容</p>',
         childDoc: []
       },
         {
+          docid: '2',
           isSub: false,
           title: '团队文档2',
           content: '<p>content2</p>',
           childDoc: []
         },
         {
+          docid: '-1',
           isSub: true,
           title: '项目1',
           content: '',
-          childDoc: [{title: '项目1文档', content: '<p>content3</p>'}, {title: '项目1文档', content: '<p>content4</p>'}]
+          childDoc: [{docid: '3',title: '项目1文档', content: '<p>content3</p>'}, {docid: '4',title: '项目1文档', content: '<p>content4</p>'}]
         }]
     };
   },
