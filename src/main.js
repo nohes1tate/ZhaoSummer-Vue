@@ -22,13 +22,14 @@ Vue.use(ElementUI)
 Vue.use(mavonEditor)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
 Vue.directive('title', {
   inserted: function (el) {
     document.title = el.dataset.title
   }
 })
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
+

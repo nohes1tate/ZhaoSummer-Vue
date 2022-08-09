@@ -371,6 +371,10 @@
             </el-table>
           </div>
         </div>
+
+        <div v-if="leftIndex==='3'">
+          <DocumentView :list="documentList"></DocumentView>
+        </div>
       </div>
       <div class="no-group" v-else>
         <span style="font-size: 40px; color: #595959">创建团队</span>
@@ -385,10 +389,11 @@
 <script>
 import ProjectCover from "@/components/homepage/projectCover.vue";
 import recycleProjectCover from "@/components/homepage/recycleProjectCover";
+import DocumentView from "@/views/documentEdit/DocumentView";
 
 export default {
   name: 'HomeView',
-  components: {ProjectCover,recycleProjectCover},
+  components: {ProjectCover,recycleProjectCover, DocumentView},
   data() {
     return {
       currentUserEmail:'',
@@ -455,6 +460,24 @@ export default {
           {required: true, message: '请输入团队简介', trigger: 'blur'}
         ]
       },
+      documentList: [{
+        isSub: false,
+        title: 'title1',
+        content: '<p>content1</p>',
+        childDoc: []
+      },
+        {
+          isSub: false,
+          title: 'title2',
+          content: '<p>content2</p>',
+          childDoc: []
+        },
+        {
+          isSub: true,
+          title: 'project1',
+          content: '',
+          childDoc: [{title: 'title3', content: '<p>content3</p>'}, {title: 'title4', content: '<p>content4</p>'}]
+        }]
     };
   },
   created() {

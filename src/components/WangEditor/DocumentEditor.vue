@@ -16,13 +16,6 @@
           @onCreated="onCreated"
       />
     </div>
-    <div style="margin-top: 10px">
-      <textarea
-          v-model="html"
-          readonly
-          style="width: 100%; height: 200px; outline: none"
-      ></textarea>
-    </div>
   </div>
 </template>
 
@@ -43,7 +36,7 @@ export default {
       html: "<p>hello&nbsp;world</p>",
       toolbarConfig: {
         // toolbarKeys: [ /* 显示哪些菜单，如何排序、分组 */ ],
-        // excludeKeys: [ /* 隐藏哪些菜单 */ ],
+        excludeKeys: [ 'group-image','group-video' ],
       },
       editorConfig: {
         placeholder: "请输入内容...",
@@ -179,8 +172,9 @@ export default {
   beforeDestroy() {
     socket.close()
     const editor = this.editor;
-    if (editor == null) return;
+    if (editor !== null)
     editor.destroy(); // 组件销毁时，及时销毁 editor ，重要！！！
+    if (this.timer !== null)
     clearInterval(this.timer)
   },
 };
