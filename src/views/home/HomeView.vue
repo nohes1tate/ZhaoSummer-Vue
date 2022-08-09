@@ -210,23 +210,23 @@
         <div class="project-box" v-if="leftIndex==='1'">
           <div class="project-nav">
             <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="margin-top: 40px; border-right: none">
-              <el-menu-item index="1" @click="toAllProject">
+              <el-menu-item index="1-1" @click="toAllProject">
                 <i class="el-icon-discount"></i>
                 <span slot="title">全部项目</span>
               </el-menu-item>
-              <el-menu-item index="2" @click="toFavorProject">
+              <el-menu-item index="1-2" @click="toFavorProject">
                 <i class="el-icon-star-on"></i>
                 <span slot="title">我的收藏</span>
               </el-menu-item>
-              <el-menu-item index="3" @click="toRecentView">
+              <el-menu-item index="1-3" @click="toRecentView">
                 <i class="el-icon-time"></i>
                 <span slot="title">最近查看</span>
               </el-menu-item>
-              <el-menu-item index="4" @click="toMyCreateProject">
+              <el-menu-item index="1-4" @click="toMyCreateProject">
                 <i class="el-icon-user-solid"></i>
                 <span slot="title">我创建的</span>
               </el-menu-item>
-              <el-menu-item index="5" @click="toDeletedProject">
+              <el-menu-item index="1-5" @click="toDeletedProject">
                 <i class="el-icon-delete-solid"></i>
                 <span slot="title">回收站</span>
               </el-menu-item>
@@ -310,7 +310,7 @@
           </div>
         </div>
 
-        <div class="group-box" v-if="leftIndex==='2'">
+        <div class="group-box" v-else-if="leftIndex==='2'">
           <div style="text-align: left; margin-top: 10vh;">
             <span style="font-size: 40px;">{{ curGroupName }}</span>
             <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
@@ -372,7 +372,7 @@
           </div>
         </div>
 
-        <div v-if="leftIndex==='3'">
+        <div v-else-if="leftIndex==='3'">
           <DocumentView :list="documentList"></DocumentView>
         </div>
       </div>
@@ -462,21 +462,21 @@ export default {
       },
       documentList: [{
         isSub: false,
-        title: 'title1',
-        content: '<p>content1</p>',
+        title: '团队文档1',
+        content: '<p>文档1的内容</p>',
         childDoc: []
       },
         {
           isSub: false,
-          title: 'title2',
+          title: '团队文档2',
           content: '<p>content2</p>',
           childDoc: []
         },
         {
           isSub: true,
-          title: 'project1',
+          title: '项目1',
           content: '',
-          childDoc: [{title: 'title3', content: '<p>content3</p>'}, {title: 'title4', content: '<p>content4</p>'}]
+          childDoc: [{title: '项目1文档', content: '<p>content3</p>'}, {title: '项目1文档', content: '<p>content4</p>'}]
         }]
     };
   },

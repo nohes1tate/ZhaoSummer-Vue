@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/documentEdit/:documentID',
     name: 'documentEdit',
-    component: () => import('../views/documentEdit/DocumentView'),
+    component: () => import('../views/documentEdit/DocumentEditView'),
     meta:{
       title:"墨书-文档编辑"
     },
