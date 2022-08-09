@@ -81,6 +81,7 @@ export default {
     dataForm.append("userID", this.userID);
     dataForm.append("username", this.username);
     dataForm.append("authorization", localStorage.getItem('authorization'));
+    console.log(this.projectName)
     this.$axios({
       method: 'post',
       url: 'ProjectManager/isCollect/',
