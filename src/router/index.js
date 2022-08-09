@@ -65,7 +65,7 @@ const routes = [
   {
     path: '/project/:projectID',
     name: 'project',
-    component: () => import(/* webpackChunkName: "about" */ '../views/project/Project'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/project/projectVersion2'),
     children:[
       //这个是空白页面，重新加载当前页面会用到
       {
