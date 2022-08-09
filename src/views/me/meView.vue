@@ -188,13 +188,10 @@ export default {
         data: formData,
       })
           .then(res => {
-            console.log(res.data)
             switch (res.data.error) {
               case 0:
-                this.userEmail=res.data.userEmail;
-                this.curUserRealname=res.data.realName;
-                console.log(this.userEmail);
-                console.log(this.curUserRealname);
+                this.userEmail=res.data.data.userEmail;
+                this.curUserRealname=res.data.data.realName;
                 break;
             }
           })
