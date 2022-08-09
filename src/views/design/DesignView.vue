@@ -4,7 +4,7 @@
       <el-menu
           mode="vertical"
           default-active="0"
-          style="width: 30vh"
+          style="width: 30vh;height: 100vh"
       >
         <div v-for="(item,index1) in axureList" v-bind:key="index1+''">
           <el-menu-item :index="index1+''" @click="changeAxure(item.axureid,item.content)">

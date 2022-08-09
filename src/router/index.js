@@ -9,6 +9,7 @@ import designTool from "@/components/InlineAxure/DesignTool";
 //import documentEditor from "@/components/documentEdit/DocumentEdit"
 import ProjectView from "@/components/projectpage/ProjectView";
 import DocumentEditView from "@/views/documentEdit/DocumentEditView";
+//import PreviewListView from "@/views/preview/PreviewListView";
 
 Vue.use(VueRouter)
 
@@ -40,7 +41,7 @@ const routes = [
   {
     path: '/preview',
     name: 'preview',
-    component: () => import('../views/design/PreviewView'),
+    component: () => import('../views/preview/PreviewListView'),
     meta:{
       title:"墨书-预览"
     },

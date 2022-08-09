@@ -10,10 +10,6 @@
         <a-icon type="border" />
         适合窗口大小
       </a-button>
-      <a-button type="primary" @click="onSizeOri">
-        <a-icon type="fullscreen-exit" />
-        实际大小
-      </a-button>
     </div>
   </div>
 </template>
@@ -24,6 +20,12 @@ import Topology from '@/assets/topology-vue';
 Vue.use(Topology);
 export default {
   name: 'PreviewView',
+  props: {
+    content: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       data: {},
@@ -33,14 +35,16 @@ export default {
   },
   created() {
     //获取存储数据
-    const data = sessionStorage.getItem('topologyData');
-    if (data) {
-      this.data = JSON.parse(data);
-    } else {
-      //
-    }
 
-    this.showTools = !!this.$route.query.r;
+      this.data = JSON.parse(this.content);
+
+
+    this.showTools = true;
+  },
+  watch: {
+    content(newVal){
+      this.data = JSON.parse(newVal)
+    }
   },
   methods: {
     onSizeWindow() {
@@ -60,7 +64,11 @@ export default {
 <style lang="scss" scoped>
 .preview {
   position: relative;
-  height: 100vh;
+  height: 93vh;
+
+  margin-left: 30vh;
+
+  margin-top: -93vh;
 
   .tools {
     position: absolute;
