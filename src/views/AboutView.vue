@@ -14,10 +14,10 @@ export default {
   data() {
     return {
       UMLList: [{UMLid: '1',
-        title: '页面1',
+        title: 'UML1',
         content: '',   },
         {UMLid: '2',
-          title: '页面2',
+          title: 'UML2',
           content: '',}]
     }
   }
