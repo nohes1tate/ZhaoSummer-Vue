@@ -125,23 +125,23 @@
         <div class="project-box" v-if="leftIndex==='1'">
           <div class="project-nav">
             <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="margin-top: 40px; border-right: none">
-              <el-menu-item index="1-1" @click="toAllProject">
+              <el-menu-item index="1" @click="toAllProject">
                 <i class="el-icon-discount"></i>
                 <span slot="title">全部项目</span>
               </el-menu-item>
-              <el-menu-item index="1-2" @click="toFavorProject">
+              <el-menu-item index="2" @click="toFavorProject">
                 <i class="el-icon-star-on"></i>
                 <span slot="title">我的收藏</span>
               </el-menu-item>
-              <el-menu-item index="1-3" @click="toRecentView">
+              <el-menu-item index="3" @click="toRecentView">
                 <i class="el-icon-time"></i>
                 <span slot="title">最近查看</span>
               </el-menu-item>
-              <el-menu-item index="1-4" @click="toMyCreateProject">
+              <el-menu-item index="4" @click="toMyCreateProject">
                 <i class="el-icon-user-solid"></i>
                 <span slot="title">我创建的</span>
               </el-menu-item>
-              <el-menu-item index="1-5" @click="toDeletedProject">
+              <el-menu-item index="5" @click="toDeletedProject">
                 <i class="el-icon-delete-solid"></i>
                 <span slot="title">回收站</span>
               </el-menu-item>
@@ -217,7 +217,6 @@
               <projectCover :projectName=project.projectName :groupID=curGroupID :userID=curUserID :username=curUsername :projectID=project.projectID
                             :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
                             :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
-                            :hasFavored="project.hasFavored"
                             v-for="project in curProjectList" v-bind:key="project.projectID"
                             @click="toProject(project.projectID)"
                             style="margin-right: 7vh; margin-top: 4vh"></projectCover>
@@ -257,7 +256,7 @@
               <el-table-column
                   prop="level"
                   label="权限"
-                  width="160">
+                  width="130">
               </el-table-column>
               <el-table-column
                   fixed="right"
@@ -422,6 +421,7 @@ export default {
       })
           .then(res => {
             this.searchProjectInput = '';
+            console.log(res.data);
             switch (res.data.error) {
               case 0:
                 this.curProjectList = JSON.parse(res.data.projectList);
@@ -708,13 +708,14 @@ export default {
       this.refreshFavorProject();
     },
     refreshFavorProject() {
+      console.log('refresh')
       const projectForm = new FormData();
       projectForm.append("userID", this.curUserID);
       projectForm.append("username", this.curUsername);
       projectForm.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
-        url: 'ProjectManager/viewCollect',
+        url: 'ProjectManager/viewCollect/',
         data: projectForm,
       })
           .then(res => {
@@ -734,7 +735,7 @@ export default {
     toRecentView() {
       this.projectIndex = '3';
       const projectForm = new FormData();
-      projectForm.append("groupID", this.curUserID);
+      projectForm.append("userID", this.curUserID);
       projectForm.append("username", this.curUsername);
       projectForm.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
@@ -743,9 +744,9 @@ export default {
         data: projectForm,
       })
           .then(res => {
-            switch (res.data.error) {
+            switch (res.data.errno) {
               case 0:
-                this.curProjectList = res.data.project_list;
+                this.curProjectList = res.data.data;
                 break;
             }
           })
@@ -899,6 +900,7 @@ export default {
       formData.append("userID", this.curUserID);
       formData.append("username", this.curUsername);
       formData.append("authorization", localStorage.getItem('authorization'));
+      console.log(this.curUserID)
       this.$axios({
         method: 'post',
         url: 'TeamManager/getGroupInfo/',

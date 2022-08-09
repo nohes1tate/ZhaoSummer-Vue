@@ -78,8 +78,27 @@ export default {
     this.projectID = this.$route.params.projectID;
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
+    this.getProjectInfo()
   },
   methods: {
+    getProjectInfo(){
+      const formData = new FormData();
+      formData.append('projectID', this.projectID);
+      formData.append('authorization', localStorage.getItem('authorization'));
+      formData.append('username',localStorage.getItem('username'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/projectView/',
+        data: formData,
+      })
+          .then(res => {
+            console.log(res.data)
+            this.projectName=res.data.projectName;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     toHome(){
       let path='/home'
       this.$router.push(path);

@@ -1,5 +1,5 @@
 <template>
-  <div id="project-cover" @click="toProjectPage">
+  <div id="project-cover">
     <div style="margin-left: 210px; margin-top: 8px; position: absolute">
       <el-dropdown placement="bottom-start" @command="handleCommand">
         <span class="el-dropdown-link" style="color: whitesmoke">
@@ -14,10 +14,10 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <div class="cover-box">
+    <div class="cover-box"  @click="toProjectPage">
       <img src="../../../src/assets/images/project-cover2.jpg" style="width: 100%; height: 100%;">
     </div>
-    <div style="margin-top: 10px; display: flex;flex-direction: column">
+    <div style="margin-top: 10px; display: flex;flex-direction: column" @click="toProjectPage">
       <span style="font-size: 20px;">{{ projectName }}</span>
       <span style="font-size: 12px; color: #999; margin-top: 5px;">创建者：{{ projectCreator }}</span>
       <span style="font-size: 12px; color: #999; margin-top: 2px">创建时间：{{ projectCreateTime }}</span>
@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import HomeView from "@/views/home/HomeView";
 
 export default {
   name: "projectCover",
   data(){
     return{
       dotdotdot: false,
+      hasFavored:{default: false},
       newProjectNameDialogVisible: false,
       newProjectNameForm: {
         newProjectName: '',
@@ -87,13 +87,12 @@ export default {
       data: dataForm,
     })
         .then(res => {
+          console.log(this.projectName)
           switch (res.data.error) {
             case 0:
-              // eslint-disable-next-line vue/no-mutating-props
               this.hasFavored = true;
               break;
             case 1:
-              // eslint-disable-next-line vue/no-mutating-props
               this.hasFavored = false;
               break;
           }
@@ -133,7 +132,7 @@ export default {
           .then(res => {
             switch (res.data.error) {
               case 0:
-                HomeView.methods.toAllProject();
+                //HomeView.methods.toAllProject();
                 break;
             }
           })
@@ -156,9 +155,8 @@ export default {
           .then(res => {
             switch (res.data.error) {
               case 0:
-                // eslint-disable-next-line vue/no-mutating-props
                 this.hasFavored = true;
-                HomeView.methods.refreshFavorProject();
+                //HomeView.methods.refreshFavorProject();
                 break;
             }
           })
@@ -175,15 +173,14 @@ export default {
       dataForm.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
-        url: 'ProjectManager/projectUnCollect/',
+        url: 'ProjectManager/projectUncollect/',
         data: dataForm,
       })
           .then(res => {
             switch (res.data.error) {
               case 0:
-                // eslint-disable-next-line vue/no-mutating-props
                 this.hasFavored = false;
-                HomeView.methods.refreshFavorProject();
+                //this.$parent.refreshFavorProject();
                 break;
             }
           })
@@ -199,10 +196,11 @@ export default {
       dataForm.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
-        url: 'ProjectManager/projectClick',
+        url: 'ProjectManager/projectClick/',
         data: dataForm,
       })
           .then(res => {
+            console.log('click');
             switch (res.data.error) {
               case 0:
                 break;
@@ -315,7 +313,6 @@ export default {
     projectCreateTime:{default: '2022-10-10'},
     docNum:{default: 0},
     pageNum:{default: 0},
-    hasFavored:{default: false},
   },
 }
 </script>

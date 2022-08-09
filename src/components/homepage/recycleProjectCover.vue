@@ -1,40 +1,25 @@
 <template>
   <div id="project-cover">
-    <div style="margin-left: 195px; margin-top: 8px; position: absolute" >
-      <el-popover
-          placement="right"
-          width="200"
-          trigger="hover">
-        <el-button size="small" plain @click="recycleProjectDialogVisible = true">恢复项目</el-button>
-        <el-button size="small" type="danger" plain @click="deleteProjectDialogVisible = true">销毁项目</el-button>
-        <i class="el-icon-edit" slot="reference" ></i>
-      </el-popover>
+    <div style="margin-left: 210px; margin-top: 8px; position: absolute">
+      <el-dropdown placement="bottom-start" @command="handleCommand">
+        <span class="el-dropdown-link" style="color: whitesmoke">
+          <i class="el-icon-edit" slot="reference"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="1">恢复项目</el-dropdown-item>
+          <el-dropdown-item command="2">销毁项目</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
-    <div @click="toProjectPage" style="height: 240px">
-      <div class="project-name" >
-        <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">创建者：</div>
-        <div>{{projectCreator}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">创建时间：</div>
-        <div>{{projectCreateTime}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">页面数：</div>
-        <div>{{pageNum}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">文档数：</div>
-        <div>1</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">项目简介：</div>
-        <div class="intro-text">{{projectIntro}}</div>
-      </div>
+    <div class="cover-box"  @click="toProjectPage">
+      <img src="../../../src/assets/images/project-cover2.jpg" style="width: 100%; height: 100%;">
     </div>
+    <div style="margin-top: 10px; display: flex;flex-direction: column" @click="toProjectPage">
+      <span style="font-size: 20px;">{{ projectName }}</span>
+      <span style="font-size: 12px; color: #999; margin-top: 5px;">创建者：{{ projectCreator }}</span>
+      <span style="font-size: 12px; color: #999; margin-top: 2px">创建时间：{{ projectCreateTime }}</span>
+    </div>
+
     <el-dialog
         title="恢复项目"
         :visible.sync="recycleProjectDialogVisible"
@@ -85,6 +70,13 @@ export default {
     },
     toProjectPage() {
       this.$message.warning('请先恢复项目');
+    },
+    handleCommand(command) {
+      if (command ==='1') {
+        this.recycleProjectDialogVisible = true
+      } else if (command ==='2') {
+        this.deleteProjectDialogVisible = true;
+      }
     },
     recoverProject(){
       const formData = new FormData();
@@ -162,30 +154,5 @@ export default {
 
 <style>
 
-.info-row {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-}
-.info-tag {
-  font-family: "black",serif;
-  width: 60px;
-  margin-left: 20px;
-}
-.project-name {
-  font-size: 20px;
-  color: #46a6ff;
-  text-align: center;
-  width: 100%;
-  margin-top: 25px;
-  margin-bottom: 5px;
-}
-.intro-text {
-  width: 130px;
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 </style>
