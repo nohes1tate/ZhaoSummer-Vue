@@ -70,8 +70,8 @@
             </thead>
             <tbody :command=group v-for="group in this.groupList" v-bind:key="group.groupID">
             <td>{{group.groupName}}</td>
-            <td>身份</td>
-            <td>{{group.groupID}}</td>
+            <td>{{group.level}}</td>
+            <td>{{group.groupMemberNum}}</td>
             <td>
               <a :href="'/project/'+group.groupID+''">查看</a>
             </td>
