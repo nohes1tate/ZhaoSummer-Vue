@@ -1,8 +1,8 @@
 <template>
-  <div id="project-cover">
-    <div style="margin-left: 195px; margin-top: 8px; position: absolute" >
+  <div id="project-cover" @click="toProjectPage">
+    <div style="margin-left: 210px; margin-top: 8px; position: absolute">
       <el-dropdown placement="bottom-start" @command="handleCommand">
-        <span class="el-dropdown-link">
+        <span class="el-dropdown-link" style="color: whitesmoke">
           <i class="el-icon-edit" slot="reference"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -14,30 +14,13 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <div @click="toProjectPage" style="height: 240px">
-      <div class="project-name" >
-        <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 300px">{{projectName}}</span>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">创建者：</div>
-        <div>{{projectCreator}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">创建时间：</div>
-        <div>{{projectCreateTime}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">页面数：</div>
-        <div>{{pageNum}}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">文档数：</div>
-        <div>1</div>
-      </div>
-      <div class="info-row">
-        <div class="info-tag">项目简介：</div>
-        <div class="intro-text">{{projectIntro}}</div>
-      </div>
+    <div class="cover-box">
+      <img src="../../../src/assets/images/project-cover2.jpg" style="width: 100%; height: 100%;">
+    </div>
+    <div style="margin-top: 10px; display: flex;flex-direction: column">
+      <span style="font-size: 20px;">{{ projectName }}</span>
+      <span style="font-size: 12px; color: #999; margin-top: 5px;">创建者：{{ projectCreator }}</span>
+      <span style="font-size: 12px; color: #999; margin-top: 2px">创建时间：{{ projectCreateTime }}</span>
     </div>
       <el-dialog
           title="修改项目名称"
@@ -91,6 +74,33 @@ export default {
       },
       deleteProjectDialogVisible: false,
     }
+  },
+  created() {
+    const dataForm = new FormData();
+    dataForm.append("projectID", this.projectID);
+    dataForm.append("userID", this.userID);
+    dataForm.append("username", this.username);
+    dataForm.append("authorization", localStorage.getItem('authorization'));
+    this.$axios({
+      method: 'post',
+      url: 'ProjectManager/isCollect/',
+      data: dataForm,
+    })
+        .then(res => {
+          switch (res.data.error) {
+            case 0:
+              // eslint-disable-next-line vue/no-mutating-props
+              this.hasFavored = true;
+              break;
+            case 1:
+              // eslint-disable-next-line vue/no-mutating-props
+              this.hasFavored = false;
+              break;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
   },
   methods: {
     handleClose() {
@@ -313,19 +323,27 @@ export default {
 <style>
 #project-cover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  border-radius: 20px;
+  border-radius: 10px;
   width: 240px;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 250px;
+  height: 240px;
   display: flex;
   flex-direction: column;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
-  border: solid 2px grey;
 }
 #project-cover:hover {
-  background: #d9d9d9;
+  box-shadow: 8px 8px 10px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+.cover-box {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  overflow: hidden;
+  width: 100%;
+  height: 143px;
+}
+
+.info-box {
+
 }
 .info-row {
   display: flex;

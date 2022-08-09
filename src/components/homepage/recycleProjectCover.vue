@@ -161,22 +161,7 @@ export default {
 </script>
 
 <style>
-#project-cover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  border-radius: 20px;
-  width: 240px;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  cursor: pointer;
-  border: solid 2px grey;
-}
-#project-cover:hover {
-  background: #d9d9d9;
-}
+
 .info-row {
   display: flex;
   flex-direction: row;

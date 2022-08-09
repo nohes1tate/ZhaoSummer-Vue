@@ -12,7 +12,7 @@
         </el-popover>
         <el-dropdown placement="bottom-start" @command="handleAvatarCommand">
         <span class="el-dropdown-link">
-          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
+          <el-avatar :size="40" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
         </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="1">个人信息</el-dropdown-item>
@@ -24,7 +24,7 @@
             trigger="hover"
             v-show="!is_login">
           <el-button type="primary" plain @click="login" v-show="!is_login" width="150px">去 登 录</el-button>
-          <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
+          <el-avatar :size="40" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference"></el-avatar>
         </el-popover>
       </div>
       <el-menu
@@ -407,7 +407,7 @@ export default {
       input2: '',
       input3: '',
       searchProjectInput: '',
-      hasGroup: false,
+      hasGroup: true,
       personalInfoDialogVisible: false,
       showInfoDialog: false,
       showInviteDialog: false,
@@ -491,18 +491,20 @@ export default {
     searchProject() {
       const dataForm = new FormData();
       dataForm.append("key", this.searchProjectInput);
-      dataForm.append("username", this.username);
+      dataForm.append("teamID", this.curGroupID);
+      dataForm.append("username", this.curUsername);
       dataForm.append("authorization", localStorage.getItem('authorization'));
-      console.log(this.searchProjectInput);
       this.$axios({
         method: 'post',
         url: 'ProjectManager/searchProject/',
         data: dataForm,
       })
           .then(res => {
+            this.searchProjectInput = '';
             switch (res.data.error) {
               case 0:
-                this.curProjectList = res.data.projectList;
+                this.curProjectList = JSON.parse(res.data.projectList);
+                console.log(this.curProjectList[0]);
                 break;
               case 4001:
                 this.$message({
@@ -786,7 +788,7 @@ export default {
     },
     refreshFavorProject() {
       const projectForm = new FormData();
-      projectForm.append("groupID", this.curGroupID);
+      projectForm.append("userID", this.curUserID);
       projectForm.append("username", this.curUsername);
       projectForm.append("authorization", localStorage.getItem('authorization'));
       this.$axios({
@@ -810,6 +812,25 @@ export default {
     },
     toRecentView() {
       this.projectIndex = '3';
+      const projectForm = new FormData();
+      projectForm.append("groupID", this.curUserID);
+      projectForm.append("username", this.curUsername);
+      projectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewRecentProject/',
+        data: projectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.curProjectList = res.data.project_list;
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     toMyCreateProject() {
       this.projectIndex = '4';
