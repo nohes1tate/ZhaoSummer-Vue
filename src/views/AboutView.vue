@@ -1,15 +1,15 @@
 <template>
   <div style="width: auto" >
-    <UMLTool></UMLTool>
+    <DesignView :list="[1,2]"></DesignView>
   </div>
 </template>
 
 <script>
-import UMLTool from "@/components/UMLDrawer/UMLTool";
+import DesignView from "@/views/design/DesignView";
 
 export default {
   components: {
-    UMLTool
+    DesignView
   }
 }
 
