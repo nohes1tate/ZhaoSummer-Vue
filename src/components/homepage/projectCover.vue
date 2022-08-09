@@ -88,7 +88,7 @@ export default {
       data: dataForm,
     })
         .then(res => {
-          console.log(this.projectName)
+          //console.log(this.projectName)
           switch (res.data.error) {
             case 0:
               this.hasFavored = true;
