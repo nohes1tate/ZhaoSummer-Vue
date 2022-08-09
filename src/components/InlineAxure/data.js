@@ -44,7 +44,7 @@ export const defalutMenus = {
   // middle: []
 };
 
-export const defalutUserMenus = null;
+export const defalutUserMenus = [];
 
 export const defalutMaterials = [
   {

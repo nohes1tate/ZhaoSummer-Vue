@@ -122,7 +122,7 @@
 
     <div class="content-home">
       <div v-if="hasGroup">
-        <div class="project-box" v-if="leftIndex==='1'">
+        <div class="project-box" v-show="leftIndex==='1'">
           <div class="project-nav">
             <el-menu :default-active="projectIndex" class="el-menu-vertical-demo" style="margin-top: 40px; border-right: none">
               <el-menu-item index="1" @click="toAllProject">
@@ -223,7 +223,7 @@
             </div>
           </div>
         </div>
-        <div class="group-box" v-else-if="leftIndex==='2'">
+        <div class="group-box" v-show="leftIndex==='2'">
           <div style="text-align: left; margin-top: 10vh;">
             <span style="font-size: 40px;">{{ curGroupName }}</span>
             <span class="member-tag creator-member" v-if="curIsCreator">创建者</span>
@@ -285,7 +285,7 @@
           </div>
         </div>
 
-        <div v-else-if="leftIndex==='3'">
+        <div v-show="leftIndex==='3'">
           <DocumentView :list="documentList"></DocumentView>
         </div>
       </div>

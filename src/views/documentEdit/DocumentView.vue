@@ -23,7 +23,7 @@
                 </el-menu-item-group>
               </el-submenu>
             </div>
-            <el-menu-item index="newDoc"><i class="el-icon-plus"></i>新建文档</el-menu-item>
+            <el-menu-item index="newDoc" @click="createDoc"><i class="el-icon-plus"></i>新建文档</el-menu-item>
           </el-menu>
     </div>
     <div style="width: auto">
@@ -78,6 +78,9 @@ export default {
     //console.log(this.documentList[0])
   },
   methods: {
+    createDoc() {
+
+    },
     changeDoc(docID,content){
       this.curDocID=docID
       this.curHtml=content

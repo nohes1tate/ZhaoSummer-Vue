@@ -65,15 +65,17 @@
                 <th>团队名称</th>
                 <th>身份</th>
                 <th>团队人数</th>
+                <th>创建时间</th>
                 <th>操作</th>
               </tr>
             </thead>
             <tbody :command=group v-for="group in this.groupList" v-bind:key="group.groupID">
             <td>{{group.groupName}}</td>
-            <td>身份</td>
-            <td>{{group.groupID}}</td>
+            <td>{{group.level}}</td>
+            <td>{{group.groupMemberNum}}</td>
+            <td>{{group.createdTime}}</td>
             <td>
-              <a :href="'/project/'+group.groupID+''">查看</a>
+              <a :href="'/home'">查看</a>
             </td>
             </tbody>
           </table>
