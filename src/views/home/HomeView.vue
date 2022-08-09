@@ -257,7 +257,7 @@
               <el-table-column
                   prop="level"
                   label="权限"
-                  width="160">
+                  width="130">
               </el-table-column>
               <el-table-column
                   fixed="right"
