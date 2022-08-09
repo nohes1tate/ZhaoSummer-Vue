@@ -1,22 +1,22 @@
 <template>
   <div style="width: auto" >
-    <UMLView :list="UMLList"></UMLView>
+    <DesignView :list="axureList"></DesignView>
   </div>
 </template>
 
 <script>
-import UMLView from "@/views/design/UMLView";
+import DesignView from "@/views/design/DesignView";
 
 export default {
   components: {
-    UMLView
+    DesignView
   },
   data() {
     return {
-      UMLList: [{UMLid: '1',
+      axureList: [{axureid: '1',
         title: '页面1',
         content: '',   },
-        {UMLid: '2',
+        {axureid: '2',
           title: '页面2',
           content: '',}]
     }
