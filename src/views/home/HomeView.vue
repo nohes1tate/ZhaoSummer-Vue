@@ -6,7 +6,7 @@
             placement="right"
             trigger="hover"
             v-show="is_login">
-          <el-button size="small" plain @click="personalInfoDialogVisible = true">个人信息</el-button>
+          <el-button size="small" plain @click="toMePage">个人中心</el-button>
           <el-button size="small" type="danger" plain @click="logout">退出登录</el-button>
 
         </el-popover>
@@ -15,7 +15,7 @@
           <el-avatar :size="30" src="https://img02.mockplus.cn/mockplus/avatars/05.jpg" fit="cover" style="margin-left: -5px; cursor: pointer" slot="reference" ></el-avatar>
         </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="1">个人信息</el-dropdown-item>
+            <el-dropdown-item command="1">个人中心</el-dropdown-item>
             <el-dropdown-item command="2">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -98,91 +98,6 @@
     <el-button @click="newTeamDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="createGroup">确 定</el-button>
   </span>
-    </el-dialog>
-
-    <el-dialog
-        title="账号设置"
-        :visible.sync="personalInfoDialogVisible"
-        width="60%">
-      <div class="container-style">
-        <div class="left-box">
-          <el-menu
-              default-active="1"
-              class="select-box"
-              @open="handleOpen"
-              @close="handleClose"
-              background-color="#545c64"
-              text-color="#fff"
-              active-text-color="#ffd04b">
-            <el-menu-item index="1" @click="userSetting=true,updateCode=false">
-              <i class="el-icon-setting"></i>
-              <span slot="title">账号设置</span>
-            </el-menu-item>
-            <el-menu-item index="2" @click="updateCode=true,userSetting=false">
-              <i class="el-icon-edit-outline"></i>
-              <span slot="title">更改密码</span>
-            </el-menu-item>
-          </el-menu>
-        </div>
-        <div class="right-box" v-show="userSetting">
-          <div class="right-left-box">
-            <div class="container-box">
-              <div class="label-line">
-                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
-              </div>
-              <el-input v-model="currentUserEmail" placeholder="请输入当前邮箱"></el-input>
-            </div>
-            <div class="container-box">
-              <div class="label-line">
-                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">新邮箱</span>
-              </div>
-              <el-input v-model="newUserEmail" placeholder="请输入新邮箱"></el-input>
-            </div>
-            <div class="container-button-box">
-              <el-button type="primary" @click="updateEmail">修 改 邮 箱</el-button>
-            </div>
-          </div>
-        </div>
-        <div class="right-box" v-show="updateCode">
-          <div class="right-right-box">
-            <div class="right-container-box">
-              <div class="label-line">
-                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">当前邮箱</span>
-              </div>
-              <el-input v-model="currentUserEmail" placeholder="请输入当前邮箱"></el-input>
-            </div>
-            <div class="right-container-box">
-              <div class="label-line">
-                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">验证码</span>
-              </div>
-              <el-input v-model="checkCode" placeholder="请输入验证码"></el-input>
-            </div>
-            <div class="right-container-box">
-              <div class="label-line">
-                <span style="color: red;font-size: 25px;justify-content:center;align-items: center">*</span>
-                <span style="text-align: left;font-size: 18px;color: white">新密码</span>
-              </div>
-              <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
-            </div>
-          </div>
-          <div class="right-right-button-box">
-            <div class="right-button-box">
-              <el-button type="primary" @click="forget">获取验证码</el-button>
-            </div>
-            <div class="right-button-under-box">
-              <el-button type="primary" @click="update">确 认 修 改</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="personalInfoDialogVisible= false">取 消</el-button>
-    <el-button type="primary" @click="personalInfoDialogVisible = false">确 定</el-button>
-        </span>
     </el-dialog>
 
     <el-dialog
@@ -408,7 +323,6 @@ export default {
       input3: '',
       searchProjectInput: '',
       hasGroup: false,
-      personalInfoDialogVisible: false,
       showInfoDialog: false,
       showInviteDialog: false,
       inviteMemberName: '',
@@ -488,6 +402,10 @@ export default {
       this.is_login = true
   },
   methods: {
+    toMePage(){
+        let path ='/me/' + this.curUserID
+        this.$router.push(path);
+    },
     searchProject() {
       const dataForm = new FormData();
       dataForm.append("key", this.searchProjectInput);
@@ -524,7 +442,7 @@ export default {
     },
     handleAvatarCommand(index) {
       if(index === '1') {
-        this.personalInfoDialogVisible = true;
+        this.toMePage();
       } else if(index === '2') {
         this.logout();
       }
