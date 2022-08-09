@@ -37,7 +37,6 @@ import DocumentEditor from "@/components/WangEditor/DocumentEditor";
 //import DocumentEdit from "@/components/WangEditor/DocumentEditor";
 //import DocumentDisplay from "@/components/WangEditor/DocumentDisplay";
 //import {Editor, Toolbar} from "@wangeditor/editor-for-vue";
-import {ListItem} from "tiptap-extensions";
 
 export default {
   name: "DocumentView",
@@ -47,7 +46,7 @@ export default {
   },
   props: {
     list: {
-      type: ListItem,
+      type: Array,
       default: []
     }
   },

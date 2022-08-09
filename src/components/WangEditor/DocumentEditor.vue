@@ -146,7 +146,7 @@ export default {
         var self = this
        // console.log('支持Websocket',this.documentid)
         var socketUrl = "http://localhost:9000/document/"
-        //var socketUrl = "http://43.138.86.76/document/" + this.documentid
+        //var socketUrl = "http://43.138.86.76/document/"
         socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
         console.log(socketUrl)
         if(socket!==null){
@@ -231,10 +231,6 @@ export default {
   mounted() {
     this.curUser=localStorage.getItem('userID')
      //模拟 ajax 请求，异步渲染编辑器
-    setTimeout(() => {
-      this.html = "<p>默认的文档内容</p>";
-      this.preHtml=this.html
-    }, 1500);
     this.openSocket()
   },
   beforeDestroy() {
