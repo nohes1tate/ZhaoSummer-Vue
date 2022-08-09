@@ -1,15 +1,25 @@
 <template>
   <div style="width: auto" >
-    <DesignView :list="[1,2]"></DesignView>
+    <UMLView :list="UMLList"></UMLView>
   </div>
 </template>
 
 <script>
-import DesignView from "@/views/design/DesignView";
+import UMLView from "@/views/design/UMLView";
 
 export default {
   components: {
-    DesignView
+    UMLView
+  },
+  data() {
+    return {
+      UMLList: [{UMLid: '1',
+        title: '页面1',
+        content: '',   },
+        {UMLid: '2',
+          title: '页面2',
+          content: '',}]
+    }
   }
 }
 
