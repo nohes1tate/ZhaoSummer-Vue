@@ -40,8 +40,8 @@
             <div class="list-item">
               <span>邮箱</span>
               <p>
-                <span>userEmail</span>
-                <a class="p-span bottom-inOutSpread" @click="changeMyEmail">修改</a>
+                <span>{{ this.userEmail }}</span>
+                <a class="p-span" @click="changeMyEmail">修改</a>
               </p>
             </div>
             <div class="list-item">
@@ -53,7 +53,7 @@
             <div class="list-item">
               <span>真实姓名</span>
               <p>
-                <span>userRealName</span>
+                <span>{{ this.curUserRealname }}</span>
               </p>
             </div>
           </div>
@@ -64,16 +64,16 @@
               <tr>
                 <th>团队名称</th>
                 <th>身份</th>
-                <th>创建时间</th>
+                <th>团队人数</th>
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody>
-            <td>userGroup</td>
-            <td>userPerm</td>
-            <td>createTime</td>
+            <tbody :command=group v-for="group in this.groupList" v-bind:key="group.groupID">
+            <td>{{group.groupName}}</td>
+            <td>身份</td>
+            <td>{{group.groupID}}</td>
             <td>
-              <a href="/project/0">查看</a>
+              <a :href="'/project/'+group.groupID+''">查看</a>
             </td>
             </tbody>
           </table>
@@ -128,6 +128,7 @@ export default {
     return{
       showVRcode:false,
       curUserID:0,
+      curUserRealname:'',
       curUsername:'',
       checkCode:'',
       newPassword:'',
@@ -146,6 +147,7 @@ export default {
       hasGroup:false,
       isManager:false,
       isCreator:false,
+      userEmail:''
     }
   },
   created() {
@@ -165,16 +167,34 @@ export default {
         data: formData,
       })
           .then(res => {
-            //console.log(res.data)
             switch (res.data.error) {
               case 0:
-                //console.log(res.data.group_list);
                 this.groupList = res.data.group_list;
                 if (this.groupList.length > 0) {
                   this.hasGroup = true;
                 } else {
                   this.hasGroup = false;
                 }
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+      this.$axios({
+        method: 'post',
+        url: 'Login/viewUser/',
+        data: formData,
+      })
+          .then(res => {
+            console.log(res.data)
+            switch (res.data.error) {
+              case 0:
+                this.userEmail=res.data.userEmail;
+                this.curUserRealname=res.data.realName;
+                console.log(this.userEmail);
+                console.log(this.curUserRealname);
                 break;
             }
           })
@@ -535,9 +555,21 @@ ul,li{
   padding-top: 16px;
 }
 .active{
+  position: relative;
   color: #e76bec;
-  border-bottom: 3px solid #a259ff;
   cursor: pointer;
+}
+.active:before{
+  content: "";
+  width: 100%;
+  border-bottom: 3px solid #a259ff;
+  position: absolute;
+  bottom: 0;
+  animation: underline-moving linear 0.1s 1;
+}
+@keyframes underline-moving {
+  0%{left: 50%;width: 0}
+  100%{left: 0;width: 100%}
 }
 .not-active{
   color: black;
@@ -586,87 +618,43 @@ ul,li{
   font-weight: 600;
 }
 .p-span{
+  position: relative;
   color: #a259ff;
   font-weight: 600;
   margin-left: 10px;
+  padding-bottom: 4px;
+}
+.p-span:hover:before{
+  left: 0;
+  width: 100%;
+}
+.p-span:before{
+  content: "";
+  width: 0;
+  border-bottom: 2px solid #a259ff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transition: all linear 0.1s;
 }
 .p-span2{
   color: #a259ff;
   font-weight: 600;
+  position: relative;
+  padding-bottom: 4px;
 }
-.bottom-inOutSpread:before,.bottom-inOutSpread:after,.bottom-inOutSpread>.ui-border-element:before,.bottom-inOutSpread>.ui-border-element:after {
-  content:'';
-  position:absolute;
+.p-span2:hover:before{
+  left: 0;
+  width: 100%;
 }
-.bottom-inOutSpread:after {
-  border-bottom:2px solid #a259ff;
-  left:11%;
-  right:90%;
-  bottom:0px;
-
-  -webkit-transition-property:all;
-  -moz-transition-property:all;
-  -o-transition-property:all;
-  transition-property:all;
-  -webkit-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -moz-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -o-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -webkit-transition-duration:200ms;
-  -moz-transition-duration:200ms;
-  -o-transition-duration:200ms;
-  transition-duration:200ms;
-  -webkit-transition-delay:0s;
-  -moz-transition-delay:0s;
-  -o-transition-delay:0s;
-  transition-delay:0s
-}
-.bottom-inOutSpread:hover:after {
-  left:8.5%;
-  right:87.5%
-}
-.bottom-inOutSpread:not(:hover):after {
-  -webkit-transition-delay:0s;
-  -moz-transition-delay:0s;
-  -o-transition-delay:0s;
-  transition-delay:0s
-}
-.bottom-inOutSpread2:before,.bottom-inOutSpread2:after,.bottom-inOutSpread2>.ui-border-element:before,.bottom-inOutSpread2>.ui-border-element:after {
-  content:'';
-  position:absolute;
-}
-.bottom-inOutSpread2:after {
-  border-bottom:2px solid #a259ff;
-  left:3%;
-  right:97%;
-  bottom:0px;
-
-  -webkit-transition-property:all;
-  -moz-transition-property:all;
-  -o-transition-property:all;
-  transition-property:all;
-  -webkit-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -moz-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -o-transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  transition-timing-function:cubic-bezier(0, 0.98, 0.51, 0.93);
-  -webkit-transition-duration:200ms;
-  -moz-transition-duration:200ms;
-  -o-transition-duration:200ms;
-  transition-duration:200ms;
-  -webkit-transition-delay:0s;
-  -moz-transition-delay:0s;
-  -o-transition-delay:0s;
-  transition-delay:0s
-}
-.bottom-inOutSpread2:hover:after {
-  left:0%;
-  right:93.5%
-}
-.bottom-inOutSpread2:not(:hover):after {
-  -webkit-transition-delay:0s;
-  -moz-transition-delay:0s;
-  -o-transition-delay:0s;
-  transition-delay:0s
+.p-span2:before{
+  content: "";
+  width: 0;
+  border-bottom: 2px solid #a259ff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transition: all linear 0.1s;
 }
 .team-info{
   margin: 0 -16px;
