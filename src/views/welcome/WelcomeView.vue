@@ -132,11 +132,19 @@
       <h6>和团队一起开启高效协作之旅</h6>
       <a class="footer-btna" :href="this.homeUrl">点击开始</a>
     </div>
-    <div class="customer-service">
+    <div class="customer-service" @mouseenter="showVRcode = true" @mouseleave="showVRcode = false">
       <div class="item" id="customer-message">
-        <svg class="icon go-top" aria-hidden="true" style="">
+        <svg class="icon go-top" aria-hidden="true">
           <use xlink:href="#icon-xiaoxi"></use>
         </svg>
+        <div class="VRcode-box" v-show="showVRcode">
+          <h2>  需要帮助？</h2>
+          <h3>联系产品经理</h3>
+          <img src="../../assets/images/product-manager-VRcode.jpg">
+          <h3>钊钊国王为您服务</h3>
+          <img src="../../assets/images/ZhaoZhaoKingCode.jpg">
+          <h2>扫码联系我们吧！</h2>
+        </div>
       </div>
       <div class="item" id="go-top" @click="backTop" v-show="showTopbtn">
         <svg class="icon go-top" aria-hidden="true">
@@ -152,6 +160,7 @@ export default {
   name: "WelcomeView",
   data(){
     return{
+      showVRcode:false,
       showMenu:false,
       showTopbtn:false,
       scrollTop:0,
@@ -526,5 +535,34 @@ ul,li{
 .user-menu a:hover{
   transition: 0.3s;
   background-color: #d1d1d1;
+}
+.VRcode-box{
+  bottom: 0px;
+  right: 60px;
+  width: 250px;
+  height: 560px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.3s;
+  position: absolute;
+  border: 1px solid #e9e9e9;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0,0,0, 0.02);
+}
+.VRcode-box h2{
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+.VRcode-box h3{
+  color: #8c8889;
+  font-size: 15px;
+  height: 20px;
+  margin-top:10px;
+}
+.VRcode-box img{
+  width: 200px;
 }
 </style>

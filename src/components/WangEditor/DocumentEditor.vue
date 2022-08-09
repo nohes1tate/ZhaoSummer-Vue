@@ -77,8 +77,8 @@ export default {
       else {
         var self = this
         console.log('支持Websocket')
-        //var socketUrl = "http://localhost:9000/document/" + this.$route.params.documentID
         var socketUrl = "http://localhost:9000/document/" + this.$route.params.documentID
+        //var socketUrl = "http://43.138.86.76/document/" + this.$route.params.documentID
         socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
         console.log(socketUrl)
         if(socket!==null){
@@ -112,7 +112,8 @@ export default {
         {
           console.log(JSON.parse(msg2.message))
           let rcv = JSON.parse(msg2.message)
-          if(rcv.fromUser !== self.curUser){
+          if(true){
+          //if(rcv.fromUser !== self.curUser){
           //console.log(rcv.content)
           //console.log(self.html)
             self.html = rcv.content
@@ -134,18 +135,7 @@ export default {
       this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
     },
     onChange(editor) {
-      //console.log("onChange", editor.getHtml()); // onChange 时获取编辑器最新内容
-      /*let sendData = {content: editor.getHtml(),fromUser: this.curUser}
-      const msg = JSON.stringify({
-        type: 'message',
-        message: JSON.stringify(sendData)
-      })
-      //sendData.fromUser = this.curUser
-      if(socket.readyState===1)
-      {
-        setTimeout(() =>{socket.send(msg)},200)
-        }
-*/
+
     },
     getEditorText() {
       const editor = this.editor;
@@ -168,6 +158,13 @@ export default {
       this.preHtml=this.html
     }, 1500);
     this.openSocket()
+  },
+  watch: {
+      '$route' (to, from) {
+        // 在mounted函数执行的方法，放到该处
+        socket.close()
+        this.openSocket()
+      }
   },
   beforeDestroy() {
     socket.close()

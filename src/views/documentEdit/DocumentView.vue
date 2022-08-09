@@ -23,25 +23,19 @@
                 </el-menu-item-group>
               </el-submenu>
             </div>
+            <el-menu-item index="newDoc"><i class="el-icon-plus"></i>新建文档</el-menu-item>
           </el-menu>
     </div>
     <div style="width: auto">
         <div style="border: 1px solid #ccc">
-          <div>
-            <div style="display: flex;align-items: center;margin-right: 30px;border-bottom: 1px solid #ccc" >
-              <el-button type="success" size="mini" style="margin-left: auto"><i class="el-icon-download"></i>下载 </el-button>
-              <el-button type="success" size="mini"><i class="el-icon-edit"></i>编辑</el-button>
-            </div>
             <!-- 工具栏 -->
             <Toolbar
-                style="border-bottom: 1px solid #ccc"
                 :editor="editor"
                 :defaultConfig="toolbarConfig"
             />
-          </div>
           <!-- 编辑器 -->
           <Editor
-              style="height: 85vh; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,.5);"
+              style="height: 85vh; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
               :defaultConfig="editorConfig"
               v-model="html"
               @onCreated="onCreated"
@@ -55,6 +49,7 @@
 //import DocumentEdit from "@/components/WangEditor/DocumentEditor";
 //import DocumentDisplay from "@/components/WangEditor/DocumentDisplay";
 import {Editor, Toolbar} from "@wangeditor/editor-for-vue";
+import {ListItem} from "tiptap-extensions";
 
 export default {
   name: "DocumentView",
@@ -63,7 +58,10 @@ export default {
     Editor, Toolbar
   },
   props: {
-    list: []
+    list: {
+      type: ListItem,
+      default: []
+    }
   },
   data() {
     return {
@@ -73,8 +71,9 @@ export default {
       html: '',
       documentList: this.list,
       toolbarConfig: {
-        // toolbarKeys: [ /* 显示哪些菜单，如何排序、分组 */ ],
-        excludeKeys: [ 'group-image','group-video' ],
+         // toolbarKeys: [ 'headerSelect', 'blockquote', '|','bold', 'underline', 'italic',  ],
+        // excludeKeys: [ 'group-image','group-video', 'fullScreen' ],
+
       },
       editorConfig: {
         placeholder: "请输入内容...",
@@ -92,14 +91,20 @@ export default {
   methods: {
     onCreated(editor) {
       this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
-      this.editor.disable()
+      //this.editor.disable()
       this.html=this.documentList[0].content
+
+
+       console.log(editor.getAllMenuKeys())
+      console.log(Toolbar)
+
     },
   },
   beforeDestroy() {
     const editor = this.editor;
     if (editor == null) return;
     editor.destroy(); // 组件销毁时，及时销毁 editor ，重要！！！
+    console.log('destroy')
   },
 }
 </script>
@@ -115,6 +120,15 @@ export default {
 
 .el-menu-item {
   text-align: left;
+}
+
+.baricon {
+  width: 30px;
+  height: 25px;
+  text-align: center;
+}
+.baricon:hover {
+  background-color: #ccc;
 }
 </style>
 <style src="@wangeditor/editor/dist/css/style.css"></style>
