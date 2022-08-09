@@ -7,7 +7,7 @@
               style="width: 30vh"
           >
             <div v-for="(item,index1) in documentList" v-bind:key="index1+''">
-              <el-menu-item :index="index1+''" v-if="item.isSub===false" @click="html=item.content">
+              <el-menu-item :index="index1+''" v-if="item.isSub===false" @click="changeDoc(item.docid,item.content)">
                 <i class="el-icon-document"></i>
                 {{ item.title }}
               </el-menu-item>
@@ -17,7 +17,7 @@
                   <el-menu-item v-for="(subItem,index2) in item.childDoc"
                                 v-bind:key="index1+'-'+index2"
                                 :index="index1+'-'+index2"
-                                @click="html=subItem.content">
+                                @click="changeDoc(subItem.docid,subItem.content)">
                     <i class="el-icon-document"></i>{{ subItem.title }}
                   </el-menu-item>
                 </el-menu-item-group>
@@ -27,45 +27,34 @@
           </el-menu>
     </div>
     <div style="width: auto">
-        <div style="border: 1px solid #ccc">
-            <!-- 工具栏 -->
-            <Toolbar
-                :editor="editor"
-                :defaultConfig="toolbarConfig"
-            />
-          <!-- 编辑器 -->
-          <Editor
-              style="height: 85vh; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
-              :defaultConfig="editorConfig"
-              v-model="html"
-              @onCreated="onCreated"
-          />
-      </div>
+       <DocumentEditor :documentid="curDocID" @htmlChange="handleChangeHtml" :showhtml="curHtml"></DocumentEditor>
     </div>
   </div>
 </template>
 
 <script>
+import DocumentEditor from "@/components/WangEditor/DocumentEditor";
 //import DocumentEdit from "@/components/WangEditor/DocumentEditor";
 //import DocumentDisplay from "@/components/WangEditor/DocumentDisplay";
-import {Editor, Toolbar} from "@wangeditor/editor-for-vue";
-import {ListItem} from "tiptap-extensions";
+//import {Editor, Toolbar} from "@wangeditor/editor-for-vue";
 
 export default {
   name: "DocumentView",
   components: {
     //DocumentEdit
-    Editor, Toolbar
+    DocumentEditor
   },
   props: {
     list: {
-      type: ListItem,
+      type: Array,
       default: []
     }
   },
   data() {
     return {
+      curHtml: '',
       editor: null,
+      curDocID: '1',
       groupId: '',
       projectId: '',
       html: '',
@@ -89,22 +78,32 @@ export default {
     //console.log(this.documentList[0])
   },
   methods: {
-    onCreated(editor) {
-      this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
-      //this.editor.disable()
-      this.html=this.documentList[0].content
-
-
-       console.log(editor.getAllMenuKeys())
-      console.log(Toolbar)
-
+    changeDoc(docID,content){
+      this.curDocID=docID
+      this.curHtml=content
     },
-  },
-  beforeDestroy() {
-    const editor = this.editor;
-    if (editor == null) return;
-    editor.destroy(); // 组件销毁时，及时销毁 editor ，重要！！！
-    console.log('destroy')
+    handleChangeHtml(html,docID){
+      let index = null
+      let subIndex = null
+      for(index=0; index<this.documentList.length; index++){
+       // console.log(this.documentList[index].childDoc.length !== 0)
+        if(this.documentList[index].childDoc.length !== 0){
+          for(subIndex=0; subIndex<this.documentList[index].childDoc.length ; subIndex++){
+            //console.log('sub',subItem[subIndex])
+            if(this.documentList[index].childDoc[subIndex].docid,docID,this.documentList[index].childDoc[subIndex].docid === docID){
+              this.documentList[index].childDoc[subIndex].content=html
+            }
+          }
+        }
+        else {
+          //console.log('outer',this.documentList[index])
+          if(this.documentList[index].docid,docID, this.documentList[index].docid === docID){
+            this.documentList[index].content=html
+          }
+        }
+      }
+      console.log(this.documentList)
+    }
   },
 }
 </script>

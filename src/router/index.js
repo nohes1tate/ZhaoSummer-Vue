@@ -8,6 +8,7 @@ import designTool from "@/components/InlineAxure/DesignTool";
 //import documentEditor from "@/components/documentEditOld/DocumentEditor";
 //import documentEditor from "@/components/documentEdit/DocumentEdit"
 import ProjectView from "@/components/projectpage/ProjectView";
+import DocumentEditView from "@/views/documentEdit/DocumentEditView";
 
 Vue.use(VueRouter)
 
@@ -82,6 +83,14 @@ const routes = [
         meta: {
           title: "UML图页", //页面标题
           canMultipleOpen: true //支持根据参数不同多开不同页签
+        }
+      },
+      {
+        path: "document/:documentID",
+        component: DocumentEditView,
+        meta: {
+          title: "文档页",
+          canMultipleOpen: true
         }
       },
       {

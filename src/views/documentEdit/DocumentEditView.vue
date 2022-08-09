@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-button @click="fuckme"></el-button>
-    <DocumentEditor :key="documentID"></DocumentEditor>
+    <DocumentEditor :documentid="documentID+''"></DocumentEditor>
   </div>
 </template>
 
@@ -12,20 +11,23 @@ export default {
   name: "DocumentEditView",
 
   components: {
-    DocumentEditor
+    DocumentEditor,
   },
   data() {
     return {
-      documentID: ''
+      documentID: '',
+      num: 3,
     }
   },
   methods: {
     fuckme() {
-      this.$router.push('/documentEdit/' + (this.$route.params.documentID+1))
+      this.num++,
+          this.documentID++
     },
   },
   mounted() {
     this.documentID=this.$route.params.documentID
+    this.num=this.$route.params.documentID
   }
 }
 </script>
