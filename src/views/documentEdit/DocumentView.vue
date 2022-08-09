@@ -97,7 +97,7 @@ export default {
         }
         else {
           //console.log('outer',this.documentList[index])
-          if(this.documentList[index].docid,docID, this.documentList[index].docid === docID){
+          if(this.documentList[index].docid === docID){
             this.documentList[index].content=html
           }
         }
