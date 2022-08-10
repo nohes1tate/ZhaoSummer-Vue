@@ -100,11 +100,6 @@ export default {
       },
     };
   },
-  beforeRouteLeave (to, from, next) {
-    // 这里需要elementui的支持，如果使用其他界面组件自行替换即可
-   // console.log('leaveDesignTool!')
-    next()
-  },
   mounted() {
 
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
@@ -135,6 +130,13 @@ export default {
       clearInterval(this.timer)
     socket.close()
     this.timer=null;
+  },
+  beforeRouteLeave(to, from, next){
+    if (this.timer !== null)
+      clearInterval(this.timer)
+    socket.close()
+    this.timer=null;
+    next()
   },
   watch: {
     axurecontent(newval){
