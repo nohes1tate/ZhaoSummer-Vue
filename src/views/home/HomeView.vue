@@ -33,7 +33,8 @@
           active-text-color="#87CEFA"
           text-color="grey"
           :default-active="leftIndex"
-          style="margin-bottom: 35vh;">
+          style="margin-bottom: 35vh;"
+          :key="reloadkey">
         <el-menu-item index="1" style="height: 80px; padding-top: 10px;" @click="showProject">
           <div class="left-nav-item">
             <i class="el-icon-document" style="font-size: 25px"></i>
@@ -309,6 +310,7 @@ export default {
   components: {ProjectCover,recycleProjectCover, DocumentView},
   data() {
     return {
+      reloadkey:false,
       docreload: false,
       currentUserEmail:'',
       newUserEmail:'',
@@ -378,15 +380,16 @@ export default {
       documentList: []
     };
   },
-  mounted() {
-
-  },
   created() {
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
     this.getGroup();
     if (this.curUserID !== null)
       this.is_login = true
+    if(this.$route.query.leftIndex===undefined)
+      this.leftIndex='1'
+    else
+    this.leftIndex=this.$route.query.leftIndex
   },
   methods: {
     toMePage(){

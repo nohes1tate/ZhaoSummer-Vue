@@ -2,14 +2,10 @@
   <div class="preview">
     <topology preview="true" :data="data" />
     <div class="tools" v-if="showTools">
-      <a-button type="primary" @click="onBack">
-        <a-icon type="left" /> 返回
-      </a-button>
+      <button @click="onBack" class="go-back"><a-icon type="left" style="font-size: 15px;font-weight:bold;"/> 返回</button>
       <div></div>
-      <a-button type="primary" style="margin-right: 20px;" @click="onSizeWindow">
-        <a-icon type="border" />
-        适合窗口大小
-      </a-button>
+      <button  class="to-design" @click="onDesign">编辑</button>
+      <button class="fit-screen" @click="onSizeWindow"><a-icon type="border" />适合窗口大小</button>
     </div>
   </div>
 </template>
@@ -24,22 +20,25 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    axureID:{
+      type:String,
+      default: ''
     }
   },
   data() {
     return {
       data: {},
       locked: 0,
-      showTools: true
+      showTools: true,
+      projectID:'',
     };
   },
   created() {
     //获取存储数据
-
-      this.data = JSON.parse(this.content);
-
-
+    this.data = JSON.parse(this.content);
     this.showTools = true;
+    this.projectID=this.$route.params.projectID
   },
   watch: {
     content(newVal){
@@ -47,6 +46,10 @@ export default {
     }
   },
   methods: {
+    onDesign(){
+      let path ='/design/' + this.projectID
+      this.$router.push(path);
+    },
     onSizeWindow() {
       window.topology.fitView(16);
     },
@@ -75,6 +78,7 @@ export default {
     left: 0;
     top: 0;
     right: 0;
+    height: 40px;
     display: flex;
     & > div {
       flex-grow: 1;
@@ -84,5 +88,62 @@ export default {
       margin: 12px 16px 12px;
     }
   }
+}
+.go-back{
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #a259ff;
+  height: 28px;
+  width: 60px;
+  line-height: 10px;
+  transition: 0.3s;
+  font-size: 15px;
+  position: relative;
+  top:-7px;
+}
+.go-back:hover{
+  background-color: #e76bec;
+}
+.fit-screen{
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #a259ff;
+  height: 28px;
+  width: 120px;
+  line-height: 10px;
+  transition: 0.3s;
+  font-size: 15px;
+  position: relative;
+  top:-7px;
+}
+.fit-screen:hover{
+  background-color: #e76bec;
+}
+.to-design{
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #a259ff;
+  height: 28px;
+  width: 60px;
+  line-height: 10px;
+  transition: 0.3s;
+  font-size: 15px;
+  position: relative;
+  top:-7px;
+}
+.to-design:hover{
+  background-color: #e76bec;
 }
 </style>

@@ -270,6 +270,7 @@ export default {
   position: relative;
   margin-left: 10vh;
   cursor: pointer;
+  transition: 0.3s;
 }
 .left-arrow:hover{
   color: #e76bec;

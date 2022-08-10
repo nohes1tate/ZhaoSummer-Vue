@@ -15,7 +15,7 @@
         <el-menu-item index="newAxure"><i class="el-icon-plus"></i>新建页面</el-menu-item>
       </el-menu>
     </div>
-    <preview-view :content="curContent" :key="reloadkey"></preview-view>
+    <preview-view :content="curContent" :key="reloadkey" :axureID="curAxureID"></preview-view>
   </div>
 </template>
 
@@ -39,12 +39,17 @@ export default {
       reloadkey:false,
       axureList: this.list,
       curContent: '',
+      curAxureID:'',
     }
+  },
+  created() {
+    this.curContent=this.axureList[0].content
   },
   methods: {
     changeAxure(axureID,content) {
       this.curContent=content
       this.reloadkey=!this.reloadkey
+      this.curAxureID=axureID
     }
   }
 }
