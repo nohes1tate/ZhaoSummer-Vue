@@ -104,7 +104,7 @@
         </div>
       </el-dialog>
     </div>
-    <preview-view :content="curContent" :key="reloadkey" :axureID="curAxureID" v-show="!newPage"></preview-view>
+    <preview-view :content="curContent" :key="reloadkey" :axureID="curAxureID" :is-page="isPage" v-show="!newPage"></preview-view>
     <div class="no-group" v-show="newPage && isPage">
       <span style="font-size: 40px; color: #595959">创建页面</span>
       <span style="font-size: 15px; color: #999999; margin-top: 4vh;">当前项目下无页面，请先创建</span>
