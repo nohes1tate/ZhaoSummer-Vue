@@ -38,6 +38,8 @@
     "drawio-embed": "^1.0.2",
     "element": "^0.1.4",
     "element-ui": "^2.15.9",
+    "file-saver": "^2.0.5",
+    "html-docx-js": "^0.3.1",
     "html2canvas": "^1.4.1",
     "http": "^0.0.1-security",
     "i": "^0.3.7",
