@@ -1,5 +1,6 @@
 <template>
-  <div st>
+  <div >
+    <el-button @click="download">fuckme</el-button>
     <div>
       <!-- 工具栏 -->
       <Toolbar
@@ -29,7 +30,8 @@
 let socket = null
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-
+import htmlDocx from 'html-docx-js/dist/html-docx';
+import saveAs from 'file-saver';
 
 
 export default {
@@ -122,6 +124,19 @@ export default {
     };
   },
   methods: {
+    download(){
+      let htmlStr = this.html;
+      let page = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${htmlStr}
+        </body></html>`
+      // console.log(page);return
+      saveAs(
+          htmlDocx.asBlob(page, {
+            orientation: "landscape"//跨域设置
+          }),
+          //文件名
+          "文档导出.doc"
+      )
+    },
     save() {
       const dataForm = new FormData();
       dataForm.append("docID", this.documentid);
