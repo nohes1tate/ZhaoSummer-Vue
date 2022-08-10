@@ -15,9 +15,35 @@ export default {
     return {
       previewList: [],
       reloadkey:false,
+      limit: false,
     }
   },
   methods: {
+    getLimit() {
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/checkProjectLimit/',
+        data: data
+      }).then(res => {
+        if(res.data.error===0){
+          this.limit=res.data.limit
+          if(!this.limit){
+            this.$message.error('暂无预览内容')
+            setTimeout(()=>{this.$router.push('/home')},1000)
+          }
+        }
+        else {
+          this.$message.error('暂无预览内容')
+          setTimeout(()=>{this.$router.push('/home')},1000)
+        }
+      })
+    },
     getAxureInfo() {
       let data = new FormData()
 
@@ -43,6 +69,7 @@ export default {
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
     this.getAxureInfo()
+    this.getLimit()
   }
 }
 </script>

@@ -16,9 +16,21 @@
       <a @click="handleNavRight">
         <div :class="{'active':navRightActive,'not-active':navRightNotActive }" >设计稿</div>
       </a>
+      <div style="margin-left: 10vh;justify-content: right">
+        <span v-if="limit">预览已开放</span>
+        <span v-else>预览未开放</span>
+        <el-switch
+            v-model="limit"
+            @change="changeLimit"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+        >
+        </el-switch>
+      </div>
     </div>
+
     <div class="show-box">
-      <DocumentView :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
+      <DocumentView :key="reloadkey" :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
       <div class="prototype" v-show="showPrototype || showUMLEdit">
         <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="updateAxure" :is-page="showPrototype"></PreviewListView>
       </div>
@@ -35,6 +47,7 @@ export default {
   components: { DocumentView,PreviewListView},
   data() {
     return {
+      limit: false,
       previewList:[],
       reloadkey:false,
       axureList:[],
@@ -81,8 +94,51 @@ export default {
     this.getAxureInfo()
     this.getUMLInfo()
     this.getDocInfo()
+    this.checkLimit()
   },
   methods: {
+    changeLimit(newVal) {
+
+      let data = new FormData()
+      data.append('projectID',this.projectID)
+      console.log(this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      console.log(localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      console.log(localStorage.getItem('authorization'))
+      data.append('limit',newVal)
+      console.log(newVal)
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/editProjectLimit/',
+        data: data
+      }).then(res => {
+        if(res.data.error!==0){
+          console.log(res.data.msg)
+        }
+      })
+    },
+    checkLimit() {
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/checkProjectLimit/',
+        data: data
+      }).then(res => {
+        console.log('limit:',res)
+        if(res.data.error===0){
+          this.limit=res.data.limit
+        }
+        else {
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
     getDocInfo(){
       let data = new FormData()
 
