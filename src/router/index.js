@@ -41,11 +41,20 @@ const routes = [
   {
     path: '/preview',
     name: 'preview',
-    component: () => import('../views/preview/PreviewListView'),
+    component: () => import('../views/design/PreviewView'),
     meta:{
       title:"墨书-预览"
     },
-
+  },
+  {
+    path: '/projectPreview/:projectID',
+    name: 'projectPreview',
+    component: () => import('../views/preview/ProjectPreview')
+  },
+  {
+    path: '/tempPreview',
+    name: 'tempPreview',
+    component: () => import('../views/design/TempPreview')
   },
   {
     path: '/home',

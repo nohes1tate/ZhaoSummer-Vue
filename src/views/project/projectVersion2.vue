@@ -20,7 +20,7 @@
     <div class="show-box">
       <DocumentView :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
       <div class="prototype" v-show="showPrototype || showUMLEdit">
-        <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="updateAxure"></PreviewListView>
+        <PreviewListView :list="this.previewList" :group="'0'" :key="reloadkey" @updateAxureList="updateAxure"></PreviewListView>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
       <el-menu
           mode="vertical"
           default-active="0"
-          style="width: 30vh"
+          style="width: 30vh;overflow: auto;min-height: 93vh;max-height: 100vh"
       >
         <div v-for="(item,index1) in documentList" v-bind:key="index1">
           <el-menu-item v-if="item.isSub==='false'" :index="index1+''" @click="changeDoc(item.docid,item.content)">
@@ -26,7 +26,7 @@
         <el-menu-item index="newDoc" @click="showDialog=true"><i class="el-icon-plus"></i>新建文档</el-menu-item>
       </el-menu>
     </div>
-    <div style="width: auto">
+    <div style="width: auto;">
       <DocumentEditor :documentid="curDocID + ''" @htmlChange="handleChangeHtml" :showhtml="curHtml"></DocumentEditor>
     </div>
     <el-dialog :append-to-body="true" title="创建文档" style="width: 1000px" :visible.sync="showDialog">

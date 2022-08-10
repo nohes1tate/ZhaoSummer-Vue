@@ -335,8 +335,7 @@ export default {
               JSON.stringify(window.topology.pureData())
           );
           this.$router.push({
-            path: '/preview',
-            query: {id: '114', r: '1'}
+            path: '/tempPreview',
           });
           break;
 

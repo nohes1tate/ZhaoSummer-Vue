@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div st>
     <div>
       <!-- 工具栏 -->
       <Toolbar
@@ -9,7 +9,7 @@
       />
       <!-- 编辑器 -->
       <Editor
-          style="height: 80vh; overflow-y: hidden; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
+          style="height: 85vh; overflow-y: hidden; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
           :defaultConfig="editorConfig"
           v-model="html"
           @onChange="onChange"

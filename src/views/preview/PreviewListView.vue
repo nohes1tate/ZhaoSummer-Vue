@@ -92,6 +92,7 @@
             <el-radio v-model="axureFormIndex" label="1">电商</el-radio>
             <el-radio v-model="axureFormIndex" label="2">学术成果分享平台</el-radio>
           </div>
+          <el-button style="text" @click="goAxurePreview">模板预览</el-button>
           <el-button @click="showFormDialogVisible = false" style="margin-left: 200px">取 消</el-button>
           <el-button type="primary" @click="newFormAxure" style="margin-left: 5vh;">确 定</el-button>
         </el-dialog>
@@ -3581,6 +3582,9 @@ export default {
           this.webHeight = 768;
           break;
       }
+    },
+    goAxurePreview(){
+
     },
     newFormAxure() {
       const projectForm = new FormData();
