@@ -7,9 +7,9 @@
           style="width: 30vh"
       >
         <div v-for="(item,index1) in UMLList" v-bind:key="index1+''">
-          <el-menu-item :index="index1+''" @click="changeUML(item.UMLid,item.content)">
+          <el-menu-item :index="index1+''" @click="changeUML(item.id,item.content)">
             <i class="el-icon-document"></i>
-            {{ item.title }}
+            {{ item.name }}
           </el-menu-item>
         </div>
         <el-menu-item index="newUML"><i class="el-icon-plus"></i>新建页面</el-menu-item>

@@ -69,7 +69,7 @@ const routes = [
     component:()=>import('../views/preview/documentPreview')
   },
   {
-    path: '/design/:projcetID',
+    path: '/design/:projectID',
     name: 'design',
     component:()=>import('../views/design/DesignView'),
   },
@@ -102,14 +102,6 @@ const routes = [
         meta: {
           title: "文档页",
           canMultipleOpen: true
-        }
-      },
-      {
-        path: "axure/:axureID",
-        component: designTool,
-        meta: {
-          title: "页面设计", //页面标题
-          canMultipleOpen: true //支持根据参数不同多开不同页签
         }
       },
       {

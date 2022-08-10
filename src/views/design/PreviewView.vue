@@ -6,7 +6,7 @@
         <a-icon type="left" /> 返回
       </a-button>
       <div></div>
-      <a-button type="primary" style="margin-right: 0" @click="onSizeWindow">
+      <a-button type="primary" style="margin-right: 20px;" @click="onSizeWindow">
         <a-icon type="border" />
         适合窗口大小
       </a-button>
@@ -79,9 +79,9 @@ export default {
     & > div {
       flex-grow: 1;
     }
-
+    background-color: white;
     button {
-      margin: 12px 16px;
+      margin: 12px 16px 12px;
     }
   }
 }

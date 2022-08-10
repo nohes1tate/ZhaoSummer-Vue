@@ -90,7 +90,7 @@ export default {
 
       this.$axios({
         method: 'post',
-        url: 'ProjectManager/viewAxureList/',
+        url: 'ProjectManager/viewUMLList/',
         data: data
       })
           .then(res=>{
