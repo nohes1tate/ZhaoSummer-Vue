@@ -64,7 +64,12 @@ const routes = [
     },
   },
   {
-    path: '/design:projcetID',
+    path: '/doctemplate/:templateID',
+    name: 'doctemplate',
+    component:()=>import('../views/preview/documentPreview')
+  },
+  {
+    path: '/design/:projcetID',
     name: 'design',
     component:()=>import('../views/design/DesignView'),
   },
