@@ -14,11 +14,11 @@
         <div :class="{'active':navCenterActive,'not-active':navCenterNotActive }" >原型稿</div>
       </a>
       <a @click="handleNavRight">
-        <div :class="{'active':navRightActive,'not-active':navRightNotActive }" >设计稿</div>
+        <div :class="{'active':navRightActive,'not-active':navRightNotActive }" >UML图</div>
       </a>
     </div>
 
-    <div style="margin-left: 170vh;justify-content: right;position: absolute">
+    <div style="margin-left: 170vh;justify-content: right;position: absolute" v-show="showPrototype">
       <span v-if="limit">预览已开放</span>
       <span v-else>预览未开放</span>
       <el-switch

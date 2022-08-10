@@ -258,7 +258,6 @@ export default {
       }).then(res => {
         // console.log(res)
         if(res.data.error === 0) {
-          self.$message.success('UML图保存成功！')
           self.$message.success(res.data.msg)
         }
         else {
