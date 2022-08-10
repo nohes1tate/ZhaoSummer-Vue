@@ -28,7 +28,7 @@
           inactive-color="#ff4949"
       >
       </el-switch>
-      <a style="margin-left: 5vh" v-if="limit" :href="previewHref">预览地址</a>
+      <a style="margin-left: 5vh;user-select: none;" v-if="limit" :href="previewHref">预览地址</a>
     </div>
 
     <div class="show-box">
@@ -99,7 +99,7 @@ export default {
     this.getDocInfo()
     this.checkLimit()
     let path = this.$router.resolve('/projectPreview/'+this.$route.params.projectID);
-    window.open(path.href)
+    this.previewHref=path
   },
   methods: {
     changeLimit(newVal) {
