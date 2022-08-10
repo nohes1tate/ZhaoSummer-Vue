@@ -74,6 +74,11 @@ const routes = [
     component:()=>import('../views/design/DesignView'),
   },
   {
+    path: '/UML/:projectID',
+    name: 'UML',
+    component:()=>import('../views/design/UMLView')
+  },
+  {
     path: '/project/:projectID',
     name: 'project',
     component: () => import(/* webpackChunkName: "about" */ '../views/project/projectVersion2'),

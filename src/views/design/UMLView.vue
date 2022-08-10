@@ -12,7 +12,7 @@
             {{ item.name }}
           </el-menu-item>
         </div>
-        <el-menu-item index="newUML"><i class="el-icon-plus"></i>新建页面</el-menu-item>
+        <el-menu-item index="newUML"><i class="el-icon-plus" @click="toNewUML"></i>新建页面</el-menu-item>
       </el-menu>
     </div>
     <div style="width: auto">
@@ -34,14 +34,74 @@ export default {
       default: []
     }
   },
+  mounted() {
+    this.projectID=this.$route.params.projectID
+    this.getUMLInfo()
+  },
   data() {
     return {
       curUML: '',
       curUMLID: '1',
-      UMLList: this.list
+      UMLList: [],
+      projectID:'',
     }
   },
   methods: {
+    toNewUML(){
+      const self = this
+      const data = new FormData
+      data.append('userID',localStorage.getItem('userID'))
+      data.append('projectID',this.$route.params.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      data.append('umlData','')
+      this.$prompt('UML名称','UML页面',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{3,20}$/,
+        inputErrorMessage: 'UML名在3~20字之间'
+      }).then(({ value }) => {
+        data.append('umlName',value)
+        self.$axios({
+          method: 'post',
+          url: 'ProjectManager/createUML/',
+          data: data
+        })
+            .then(res => {
+              console.log(res)
+              if(res.data.error !==0) {
+                this.$message.error(res.data.msg)
+              }
+              else {
+                this.$message.success('UML创建成功!')
+                console.log(res.data)
+              }
+            })
+      }).catch(() => {
+      });
+
+    },
+    getUMLInfo(){
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewUMLList/',
+        data: data
+      })
+          .then(res=>{
+            if(res.data.error === 0){
+              this.UMLList=res.data.uml_list;
+              this.reloadkey=!this.reloadkey;
+              this.curUMLID=this.UMLList[0].content
+              this.curUML=this.UMLList[0].id
+            }
+          })
+    },
     handleUMLChange(content,UMLID){
       //console.log('gotchange')
       let index = null

@@ -20,7 +20,7 @@
     <div class="show-box">
       <DocumentView :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
       <div class="prototype" v-show="showPrototype || showUMLEdit">
-        <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="updateAxure"></PreviewListView>
+        <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="updateAxure" :is-page="showPrototype"></PreviewListView>
       </div>
     </div>
   </div>
@@ -79,6 +79,7 @@ export default {
     this.showDocumentEdit=true
     this.getProjectInfo()
     this.getAxureInfo()
+    this.getUMLInfo()
     this.getDocInfo()
   },
   methods: {
@@ -117,6 +118,7 @@ export default {
       })
           .then(res=>{
             if(res.data.error === 0){
+              console.log('here!!!')
               console.log(res.data.uml_list)
               this.umlList=res.data.uml_list;
               this.reloadkey=!this.reloadkey;
@@ -225,8 +227,8 @@ export default {
       this.navRightNotActive = false
       this.previewList=this.umlList
       this.reloadkey=!this.reloadkey
-      // console.log('222')
-      // console.log(this.umlList)
+      console.log('222')
+      console.log(this.umlList)
       // console.log(this.umlList)
     },
   }

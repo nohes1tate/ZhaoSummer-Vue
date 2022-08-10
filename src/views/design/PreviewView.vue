@@ -24,6 +24,10 @@ export default {
     axureID:{
       type:String,
       default: ''
+    },
+    isPage:{
+      type:Boolean,
+      default:null
     }
   },
   data() {
@@ -47,8 +51,16 @@ export default {
   },
   methods: {
     onDesign(){
-      let path ='/design/' + this.projectID
-      this.$router.push(path);
+      if(this.isPage)
+      {
+        let path ='/UML/' + this.projectID
+        this.$router.push(path);
+      }
+      else
+      {
+        let path ='/design/' + this.projectID
+        this.$router.push(path);
+      }
     },
     onSizeWindow() {
       window.topology.fitView(16);
