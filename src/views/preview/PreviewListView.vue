@@ -7,7 +7,7 @@
           style="width: 30vh; height: 93vh"
       >
         <div v-for="(item,index1) in axureList" v-bind:key="index1+''">
-          <el-menu-item :index="index1+''" @click="changeAxure(item.axureID,item.content)">
+          <el-menu-item :index="index1+''" @click="changeAxure(item.axureID,item.axureContent)">
             <i class="el-icon-document"></i>
             {{ item.axureName }}
           </el-menu-item>
