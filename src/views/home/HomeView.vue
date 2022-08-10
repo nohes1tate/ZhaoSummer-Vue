@@ -218,7 +218,7 @@
                             :docNum="project.docNum" :pageNum="project.pageNum" :projectCreateTime="project.projectCreateTime"
                             :projectIntro="project.projectIntro" :projectCreator="project.creator" :projectManager="project.projectManager"
                             v-for="project in curProjectList" v-bind:key="project.projectID"
-                            @click="toProject(project.projectID)"
+                            @click="toProject(project.projectID)" @refresh="refresh"
                             style="margin-right: 7vh; margin-top: 4vh"></projectCover>
             </div>
           </div>
@@ -666,6 +666,25 @@ export default {
     showFileCenter() {
       this.leftIndex = '3';
     },
+    refresh() {
+      switch (this.projectIndex) {
+        case '1':
+          this.toAllProject();
+          break;
+        case '2':
+          this.toFavorProject();
+          break;
+        case '3':
+          this.toRecentView();
+          break;
+        case '4':
+          this.toMyCreateProject();
+          break;
+        case '5':
+          this.toDeletedProject();
+          break;
+      }
+    },
     toAllProject() {
       this.projectIndex = '1';
       const projectForm = new FormData();
@@ -693,7 +712,6 @@ export default {
       this.refreshFavorProject();
     },
     refreshFavorProject() {
-      console.log('refresh')
       const projectForm = new FormData();
       projectForm.append("userID", this.curUserID);
       projectForm.append("username", this.curUsername);
@@ -769,6 +787,25 @@ export default {
     },
     toDeletedProject() {
       this.projectIndex = '5';
+      const recycleProjectForm = new FormData();
+      recycleProjectForm.append("groupID", this.curGroupID);
+      recycleProjectForm.append("username", this.curUsername);
+      recycleProjectForm.append("authorization", localStorage.getItem('authorization'));
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewRecycle/',
+        data: recycleProjectForm,
+      })
+          .then(res => {
+            switch (res.data.error) {
+              case 0:
+                this.recycleProjectList = res.data.project_list;
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     },
     handleOpen() {
       console.log('open')
@@ -827,7 +864,9 @@ export default {
               })
               .finally(() => {
                 this.newProjectDialogVisible = false;
-                location.reload();
+                this.projectForm.projectName = '';
+                this.projectForm.projectIntro = '';
+                this.refresh();
               })
         } else {
           return
