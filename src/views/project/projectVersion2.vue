@@ -19,7 +19,8 @@
     </div>
     <div class="show-box">
       <DocumentView :list="documentList" v-show="showDocumentEdit"></DocumentView>
-      <div class="prototype" v-show="showPrototype">
+      <div class="prototype" v-show="showPrototype || showUMLEdit">
+        <PreviewListView :list="this.previewList" :key="reloadkey"></PreviewListView>
       </div>
     </div>
   </div>
@@ -27,18 +28,24 @@
 
 <script>
 import DocumentView from "@/views/documentEdit/DocumentView";
+import PreviewListView from "@/views/preview/PreviewListView";
 
 export default {
   name: "projectVersion2",
-  components: { DocumentView},
+  components: { DocumentView,PreviewListView},
   data() {
     return {
+      previewList:[],
+      reloadkey:false,
+      axureList:[],
+      umlList:[],
       projectName:'小学期项目',
       curUsername:'',
       curUserID:0,
       projectID:0,
       showPrototype:false,
       showDocumentEdit:true,
+      showUMLEdit:false,
       navLeftActive: true,
       navLeftNotActive: false,
       navCenterActive: false,
@@ -71,8 +78,49 @@ export default {
     this.curUserID = localStorage.getItem('userID');
     this.showDocumentEdit=true
     this.getProjectInfo()
+    this.getAxureInfo()
   },
   methods: {
+    getUMLInfo(){
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewAxureList/',
+        data: data
+      })
+          .then(res=>{
+            if(res.data.error === 0){
+              console.log(res.data.uml_list)
+              this.umlList=res.data.uml_list;
+              this.reloadkey=!this.reloadkey;
+            }
+          })
+    },
+    getAxureInfo(){
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewAxureList/',
+        data: data
+      })
+          .then(res=>{
+            if(res.data.error === 0){
+              console.log(res.data.axure_list)
+              this.axureList=res.data.axure_list;
+              this.reloadkey=!this.reloadkey;
+            }
+          })
+    },
     getProjectInfo(){
       const formData = new FormData();
       formData.append('projectID', this.projectID);
@@ -96,6 +144,8 @@ export default {
       this.$router.push(path);
     },
     handleNavLeft() {
+      this.showUMLEdit=false
+      this.showPrototype=false
       this.showDocumentEdit=true
       this.navLeftActive = true
       this.navLeftNotActive = false
@@ -105,6 +155,8 @@ export default {
       this.navRightNotActive = true
     },
     handleNavCenter() {
+      this.showUMLEdit=false
+      this.showPrototype=true
       this.showDocumentEdit=false
       this.navLeftActive = false
       this.navLeftNotActive = true
@@ -112,8 +164,15 @@ export default {
       this.navCenterNotActive = false
       this.navRightActive = false
       this.navRightNotActive = true
+      this.previewList=this.axureList
+      this.reloadkey=!this.reloadkey
+      // console.log('111')
+      // console.log(this.axureList)
+      // console.log(this.previewList)
     },
     handleNavRight() {
+      this.showUMLEdit=true
+      this.showPrototype=false
       this.showDocumentEdit=false
       this.navLeftActive = false
       this.navLeftNotActive = true
@@ -121,6 +180,11 @@ export default {
       this.navCenterNotActive = true
       this.navRightActive = true
       this.navRightNotActive = false
+      this.previewList=this.umlList
+      this.reloadkey=!this.reloadkey
+      // console.log('222')
+      // console.log(this.umlList)
+      // console.log(this.umlList)
     },
   }
 }

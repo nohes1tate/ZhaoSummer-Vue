@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="border: 1px solid #ccc; margin-top: 10px">
+    <div>
       <!-- 工具栏 -->
       <Toolbar
           style="border-bottom: 1px solid #ccc"

@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/test',
     name: 'test',
-    component: () => import('../views/AboutView')
+    component: () => import('../views/design/DesignView')
   },
   {
     path: '/documentEdit/:documentID',

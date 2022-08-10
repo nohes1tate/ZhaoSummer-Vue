@@ -38,6 +38,7 @@
     "drawio-embed": "^1.0.2",
     "element": "^0.1.4",
     "element-ui": "^2.15.9",
+    "html2canvas": "^1.4.1",
     "http": "^0.0.1-security",
     "i": "^0.3.7",
     "mavon-editor": "^2.10.4",
