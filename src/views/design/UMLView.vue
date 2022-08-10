@@ -12,7 +12,7 @@
             {{ item.name }}
           </el-menu-item>
         </div>
-        <el-menu-item index="newUML"><i class="el-icon-plus" @click="toNewUML"></i>新建页面</el-menu-item>
+        <el-menu-item index="newUML" @click="toNewUML"><i class="el-icon-plus" ></i>新建UML图</el-menu-item>
       </el-menu>
     </div>
     <div style="width: auto">
@@ -68,13 +68,12 @@ export default {
           data: data
         })
             .then(res => {
-              console.log(res)
               if(res.data.error !==0) {
                 this.$message.error(res.data.msg)
               }
               else {
                 this.$message.success('UML创建成功!')
-                console.log(res.data)
+                this.getUMLInfo()
               }
             })
       }).catch(() => {
