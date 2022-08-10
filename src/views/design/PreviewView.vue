@@ -27,7 +27,7 @@ export default {
     },
     isPage:{
       type:Boolean,
-      default:null
+      default:false
     }
   },
   data() {
@@ -51,13 +51,14 @@ export default {
   },
   methods: {
     onDesign(){
-      if(this.isPage)
+      if(!this.isPage)
       {
-        let path ='/UML/' + this.projectID
-        this.$router.push(path);
+        let path1 ='/UML/' + this.$route.params.projectID
+        this.$router.push(path1);
       }
       else
       {
+        console.log(this.projectID)
         let path ='/design/' + this.projectID
         this.$router.push(path);
       }
