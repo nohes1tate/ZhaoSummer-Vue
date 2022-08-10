@@ -98,7 +98,7 @@ export default {
                   type: 'success'
                 });
                 this.recycleProjectDialogVisible = false;
-                location.reload();
+                this.$emit('refresh');
                 break;
               case 2001:
                 this.$message.warning('请求方式错误！');
@@ -129,7 +129,7 @@ export default {
                   type: 'success'
                 });
                 this.deleteProjectDialogVisible = false;
-                location.reload();
+                this.$emit('refresh');
             }
           })
           .catch(err => {

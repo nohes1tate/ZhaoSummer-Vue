@@ -133,7 +133,7 @@ export default {
           .then(res => {
             switch (res.data.error) {
               case 0:
-                //HomeView.methods.toAllProject();
+                this.$emit('refresh');
                 break;
             }
           })
@@ -157,7 +157,7 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.hasFavored = true;
-                //HomeView.methods.refreshFavorProject();
+                this.$emit('refresh');
                 break;
             }
           })
@@ -181,7 +181,7 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.hasFavored = false;
-                //this.$parent.refreshFavorProject();
+                this.$emit('refresh');
                 break;
             }
           })
@@ -236,7 +236,7 @@ export default {
                   type: 'success'
                 });
                 this.newProjectNameDialogVisible = false;
-                location.reload();
+                this.$emit('refresh');
                 break;
               case 4001:
                 this.$message.warning('用户不存在！');
@@ -266,6 +266,11 @@ export default {
       formData.append("projectUserID", this.userID);
       formData.append("username", this.username);
       formData.append("authorization", localStorage.getItem('authorization'));
+      console.log(this.projectName);
+      console.log(this.groupID);
+      console.log(this.userID);
+      console.log(this.username);
+      console.log(localStorage.getItem('authorization'));
       this.$axios({
         method: 'post',
         url: 'ProjectManager/projectDelete/',
@@ -279,7 +284,7 @@ export default {
                   type: 'success'
                 });
                 this.deleteProjectDialogVisible = false;
-                location.reload();
+                this.$emit('refresh');
                 break;
               case 4001:
                 this.$message.warning('用户不存在！');

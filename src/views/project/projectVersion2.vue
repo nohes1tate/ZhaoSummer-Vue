@@ -18,9 +18,9 @@
       </a>
     </div>
     <div class="show-box">
-      <DocumentView :list="documentList" v-show="showDocumentEdit"></DocumentView>
+      <DocumentView :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
       <div class="prototype" v-show="showPrototype || showUMLEdit">
-        <PreviewListView :list="this.previewList" :key="reloadkey"></PreviewListView>
+        <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="updateAxure"></PreviewListView>
       </div>
     </div>
   </div>
@@ -117,6 +117,27 @@ export default {
             if(res.data.error === 0){
               console.log(res.data.axure_list)
               this.axureList=res.data.axure_list;
+              this.reloadkey=!this.reloadkey;
+            }
+          })
+    },
+    updateAxure() {
+      let data = new FormData()
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'ProjectManager/viewAxureList/',
+        data: data
+      })
+          .then(res=>{
+            if(res.data.error === 0){
+              console.log('update')
+              console.log(res.data.axure_list)
+              this.axureList=res.data.axure_list;
+              this.previewList=res.data.axure_list;
               this.reloadkey=!this.reloadkey;
             }
           })
