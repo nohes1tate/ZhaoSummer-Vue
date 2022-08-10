@@ -7,6 +7,10 @@
           :editor="editor"
           :defaultConfig="toolbarConfig"
       />
+      <div class="button-box">
+        111
+        <i class="el-icon-document-checked" style="font-size: 17px; color: #112F4B; position: absolute"></i>
+      </div>
       <!-- 编辑器 -->
       <Editor
           style="height: 85vh; overflow-y: hidden; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
@@ -102,7 +106,7 @@ export default {
            "undo",
            "redo",
            "|",
-           "fullScreen"
+
          ],
         //excludeKeys: [ 'group-image','group-video' ],
       },
@@ -245,4 +249,16 @@ export default {
 };
 </script>
 
-<style scoped src="@wangeditor/editor/dist/css/style.css"></style>
+<style scoped src="@wangeditor/editor/dist/css/style.css">
+.button-box {
+  width: 38px;
+  height: 40px;
+  padding: 4px;
+  position: absolute;
+  text-align: center;
+  background-color: #0D0D0D;
+}
+.button-box :hover{
+  background-color: #f1f1f1;
+}
+</style>

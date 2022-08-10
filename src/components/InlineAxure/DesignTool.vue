@@ -18,7 +18,6 @@ import Vue from 'vue';
 import topology from '@/assets/topology-vue';
 // 需要导入topology-vue.css
 import '@/assets/topology-vue/topology-vue.css';
-import html2canvas from 'html2canvas'
 
 Vue.use(topology);
 import {

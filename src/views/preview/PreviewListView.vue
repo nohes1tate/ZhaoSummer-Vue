@@ -12,7 +12,8 @@
             {{ item.name }}
           </el-menu-item>
         </div>
-        <el-menu-item index="newAxure" @click="newAxureDialogVisible = true"><i class="el-icon-plus"></i>新建页面</el-menu-item>
+        <el-menu-item index="newAxure" @click="newAxureDialogVisible = true" v-show="isPage && newPage"><i class="el-icon-plus"></i>新建页面</el-menu-item>
+        <el-menu-item index="newAxure" @click="toNewUML" v-show="(!isPage) && newPage"><i class="el-icon-plus"></i>新建UML</el-menu-item>
       </el-menu>
       <el-dialog title="新建页面" :visible.sync="newAxureDialogVisible" :append-to-body="true">
         <div style="width: 100%; text-align: left">
@@ -103,7 +104,19 @@
         </div>
       </el-dialog>
     </div>
-    <preview-view :content="curContent" :key="reloadkey" :axureID="curAxureID"></preview-view>
+    <preview-view :content="curContent" :key="reloadkey" :axureID="curAxureID" v-show="!newPage"></preview-view>
+    <div class="no-group" v-show="newPage && isPage">
+      <span style="font-size: 40px; color: #595959">创建页面</span>
+      <span style="font-size: 15px; color: #999999; margin-top: 4vh;">当前项目下无页面，请先创建</span>
+      <el-button type="primary" style="width: 20vh; margin-top: 4vh;" @click="newAxureDialogVisible = true">创 建 页 面
+      </el-button>
+    </div>
+    <div class="no-group" v-show="newPage && (!isPage)">
+      <span style="font-size: 40px; color: #595959">创建UML图</span>
+      <span style="font-size: 15px; color: #999999; margin-top: 4vh;">当前项目下无UML图，请先创建</span>
+      <el-button type="primary" style="width: 20vh; margin-top: 4vh;" @click="toNewUML">创 建 UML 图
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -120,10 +133,16 @@ export default {
     list: {
       type: Array,
       default: null
+    },
+    isPage:{
+      type:Boolean,
+      default:null
     }
   },
   data() {
     return {
+      projectID:'',
+      newPage:false,
       axureFormIndex: '0',
       showFormDialogVisible: false,
       reloadkey:false,
@@ -3518,7 +3537,10 @@ export default {
     }
   },
   created() {
+    this.projectID=this.$route.params.projectID
+    if(this.axureList.length!==0)
     this.curContent=this.axureList[0].content
+    this.newPage= this.axureList.length===0
   },
   methods: {
     changeAxure(axureID,content) {
@@ -3834,7 +3856,41 @@ export default {
     },
     chooseType(index) {
       this.newAxureType = index;
-    }
+    },
+    toNewUML(){
+      const self = this
+      const data = new FormData
+      data.append('userID',localStorage.getItem('userID'))
+      data.append('projectID',this.$route.params.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+      data.append('umlData','')
+      this.$prompt('UML图名称','创建UML图',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{3,20}$/,
+        inputErrorMessage: '图名在3~20字之间'
+      }).then(({ value }) => {
+        data.append('umlName',value)
+        self.$axios({
+          method: 'post',
+          url: 'ProjectManager/createUML/',
+          data: data
+        })
+            .then(res => {
+              console.log(res)
+              if(res.data.error !==0) {
+                this.$message.error(res.data.msg)
+              }
+              else {
+                this.$message.success('UML创建成功!')
+                this.$router.push('/UML/'+this.projectID)
+              }
+            })
+      }).catch(() => {
+      });
+
+    },
   }
 }
 </script>
@@ -3950,5 +4006,14 @@ export default {
 }
 .el-menu-item {
   text-align: left;
+}
+.no-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top:50px;
+  left: -50px;
 }
 </style>
