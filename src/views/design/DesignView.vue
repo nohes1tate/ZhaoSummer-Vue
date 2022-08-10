@@ -399,6 +399,7 @@ export default {
         data: projectForm,
       })
           .then(res => {
+            console.log(res)
             switch (res.data.error) {
               case 0:
                 this.curProjectList = res.data.project_list;

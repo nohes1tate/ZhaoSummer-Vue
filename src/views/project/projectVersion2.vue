@@ -79,8 +79,30 @@ export default {
     this.showDocumentEdit=true
     this.getProjectInfo()
     this.getAxureInfo()
+    this.getDocInfo()
   },
   methods: {
+    getDocInfo(){
+      let data = new FormData()
+
+      data.append('projectID',this.projectID)
+      data.append('username',localStorage.getItem('username'))
+      data.append('authorization',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'DocsEdit/viewProjectDocList/',
+        data: data
+      }).then(res => {
+        console.log('doc:',res)
+        if(res.data.errno===0){
+          this.documentList=res.data.documentList
+        }else {
+          this.$message.error(res.data.errno)
+        }
+      })
+
+    },
     getUMLInfo(){
       let data = new FormData()
 
