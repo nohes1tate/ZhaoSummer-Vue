@@ -10,7 +10,7 @@
           <i class="iconfont icon-xiangxia" @click.stop="handleMenu" style="cursor:pointer;color: white;vertical-align: middle;font-size: 6px;font-weight: 1000;margin-left: 5px;background-color:rgba(57, 49, 49, 0);"></i>
           <ul class="user-menu" v-show="showMenu">
             <li>
-              <a href= "/me">个人中心</a>
+              <a :href= "'/me/'+this.curUserID">个人中心</a>
             </li>
             <li>
               <a href="/home">我的项目</a>
