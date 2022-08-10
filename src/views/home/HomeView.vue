@@ -594,7 +594,7 @@ export default {
             }
           })
           .catch(err => {
-          //  console.log(err);
+            console.log(err);
           })
     },
     setManager(operatedUsername, row) {
@@ -623,7 +623,7 @@ export default {
             }
           })
           .catch(err => {
-        //    console.log(err);
+            console.log(err);
           })
     },
     deleteManager(operatedUsername, row) {
