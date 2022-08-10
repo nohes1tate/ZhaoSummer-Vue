@@ -286,7 +286,7 @@
         </div>
 
         <div v-show="leftIndex==='3'">
-          <DocumentView :key="docreload" :group="curGroupID" :project="''" :type="'0'" :content="displayDoc" :list="documentList"></DocumentView>
+          <DocumentView :key="docreload" :group="curGroupID" :project="-1+''" :type="'1'" :content="displayDoc" :list="documentList"></DocumentView>
         </div>
       </div>
       <div class="no-group" v-else>

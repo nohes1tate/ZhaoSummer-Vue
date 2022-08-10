@@ -18,7 +18,7 @@
       </a>
     </div>
     <div class="show-box">
-      <DocumentView :list="documentList" v-show="showDocumentEdit"></DocumentView>
+      <DocumentView :list="documentList" v-show="showDocumentEdit" :project="projectID+''" :type="'0'" :content="'请选择文档'"></DocumentView>
       <div class="prototype" v-show="showPrototype || showUMLEdit">
         <PreviewListView :list="this.previewList" :key="reloadkey" @updateAxureList="getAxureInfo"></PreviewListView>
       </div>
@@ -103,7 +103,7 @@ export default {
     },
     getAxureInfo(){
       let data = new FormData()
-      console.log('iupdate')
+
       data.append('projectID',this.projectID)
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
