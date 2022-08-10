@@ -7,10 +7,12 @@
           :editor="editor"
           :defaultConfig="toolbarConfig"
       />
-      <div class="button-box">
-        111
-        <i class="el-icon-document-checked" style="font-size: 17px; color: #112F4B; position: absolute"></i>
-      </div>
+
+
+      <el-tooltip class="item" effect="dark" content="保存" placement="bottom">
+        <i class="el-icon-document-checked" style="font-size: 17px; color: #112F4B; position: absolute; margin-left: -512px; margin-top: -30px; cursor: pointer" @click="save"></i>
+      </el-tooltip>
+
       <!-- 编辑器 -->
       <Editor
           style="height: 85vh; overflow-y: hidden; overflow: auto; padding: 30px 30px 0 30px;background-color: rgba(234,235,235,1);"
@@ -120,6 +122,32 @@ export default {
     };
   },
   methods: {
+    save() {
+      const dataForm = new FormData();
+      dataForm.append("docID", this.documentid);
+      dataForm.append("content", this.html);
+      dataForm.append("username", localStorage.getItem('username'));
+      dataForm.append("authorization", localStorage.getItem('authorization'));
+      console.log(this.documentid);
+      console.log(this.html);
+      console.log(localStorage.getItem('username'));
+      console.log(localStorage.getItem('authorization'))
+      this.$axios({
+        method: 'post',
+        url: 'DocsEdit/modifyDocContent/',
+        data: dataForm,
+      })
+          .then(res => {
+            switch (res.data.errno) {
+              case 0:
+                this.$message.success('保存成功');
+                break;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     settimer() {
       console.log('timer set')
       if(this.timer==null){
@@ -249,16 +277,18 @@ export default {
 };
 </script>
 
-<style scoped src="@wangeditor/editor/dist/css/style.css">
+<style scoped src="@wangeditor/editor/dist/css/style.css"></style>
+<style>
 .button-box {
-  width: 38px;
-  height: 40px;
-  padding: 4px;
+  width: 30px;
+  height: 32px;
   position: absolute;
-  text-align: center;
-  background-color: #0D0D0D;
+  margin-top: -37.5px;
+  margin-left: 136px;
+  cursor: pointer;
 }
-.button-box :hover{
+.button-box:hover{
   background-color: #f1f1f1;
 }
+
 </style>
