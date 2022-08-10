@@ -1,6 +1,5 @@
 <template>
   <div >
-    <el-button @click="download">fuckme</el-button>
     <div>
       <!-- 工具栏 -->
       <Toolbar
@@ -8,10 +7,12 @@
           :editor="editor"
           :defaultConfig="toolbarConfig"
       />
-
+      <el-tooltip class="item" effect="dark" content="下载" placement="bottom">
+        <i class="el-icon-download" style="font-size: 17px; color: #112F4B; position: absolute; margin-left: 76vh; margin-top: -30px; cursor: pointer" @click="download"></i>
+      </el-tooltip>
 
       <el-tooltip class="item" effect="dark" content="保存" placement="bottom">
-        <i class="el-icon-document-checked" style="font-size: 17px; color: #112F4B; position: absolute; margin-left: -512px; margin-top: -30px; cursor: pointer" @click="save"></i>
+        <i class="el-icon-document-checked" style="font-size: 17px; color: #112F4B; position: absolute; margin-left: 71vh; margin-top: -30px; cursor: pointer" @click="save"></i>
       </el-tooltip>
 
       <!-- 编辑器 -->
