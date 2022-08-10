@@ -7,9 +7,9 @@
           style="width: 30vh; height: 93vh"
       >
         <div v-for="(item,index1) in axureList" v-bind:key="index1+''">
-          <el-menu-item :index="index1+''" @click="changeAxure(item.axureID,item.axureContent)">
+          <el-menu-item :index="index1+''" @click="changeAxure(item.id,item.content)">
             <i class="el-icon-document"></i>
-            {{ item.axureName }}
+            {{ item.name }}
           </el-menu-item>
         </div>
         <el-menu-item index="newAxure"><i class="el-icon-plus"></i>新建页面</el-menu-item>

@@ -69,7 +69,7 @@ const routes = [
     component:()=>import('../views/preview/documentPreview')
   },
   {
-    path: '/design/:projcetID',
+    path: '/design/:projectID',
     name: 'design',
     component:()=>import('../views/design/DesignView'),
   },
