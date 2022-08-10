@@ -147,8 +147,8 @@ export default {
       }
       else {
         console.log('支持Websocket')
-        //var socketUrl = "http://43.138.86.76:9000/UML/"
-        var socketUrl = "http://localhost:9000/UML/"
+        var socketUrl = "http://43.138.86.76:9000/UML/"
+        //var socketUrl = "http://localhost:9000/UML/"
         socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
         console.log(socketUrl)
         if(socket!==null){

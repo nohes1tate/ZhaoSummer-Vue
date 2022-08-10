@@ -286,7 +286,7 @@
         </div>
 
         <div v-show="leftIndex==='3'">
-          <DocumentView :list="documentList"></DocumentView>
+          <DocumentView :key="docreload" :group="curGroupID" :project="''" :type="'0'" :content="displayDoc" :list="documentList"></DocumentView>
         </div>
       </div>
       <div class="no-group" v-else>
@@ -309,6 +309,7 @@ export default {
   components: {ProjectCover,recycleProjectCover, DocumentView},
   data() {
     return {
+      docreload: false,
       currentUserEmail:'',
       newUserEmail:'',
       checkCode:'',
@@ -319,6 +320,7 @@ export default {
       input1: '',
       input2: '',
       input3: '',
+      displayDoc: '暂无文档',
       searchProjectInput: '',
       hasGroup: false,
       showInfoDialog: false,
@@ -373,28 +375,11 @@ export default {
           {required: true, message: '请输入团队简介', trigger: 'blur'}
         ]
       },
-      documentList: [{
-        docid: '1',
-        isSub: false,
-        title: '团队文档1',
-        content: '<p>文档1的内容</p>',
-        childDoc: []
-      },
-        {
-          docid: '2',
-          isSub: false,
-          title: '团队文档2',
-          content: '<p>content2</p>',
-          childDoc: []
-        },
-        {
-          docid: '-1',
-          isSub: true,
-          title: '项目1',
-          content: '',
-          childDoc: [{docid: '3',title: '项目1文档', content: '<p>content3</p>'}, {docid: '4',title: '项目1文档', content: '<p>content4</p>'}]
-        }]
+      documentList: []
     };
+  },
+  mounted() {
+
   },
   created() {
     this.curUsername = localStorage.getItem('username');
@@ -421,11 +406,11 @@ export default {
       })
           .then(res => {
             this.searchProjectInput = '';
-            console.log(res.data);
+           // console.log(res.data);
             switch (res.data.error) {
               case 0:
                 this.curProjectList = JSON.parse(res.data.projectList);
-                console.log(this.curProjectList[0]);
+               // console.log(this.curProjectList[0]);
                 break;
               case 4001:
                 this.$message({
@@ -501,7 +486,7 @@ export default {
         data: formData,
       })
           .then(res => {
-            console.log(res.data);
+          //  console.log(res.data);
             switch (res.data.error) {
               case 0:
                 // 前端保存用户信息
@@ -529,7 +514,7 @@ export default {
       formData.append("email", self.currentUserEmail);
       formData.append("authorization", localStorage.getItem('authorization'));
       formData.append("username", this.curUsername);
-      console.log(self.currentUserEmail);
+     // console.log(self.currentUserEmail);
       self.$axios({
         method: 'post',
         url: 'Login/forget/',
@@ -609,7 +594,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+          //  console.log(err);
           })
     },
     setManager(operatedUsername, row) {
@@ -638,7 +623,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+        //    console.log(err);
           })
     },
     deleteManager(operatedUsername, row) {
@@ -797,19 +782,19 @@ export default {
     },
     createProject() {
       const formData = new FormData();
-      console.log('团队ID:' + this.curGroupID);
+   //   console.log('团队ID:' + this.curGroupID);
       formData.append("projectName", this.projectForm.projectName);
-      console.log(this.projectForm.projectName)
+    //  console.log(this.projectForm.projectName)
       formData.append("projectTeamID", this.curGroupID);
-      console.log(this.curGroupID)
+    //  console.log(this.curGroupID)
       formData.append("projectIntro", this.projectForm.projectIntro);
-      console.log(this.projectForm.projectIntro)
+    //  console.log(this.projectForm.projectIntro)
       formData.append("projectCreatorID", localStorage.getItem('userID'));
-      console.log(localStorage.getItem('userID'))
+     // console.log(localStorage.getItem('userID'))
       formData.append("username", this.curUsername);
-      console.log(this.curUsername)
+     // console.log(this.curUsername)
       formData.append("authorization", localStorage.getItem('authorization'));
-      console.log(localStorage.getItem('authorization'))
+    //  console.log(localStorage.getItem('authorization'))
       this.$refs.projectForm.validate((valid) => {
         if (valid) {
           this.$axios({
@@ -858,7 +843,7 @@ export default {
       formData.append("authorization", localStorage.getItem('authorization'));
 
       this.$refs.teamForm.validate((valid) => {
-        console.log(valid)
+     //   console.log(valid)
         if (valid) {
           this.$axios({
             method: 'post',
@@ -900,7 +885,7 @@ export default {
       formData.append("userID", this.curUserID);
       formData.append("username", this.curUsername);
       formData.append("authorization", localStorage.getItem('authorization'));
-      console.log(this.curUserID)
+    //  console.log(this.curUserID)
       this.$axios({
         method: 'post',
         url: 'TeamManager/getGroupInfo/',
@@ -991,6 +976,32 @@ export default {
           .catch(err => {
             console.log(err);
           })
+
+      const docForm = new FormData();
+      docForm.append("teamID", groupID);
+      console.log('teamID',groupID)
+      docForm.append("username", this.curUsername);
+    //  console.log('username',this.curUsername)
+      docForm.append("authorization", localStorage.getItem('authorization'));
+    //  console.log('token',localStorage.getItem('authorization'))
+
+      this.$axios({
+        method: 'post',
+        url: 'DocsEdit/viewTeamDocList/',
+        data: docForm
+      }).then((res) => {
+        console.log('viewTeamDoc:',res)
+        if(res.data.errno === 0){
+          //console.log(this.documentList)
+          this.documentList=res.data.documentList
+          this.docreload=!this.docreload
+          console.log('after',this.documentList)
+        }
+        else {
+          this.$message.error('获取团队文档失败')
+        }
+      })
+
     },
     updateMemberInfo() {
       const projectForm = new FormData();
@@ -1048,7 +1059,7 @@ export default {
             switch (res.data.error) {
               case 0:
                 this.recycleProjectList = res.data.project_list;
-                console.log('返回回收站信息');
+             //   console.log('返回回收站信息');
                 console.log(res.data.project_list);
                 break;
             }

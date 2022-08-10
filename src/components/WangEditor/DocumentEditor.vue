@@ -46,7 +46,7 @@ export default {
       curUser: '',
       editor: null,
       preHtml: '',
-      html: "<p>hello&nbsp;world</p>",
+      html: this.showhtml,
       toolbarConfig: {
          toolbarKeys: [
            "headerSelect",
@@ -132,7 +132,7 @@ export default {
         //sendData.fromUser = this.curUser
         if(socket.readyState===1)
         {
-          console.log('send',this.html)
+         // console.log('send',this.html)
           socket.send(msg)
           this.preHtml = this.html
         }
@@ -145,8 +145,8 @@ export default {
       else {
         var self = this
        // console.log('支持Websocket',this.documentid)
-        var socketUrl = "http://localhost:9000/document/"
-        //var socketUrl = "http://43.138.86.76/document/"
+        //var socketUrl = "http://localhost:9000/document/"
+        var socketUrl = "http://43.138.86.76:9000/document/"
         socketUrl = socketUrl.replace("https", "ws").replace("http", "ws")
         console.log(socketUrl)
         if(socket!==null){
@@ -230,6 +230,7 @@ export default {
   },
   mounted() {
     this.curUser=localStorage.getItem('userID')
+   //console.log('showhtml',this.showhtml)
      //模拟 ajax 请求，异步渲染编辑器
     this.openSocket()
   },

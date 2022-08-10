@@ -20,7 +20,6 @@
     <div class="show-box">
       <DocumentView :list="documentList" v-show="showDocumentEdit"></DocumentView>
       <div class="prototype" v-show="showPrototype">
-
       </div>
     </div>
   </div>
@@ -38,8 +37,8 @@ export default {
       curUsername:'',
       curUserID:0,
       projectID:0,
-      showPrototype:true,
-      showDocumentEdit:false,
+      showPrototype:false,
+      showDocumentEdit:true,
       navLeftActive: true,
       navLeftNotActive: false,
       navCenterActive: false,
@@ -70,6 +69,7 @@ export default {
     this.projectID = this.$route.params.projectID;
     this.curUsername = localStorage.getItem('username');
     this.curUserID = localStorage.getItem('userID');
+    this.showDocumentEdit=true
     this.getProjectInfo()
   },
   methods: {
