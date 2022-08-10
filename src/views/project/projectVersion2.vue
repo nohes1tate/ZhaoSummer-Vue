@@ -18,7 +18,7 @@
       </a>
     </div>
 
-    <div style="margin-left: 170vh;justify-content: right;position: absolute" v-show="showPrototype">
+    <div style="margin-left: 183vh;justify-content: right;position: absolute" v-show="showPrototype">
       <span v-if="limit">预览已开放</span>
       <span v-else>预览未开放</span>
       <el-switch
