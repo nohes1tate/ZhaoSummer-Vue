@@ -39,7 +39,7 @@ export default {
     UMLcontent: {
       type: String,
       default: ''
-    }
+    },
   },
   data: function () {
     return {
@@ -246,21 +246,24 @@ export default {
 
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
-      data.append('UMLID',this.$route.params.UMLID)
-      data.append('UMLData',JSON.stringify(window.topology.data))
+      data.append('umlID',this.UMLid)
+      data.append('umlData',JSON.stringify(window.topology.data))
       // console.log(JSON.stringify(window.topology.data))
 
       let self = this
       this.$axios({
         method: 'post',
-        url: 'ProjectManager/UMLSave/',
+        url: 'ProjectManager/saveUML/',
         data: data
       }).then(res => {
         // console.log(res)
         if(res.data.error === 0) {
+          self.$message.success('UML图保存成功！')
           self.$message.success(res.data.msg)
         }
         else {
+          console.log('here@@')
+          console.log(this.UMLid)
           self.$message.error(res.data.msg)
         }
       })

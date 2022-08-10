@@ -39,7 +39,7 @@ export default {
     axurecontent: {
       type: String,
       default: ''
-    }
+    },
   },
   data: function () {
     return {

@@ -16,7 +16,7 @@
       </el-menu>
     </div>
     <div style="width: auto">
-      <UMLTool :UMLcontent="curUML" :UMLid="curUMLID" @UMLChange="handleUMLChange"></UMLTool>
+      <UMLTool :UMLcontent="curUML" :UMLid="curUMLID"  @UMLChange="handleUMLChange"></UMLTool>
     </div>
   </div>
 </template>
@@ -96,20 +96,19 @@ export default {
             if(res.data.error === 0){
               this.UMLList=res.data.uml_list;
               this.reloadkey=!this.reloadkey;
-              this.curUMLID=this.UMLList[0].content
-              this.curUML=this.UMLList[0].id
+              this.curUMLID=this.UMLList[0].id
+              this.curUML=this.UMLList[0].content
             }
           })
     },
     handleUMLChange(content,UMLID){
       //console.log('gotchange')
       let index = null
-      // console.log(UMLID)
       for(index=0; index<this.UMLList.length; index++){
         if(this.UMLList[index].UMLid === UMLID){
           //console.log('nani')
           this.UMLList[index].content=content
-          // console.log('UMLID ',index,' ischange')
+           //console.log('UMLID ',index,' ischange')
         }
       }
     },
