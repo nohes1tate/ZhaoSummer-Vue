@@ -54,6 +54,8 @@ export default {
     onCreated(editor) {
       this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
       this.editor.disable()
+      let templateID = this.$route.params.templateID
+      this.html = this.templateList[templateID]
     },
     onChange(editor) {
       console.log("onChange", editor.getHtml()); // onChange 时获取编辑器最新内容
@@ -75,9 +77,7 @@ export default {
     // 模拟 ajax 请求，异步渲染编辑器
     let templateID = this.$route.params.templateID
     console.log(this.templateList[templateID])
-    setTimeout(() => {
-      this.html = this.templateList[templateID];
-    }, 500);
+
   },
   beforeDestroy() {
     const editor = this.editor;
