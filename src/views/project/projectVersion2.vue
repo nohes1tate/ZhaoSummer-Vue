@@ -99,7 +99,7 @@ export default {
     this.getDocInfo()
     this.checkLimit()
     let path = this.$router.resolve('/projectPreview/'+this.$route.params.projectID);
-    this.previewHref=path
+    this.previewHref=path.href
   },
   methods: {
     changeLimit(newVal) {
