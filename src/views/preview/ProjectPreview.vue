@@ -1,6 +1,6 @@
 <template>
 <div>
-  <PreviewListView :list="this.previewList" :group="'0'" :key="reloadkey"></PreviewListView>
+  <PreviewListView v-if="limit" :list="this.previewList" :group="'0'" :key="reloadkey"></PreviewListView>
 </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
       }).then(res => {
         if(res.data.error===0){
           this.limit=res.data.limit
+          this.$message.success('预览内容加载中')
           if(!this.limit){
             this.$message.error('暂无预览内容')
             setTimeout(()=>{this.$router.push('/home')},1000)

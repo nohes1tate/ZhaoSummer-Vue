@@ -16,17 +16,19 @@
       <a @click="handleNavRight">
         <div :class="{'active':navRightActive,'not-active':navRightNotActive }" >设计稿</div>
       </a>
-      <div style="margin-left: 10vh;justify-content: right">
-        <span v-if="limit">预览已开放</span>
-        <span v-else>预览未开放</span>
-        <el-switch
-            v-model="limit"
-            @change="changeLimit"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-        >
-        </el-switch>
-      </div>
+    </div>
+
+    <div style="margin-left: 170vh;justify-content: right;position: absolute">
+      <span v-if="limit">预览已开放</span>
+      <span v-else>预览未开放</span>
+      <el-switch
+          v-model="limit"
+          @change="changeLimit"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+      >
+      </el-switch>
+      <a style="margin-left: 5vh" v-if="limit" :href="previewHref">预览地址</a>
     </div>
 
     <div class="show-box">
@@ -47,6 +49,7 @@ export default {
   components: { DocumentView,PreviewListView},
   data() {
     return {
+      previewHref: '',
       limit: false,
       previewList:[],
       reloadkey:false,
@@ -95,6 +98,8 @@ export default {
     this.getUMLInfo()
     this.getDocInfo()
     this.checkLimit()
+    let path = this.$router.resolve('/projectPreview/'+this.$route.params.projectID);
+    window.open(path.href)
   },
   methods: {
     changeLimit(newVal) {
