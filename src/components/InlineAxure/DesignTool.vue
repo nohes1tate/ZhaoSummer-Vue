@@ -249,9 +249,8 @@ export default {
 
       data.append('username',localStorage.getItem('username'))
       data.append('authorization',localStorage.getItem('authorization'))
-      data.append('axureID',this.$route.params.axureID)
+      data.append('axureID',this.axureid)
       data.append('axureData',JSON.stringify(window.topology.data))
-     // console.log(JSON.stringify(window.topology.data))
 
       let self = this
       this.$axios({
