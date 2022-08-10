@@ -1,5 +1,5 @@
 <template>
-  <div class="project-header">
+  <div class="project-header"  v-title :data-title='title' :key="reloadKey">
     <div class="project-header-left">
       <i class="el-icon-arrow-left left-arrow" @click="toHome"></i>
       <div class="project-header-name">
@@ -49,6 +49,7 @@ export default {
   components: { DocumentView,PreviewListView},
   data() {
     return {
+      title: '',
       previewHref: '',
       limit: false,
       previewList:[],
@@ -240,6 +241,8 @@ export default {
           .then(res => {
             console.log(res.data)
             this.projectName=res.data.projectName;
+            this.title=this.projectName+'-墨书'
+            this.reloadKey=!this.reloadKey
           })
           .catch(err => {
             console.log(err);

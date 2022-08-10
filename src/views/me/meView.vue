@@ -1,5 +1,5 @@
 <template>
-  <div class="me" @click="showMenu=false">
+  <div class="me" @click="showMenu=false"  v-title data-title="墨书-个人中心">
     <div class="first-img">
       <div class="top-line">
         <a href="/" class="logo">

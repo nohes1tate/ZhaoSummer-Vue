@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex">
+  <div style="display: flex" v-title data-title="墨书-页面设计">
     <div class="axure-leftnav">
       <el-menu
           mode="vertical"

@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome" @click="showMenu=false">
+  <div class="welcome" @click="showMenu=false" v-title data-title="墨书-高效的软工平台">
     <div class="first-img">
       <div class="top-line">
         <a href="/" class="logo">
