@@ -132,8 +132,8 @@
       <h6>和团队一起开启高效协作之旅</h6>
       <a class="footer-btna" :href="this.homeUrl">点击开始</a>
     </div>
-    <div class="customer-service" @mouseenter="showVRcode = true" @mouseleave="showVRcode = false">
-      <div class="item" id="customer-message">
+    <div class="customer-service" >
+      <div class="item" id="customer-message" @mouseenter="showVRcode = true" @mouseleave="showVRcode = false">
         <svg class="icon go-top" aria-hidden="true">
           <use xlink:href="#icon-xiaoxi"></use>
         </svg>
